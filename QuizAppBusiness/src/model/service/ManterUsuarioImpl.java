@@ -48,13 +48,13 @@ public class ManterUsuarioImpl implements ManterUsuario{
         if ((usuario.getSenha() == null) || (usuario.getSenha().isEmpty())) {
             errMsgList.add("A senha nao pode ser nula.");
         } else if ((usuario.getSenha()).length() < 8) {
-            errMsgList.add("A senha e' muito curta.");
+            errMsgList.add("A senha é muito curta.");
         }
 
         if ((usuario.getEmail() == null) || (usuario.getEmail().isEmpty())) {
             errMsgList.add("O e-mail nao pode ser nulo.");
         } else if ((usuario.getEmail() == null) || ((usuario.getEmail()).length() > 0)){
-            String regexp = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+            String regexp = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"; // alterar
             Pattern pattern = Pattern.compile(regexp, Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(usuario.getEmail());
             if (matcher.matches()) {
@@ -64,6 +64,7 @@ public class ManterUsuarioImpl implements ManterUsuario{
  
         if ((usuario.getDataNascimento() == null)) {
             errMsgList.add("A data de nascimento nao pode ser nula.");
+            //data de nascimento posterior a data atual.
         }
 
         if (usuario.getId() != null) {
@@ -108,6 +109,9 @@ public class ManterUsuarioImpl implements ManterUsuario{
                 errMsgList.add("O nome nao pode conter numeros.");
             }
         }
+        
+        /*Atenção às redundâncias: se o usuário existe, provavelmente alguns casos
+        nunca seria alcançado, por exemplo, a senha de um user já existente nunca seria nula.*/
 
         if ((usuario.getSenha() == null) || (usuario.getSenha().isEmpty())) {
             errMsgList.add("A senha nao pode ser nula!");
@@ -149,7 +153,7 @@ public class ManterUsuarioImpl implements ManterUsuario{
     public void deletarUsuario(Long id) throws ExcecaoPersistencia {
         
         if (id == null){
-            throw new ExcecaoPersistencia("Para remover um usuario o ID deve estar previamente presente no sistema.");
+            throw new ExcecaoPersistencia("ID não pode ser nulo.");
         }
 
         usuarioDAO.delete(id);
@@ -159,7 +163,7 @@ public class ManterUsuarioImpl implements ManterUsuario{
     public Usuario getUsuarioById(Long id) throws ExcecaoPersistencia {
         
         if (id == null){
-            throw new ExcecaoPersistencia("Para buscar um usuario o ID deve estar previamente presente no sistema.");
+            throw new ExcecaoPersistencia("ID não pode ser nulo.");
         }
 
         return usuarioDAO.getUsuarioById(id);
