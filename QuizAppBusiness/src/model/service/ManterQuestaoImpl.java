@@ -27,7 +27,7 @@ public class ManterQuestaoImpl implements ManterQuestao {
     }
 
     @Override
-    public void deletarQuestao(Questao questao) throws ExcecaoPersistencia {
+    public void deletarQuestao(Long id) throws ExcecaoPersistencia {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

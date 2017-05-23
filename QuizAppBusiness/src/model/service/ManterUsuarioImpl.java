@@ -7,8 +7,6 @@ package model.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import model.dao.UsuarioDAO;
 import model.domain.Usuario;
 import model.exception.ExcecaoNegocio;
@@ -30,19 +28,12 @@ public class ManterUsuarioImpl implements ManterUsuario{
     synchronized public Long cadastrarUsuario(Usuario usuario) throws ExcecaoNegocio, ExcecaoPersistencia {
 
         List<String> errMsgList = new ArrayList<>();
-
         if (usuario == null) {
             throw new ExcecaoNegocio("Nenhum usuario informado.");
         }
 
         if ((usuario.getNome() == null) || (usuario.getNome().isEmpty())) {
             errMsgList.add("O nome nao pode ser nulo.");
-        } else {
-            Pattern pattern = Pattern.compile("[0-9]");
-            Matcher matcher = pattern.matcher(usuario.getNome());
-            if (matcher.find()) {
-                errMsgList.add("O nome nao pode conter numeros.");
-            }
         }
 
         if ((usuario.getSenha() == null) || (usuario.getSenha().isEmpty())) {
@@ -53,13 +44,6 @@ public class ManterUsuarioImpl implements ManterUsuario{
 
         if ((usuario.getEmail() == null) || (usuario.getEmail().isEmpty())) {
             errMsgList.add("O e-mail nao pode ser nulo.");
-        } else if ((usuario.getEmail() == null) || ((usuario.getEmail()).length() > 0)){
-            String regexp = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"; // alterar
-            Pattern pattern = Pattern.compile(regexp, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(usuario.getEmail());
-            if (matcher.matches()) {
-                errMsgList.add("Formato de e-mail invalido.");
-            }
         }
  
         if ((usuario.getDataNascimento() == null)) {
@@ -86,6 +70,7 @@ public class ManterUsuarioImpl implements ManterUsuario{
             }
             throw new ExcecaoNegocio(errMsg);
         }
+        
 
         usuarioDAO.insert(usuario);
 
@@ -95,19 +80,13 @@ public class ManterUsuarioImpl implements ManterUsuario{
     @Override
     public void alterarUsuario(Usuario usuario) throws ExcecaoNegocio, ExcecaoPersistencia {
         List<String> errMsgList = new ArrayList<>();
-
         if (usuario == null) {
+            
             throw new ExcecaoNegocio("Nenhum usuario informado.");
         }
 
         if ((usuario.getNome() == null) || (usuario.getNome().isEmpty())) {
             errMsgList.add("O nome nao pode ser nulo.");
-        } else {
-            Pattern pattern = Pattern.compile("[0-9]");
-            Matcher matcher = pattern.matcher(usuario.getNome());
-            if (matcher.find()) {
-                errMsgList.add("O nome nao pode conter numeros.");
-            }
         }
         
         /*Atenção às redundâncias: se o usuário existe, provavelmente alguns casos
@@ -121,13 +100,6 @@ public class ManterUsuarioImpl implements ManterUsuario{
 
         if ((usuario.getEmail() == null) || (usuario.getEmail().isEmpty())) {
             errMsgList.add("O e-mail nao pode ser nulo.");
-        } else if ((usuario.getEmail() == null) || ((usuario.getEmail()).length() > 0)){
-            String regexp = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-            Pattern pattern = Pattern.compile(regexp, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(usuario.getEmail());
-            if (matcher.matches()) {
-                errMsgList.add("Formato de e-mail invalido.");
-            }
         }
  
         if ((usuario.getDataNascimento() == null)) {
