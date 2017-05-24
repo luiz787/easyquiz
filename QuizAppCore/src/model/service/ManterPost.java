@@ -5,6 +5,7 @@
  */
 package model.service;
 
+import java.util.List;
 import model.domain.Post;
 import model.exception.ExcecaoNegocio;
 import model.exception.ExcecaoPersistencia;
@@ -14,6 +15,6 @@ import model.exception.ExcecaoPersistencia;
  * @author Luiz
  */
 public interface ManterPost {
-    public boolean inserirPost() throws ExcecaoNegocio, ExcecaoPersistencia;
-    public Post getAll() throws ExcecaoPersistencia;
+    public Long inserirPost(Post post) throws ExcecaoNegocio, ExcecaoPersistencia;
+    public List<Post> getAll(Long idQuestao) throws ExcecaoPersistencia;
 }
