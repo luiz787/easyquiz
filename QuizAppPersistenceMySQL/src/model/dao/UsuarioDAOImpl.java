@@ -40,16 +40,16 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
             Connection conexao = JDBCManterConexao.getInstancia().getConexao();
             
-            String sql = "INSERT INTO usuario (Nome, Data_Nascimento, Email, Senha, "
-                    + "Questoes_Respondidas, Questoes_Acertadas) VALUES (?,?,?,?,?,?)";
+            String sql = "INSERT INTO usuario (Nome, Data_Nascimento, Email, Senha) "
+                    + "VALUES (?,?,?,?)";
 
             PreparedStatement pstmt = conexao.prepareStatement(sql);
             pstmt.setString(1, usuario.getNome());
             pstmt.setDate(2, usuario.getDataNascimento());
             pstmt.setString(3, usuario.getEmail());
             pstmt.setString(4, usuario.getSenha());
-            pstmt.setInt(5, (int) usuario.getQuestoesRespondidas().longValue());
-            pstmt.setInt(6, (int) usuario.getQuestoesAcertadas().longValue());
+            //pstmt.setInt(5, (int) usuario.getQuestoesRespondidas().longValue());
+            //pstmt.setInt(6, (int) usuario.getQuestoesAcertadas().longValue());
             
             pstmt.executeUpdate();
             
