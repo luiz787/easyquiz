@@ -37,11 +37,11 @@ public class ManterPostImpl implements ManterPost{
         }
         
         if(post.getIdAutor() == null){
-            errMsgList.add("O ID do autor nao foi informado!\n\n");
+            errMsgList.add("O ID do autor não foi informado!\n\n");
         }
         
         if(post.getIdQuestao() == null) {
-            errMsgList.add("O ID da questão nao foi informado!\n\n");
+            errMsgList.add("O ID da questão não foi informado!\n\n");
         }
         
         if (!errMsgList.isEmpty()) {
@@ -57,6 +57,7 @@ public class ManterPostImpl implements ManterPost{
 
     @Override
     public List<Post> getAll(Long idQuestao) throws ExcecaoPersistencia {
+        List<String> errMsgList = new ArrayList<>();
         
         if(idQuestao == null) {
             throw new ExcecaoPersistencia("Nenhum id informado!");
