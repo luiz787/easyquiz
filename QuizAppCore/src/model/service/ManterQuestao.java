@@ -17,7 +17,7 @@ import java.util.List;
 public interface ManterQuestao {
     public Long cadastrarQuestao(Questao questao) throws ExcecaoNegocio, ExcecaoPersistencia;
     public void alterarQuestao(Questao questao) throws ExcecaoNegocio, ExcecaoPersistencia;
-    public void deletarQuestao(Questao questao) throws ExcecaoPersistencia;
+    public void deletarQuestao(Long id) throws ExcecaoPersistencia;
     public Questao getQuestaoById(Long id) throws ExcecaoPersistencia;
     public List<Questao> listAll() throws ExcecaoPersistencia;
 }
