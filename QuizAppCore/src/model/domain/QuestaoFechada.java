@@ -13,22 +13,22 @@ public class QuestaoFechada extends Questao {
     public QuestaoFechada() {
         
     }
-    private String[] aternativas;
-    private int alternativaCorreta;
+    private String[] alternativas;
+    private Long alternativaCorreta;
 
     public String[] getAlternativas() {
-        return aternativas;
+        return alternativas;
     }
 
-    public void setAlternativas(String[] aternativas) {
-        this.aternativas = aternativas;
+    public void setAlternativas(String[] alternativas) {
+        this.alternativas = alternativas;
     }
 
-    public int getAlternativaCorreta() {
+    public Long getAlternativaCorreta() {
         return alternativaCorreta;
     }
 
-    public void setAlternativaCorreta(int alternativaCorreta) {
+    public void setAlternativaCorreta(Long alternativaCorreta) {
         this.alternativaCorreta = alternativaCorreta;
     }
 }
