@@ -7,7 +7,6 @@ package model.service;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -63,6 +62,28 @@ public class ManterUsuarioImplTest {
                 Logger.getLogger(ManterUsuarioImplTest.class.getName()).log(Level.SEVERE, null, ex);
             }*/
     }
+    
+    @Test
+    public void testCadastrarUsuario() throws Exception {
+        
+        // ao registrar um usuario, é obrigatório que se retorne o id do contato gerado pelo mecanismo de persistência
+        Long id = null;
+        try {
+            Usuario u = new Usuario();
+            u.setNome("José Silva");
+            u.setSenha("1234abcd");
+            u.setEmail("dss23@gmail.com");
+            u.setDataNascimento(new Date(1998, 1, 27));
+            id = usuarioManagement.cadastrarUsuario(u); //erro comunicacao JDBC
+            System.out.println(id);
+        } catch (ExcecaoNegocio ex){
+            System.out.println(ex.getMessage());
+            fail("Exceção inesperada foi lançada");
+        }
+        assertTrue(id!=null);
+        // inscreve contato para remoção após teste
+        usuarioList.add(id);
+    }    
 
     @Test
     public void testCadastrarUsuario1() throws Exception {
@@ -113,7 +134,7 @@ public class ManterUsuarioImplTest {
     }
 
     @Test
-    public void testCadastrarUsuario5() throws Exception {
+    public void testCadastrarUsuario4() throws Exception {
         
         try {
             // testa a entrada de uma senha null
@@ -130,7 +151,7 @@ public class ManterUsuarioImplTest {
     }    
 
     @Test
-    public void testCadastrarUsuario6() throws Exception {
+    public void testCadastrarUsuario5() throws Exception {
         
         try {
             // testa a entrada de uma senha com menos de 8 caracteres
@@ -146,7 +167,7 @@ public class ManterUsuarioImplTest {
         fail("Falha não identificada.");
     }    
     
-    public void testCadastrarUsuario7() throws Exception {
+    public void testCadastrarUsuario6() throws Exception {
         
         try {
             // testa entrada de email null
@@ -163,7 +184,7 @@ public class ManterUsuarioImplTest {
     }
     
     @Test
-    public void testCadastrarUsuario8() throws Exception {
+    public void testCadastrarUsuario7() throws Exception {
         
         try {
             // testa entrada de email vazio
@@ -180,7 +201,7 @@ public class ManterUsuarioImplTest {
     }
     
     @Test
-    public void testCadastrarUsuario10() throws Exception {
+    public void testCadastrarUsuario8() throws Exception {
         
         try {
             // testa entrada de data de nascimento null
@@ -197,7 +218,7 @@ public class ManterUsuarioImplTest {
     } 
     
     @Test
-    public void testCadastrarUsuario11() throws Exception {
+    public void testCadastrarUsuario9() throws Exception {
         
         try {
             // testa a entrada de um id pre-definido na criacao de um novo usuario
@@ -214,7 +235,7 @@ public class ManterUsuarioImplTest {
     }   
     
     @Test
-    public void testCadastrarUsuario12() throws Exception {
+    public void testCadastrarUsuario10() throws Exception {
         
         try {
             // testa a entrada de um numero de questoes acertadas na criacao de um novo usuario
@@ -231,7 +252,7 @@ public class ManterUsuarioImplTest {
     }   
     
     @Test
-    public void testCadastrarUsuario13() throws Exception {
+    public void testCadastrarUsuario11() throws Exception {
         
         try {
             // testa a entrada de um numero de questoes respondidas na criacao de um novo usuario
@@ -248,29 +269,7 @@ public class ManterUsuarioImplTest {
     }   
 
     @Test
-    public void testCadastrarUsuario() throws Exception {
-        
-        // ao registrar um usuario, é obrigatório que se retorne o id do contato gerado pelo mecanismo de persistência
-        Long id = null;
-        try {
-            Usuario u = new Usuario();
-            u.setNome("José Silva");
-            u.setSenha("1234abcd");
-            u.setEmail("dss23@gmail.com");
-            u.setDataNascimento(new Date(1998, 1, 27));
-            id = usuarioManagement.cadastrarUsuario(u);
-            System.out.println(id);
-        } catch (ExcecaoNegocio ex){
-            System.out.println(ex.getMessage());
-            fail("Exceção inesperada foi lançada");
-        }
-        assertTrue(id!=null);
-        // inscreve contato para remoção após teste
-        usuarioList.add(id);
-    }        
-    
-    @Test
-    public void testAlterarUsuario1() throws Exception {
+    public void testAlterarUsuario() throws Exception {
         
         try {
             //testa entrada de usuario null
@@ -318,7 +317,7 @@ public class ManterUsuarioImplTest {
     }
 
     @Test
-    public void testAlterarUsuario5() throws Exception {
+    public void testAlterarUsuario4() throws Exception {
         
         try {
             // testa a entrada de uma senha null
@@ -335,7 +334,7 @@ public class ManterUsuarioImplTest {
     }    
 
     @Test
-    public void testAlterarUsuario6() throws Exception {
+    public void testAlterarUsuario5() throws Exception {
         
         try {
             // testa a entrada de uma senha com menos de 8 caracteres
@@ -351,7 +350,7 @@ public class ManterUsuarioImplTest {
         fail("Falha não identificada.");
     }    
     
-    public void testAlterarUsuario7() throws Exception {
+    public void testAlterarUsuario6() throws Exception {
         
         try {
             // testa entrada de email null
@@ -368,7 +367,7 @@ public class ManterUsuarioImplTest {
     }
     
     @Test
-    public void testAlterarUsuario8() throws Exception {
+    public void testAlterarUsuario7() throws Exception {
         
         try {
             // testa entrada de email vazio
@@ -385,7 +384,7 @@ public class ManterUsuarioImplTest {
     }
     
     @Test
-    public void testAlterarUsuario9() throws Exception {
+    public void testAlterarUsuario8() throws Exception {
         
         try {
             // testa entrada de data de nascimento null
@@ -402,7 +401,7 @@ public class ManterUsuarioImplTest {
     } 
     
     @Test
-    public void testAlterarUsuario11() throws Exception {
+    public void testAlterarUsuario9() throws Exception {
         
         try {
             // testa a entrada de um id null na alteracao de um usuario
@@ -417,10 +416,6 @@ public class ManterUsuarioImplTest {
         
         fail("Falha não identificada.");
     }  
-
-    /**
-     * Test of personRemove method, of class PersonManagementImpl.
-     */
     
     @Test
     public void testDeletarUsuario1() throws Exception {
@@ -437,12 +432,6 @@ public class ManterUsuarioImplTest {
         
         fail("Falha não identificada.");
     }  
-    
-    
-    /*@Test
-    public void testDeletarUsuario() throws Exception {
-        usuarioDAO.delete(usuarioList.get(0)); //???
-    }*/
 
     @Test
     public void testGetUsuarioById1() throws Exception {
@@ -459,12 +448,5 @@ public class ManterUsuarioImplTest {
         
         fail("Falha não identificada.");
     }  
-    
-    /**
-     * Test of getPersonById method, of class PersonManagementImpl.
-     */
-    /*@Test
-    public void testGetUsuarioById() throws Exception {
-        usuarioDAO.getUsuarioById(usuarioList.get(0));
-    }*/
+
 }

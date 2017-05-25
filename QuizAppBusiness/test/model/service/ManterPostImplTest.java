@@ -106,7 +106,7 @@ public class ManterPostImplTest {
             manterPost.inserirPost(post);
         } catch(ExcecaoNegocio ex) {
             String mensagemErro = ex.getMessage();
-            String mensagemEsperada = "O ID do autor nao foi informado!\n\n";
+            String mensagemEsperada = "O ID do autor não foi informado!\n\n";
             assertTrue(mensagemErro.contains(mensagemEsperada));
             return;
         }
