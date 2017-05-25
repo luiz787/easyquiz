@@ -5,7 +5,6 @@
  */
 package model.service;
 
-import br.cefetmg.quizapp.model.dao.UsuarioDAOImpl;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.dao.UsuarioDAO;
+import model.dao.UsuarioDAOImpl;
 //import model.dao.UsuarioDAOImpl;
 import model.domain.Usuario;
 import model.exception.ExcecaoNegocio;
@@ -40,7 +40,7 @@ public class ManterUsuarioImplTest {
 
     @BeforeClass
     public static void setUpClass() {
-        usuarioDAO = UsuarioDAOImpl.getInstance();
+        usuarioDAO = UsuarioDAOImpl.getInstancia();
         usuarioManagement = new ManterUsuarioImpl(usuarioDAO);
         usuarioList = new ArrayList<>();
     }
