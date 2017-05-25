@@ -90,7 +90,7 @@ public class QuestaoDAOImpl implements QuestaoDAO {
                 
                 pstmt.setInt(1, (int) questao.getId().longValue());
                 pstmt.setString(2, alternativasTexto);
-                pstmt.setInt(3, ((QuestaoFechada)questao).getAlternativaCorreta());
+                pstmt.setInt (3,(int) (((QuestaoFechada)questao).getAlternativaCorreta()).longValue());
                 pstmt.executeUpdate();
             } else {
                 throw new ClassNotFoundException();
@@ -148,7 +148,7 @@ public class QuestaoDAOImpl implements QuestaoDAO {
                     }
                 }
                 pstmt.setString(1, alternativasTexto);
-                pstmt.setInt(2, ((QuestaoFechada)questao).getAlternativaCorreta());
+                pstmt.setInt (2,(int) (((QuestaoFechada)questao).getAlternativaCorreta()).longValue());
                 pstmt.setInt(3, (int) questao.getId().longValue());
                 pstmt.executeUpdate();
             } else {
@@ -217,7 +217,7 @@ public class QuestaoDAOImpl implements QuestaoDAO {
             if (rs.next()) {
                 if(rs.getString("Tipo").charAt(0)=='A') {
                     questao = new QuestaoAberta();
-                    questao.setId(rs.getLong("Id"));
+                    questao.setId((long)rs.getInt("Id"));
                     questao.setEnunciado(rs.getString("Enunciado"));
                     questao.setImagem((BufferedImage)rs.getBlob("Imagem"));
                     questao.setDificuldade(rs.getInt("Dificuldade"));
@@ -233,7 +233,7 @@ public class QuestaoDAOImpl implements QuestaoDAO {
                     rsAberta.close();
                 } else {
                     questao = new QuestaoFechada();
-                    questao.setId(rs.getLong("Id"));
+                    questao.setId((long)rs.getInt("Id"));
                     questao.setEnunciado(rs.getString("Enunciado"));
                     questao.setImagem((BufferedImage)rs.getBlob("Imagem"));
                     questao.setDificuldade(rs.getInt("Dificuldade"));
@@ -245,7 +245,7 @@ public class QuestaoDAOImpl implements QuestaoDAO {
                     ResultSet rsFechada = pstmt.executeQuery();
                     if (rsFechada.next()) {
                         ((QuestaoFechada)questao).setAlternativas(rsFechada.getString("Alternativas").split("_;_"));
-                        ((QuestaoFechada)questao).setAlternativaCorreta(rsFechada.getInt("Alternativa_Correta"));
+                        ((QuestaoFechada)questao).setAlternativaCorreta((long)rsFechada.getInt("Alternativa_Correta"));
                     }
                     rsFechada.close();
                 }
@@ -306,7 +306,7 @@ public class QuestaoDAOImpl implements QuestaoDAO {
                         ResultSet rsFechada = pstmt.executeQuery();
                         if (rsFechada.next()) {
                             ((QuestaoFechada)questao).setAlternativas(rsFechada.getString("Alternativas").split("_;_"));
-                            ((QuestaoFechada)questao).setAlternativaCorreta(rsFechada.getInt("Alternativa_Correta"));
+                            ((QuestaoFechada)questao).setAlternativaCorreta((long)rsFechada.getInt("Alternativa_Correta"));
                         }
                         rsFechada.close();
                         listAll.add(questao);
@@ -370,7 +370,7 @@ public class QuestaoDAOImpl implements QuestaoDAO {
                         ResultSet rsFechada = pstmt.executeQuery();
                         if (rsFechada.next()) {
                             ((QuestaoFechada)questao).setAlternativas(rsFechada.getString("Alternativas").split("_;_"));
-                            ((QuestaoFechada)questao).setAlternativaCorreta(rsFechada.getInt("Alternativa_Correta"));
+                            ((QuestaoFechada)questao).setAlternativaCorreta((long)rsFechada.getInt("Alternativa_Correta"));
                         }
                         rsFechada.close();
                         listAll.add(questao);
