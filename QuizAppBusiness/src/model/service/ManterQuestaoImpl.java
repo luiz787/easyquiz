@@ -82,7 +82,6 @@ public class ManterQuestaoImpl implements ManterQuestao {
             throw new ExcecaoNegocio(errMsg);
         }
         
-        
         questaoDAO.insert(questao);
         
         return questao.getId();
@@ -91,7 +90,7 @@ public class ManterQuestaoImpl implements ManterQuestao {
     @Override
     public void alterarQuestao(Questao questao) throws ExcecaoNegocio, ExcecaoPersistencia {
         List<String> errMsgList = new ArrayList<>();
-        
+        /*teste github*/
         if(questao == null){
             throw new ExcecaoNegocio("Nenhuma questão informada");
         }
