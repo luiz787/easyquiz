@@ -1,0 +1,8 @@
+git clone [endereco]
+git config --global user.email "email"
+git status
+git add -A
+git status
+git commit -m "menssagem"
+git status
+git push origin master
