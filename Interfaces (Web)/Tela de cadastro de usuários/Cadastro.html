@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>EasyQuiz TOP</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="../css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  
+  <script type="text/javascript">
+    $(document).ready(function() {
+    $('select').material_select();
+  });
+  </script>
+
+</head>
+<body>
+  <nav style="background-color:#FFFFFF;">
+
+  	<div class="nav-wrapper container">
+      <a id="logo-container" href="#" style="color:#47525E; font-size: 32px;">EasyQuiz</a>
+      <a id="botao-menu" class="btn-small waves-effect waves-light grey">Menu</a>  
+      <a style="color: #000000; margin-left: 100px;" align="right">cole ze</a>
+    </div>
+  </nav>
+
+  <nav>
+  		<div style="margin-left: 20px;">Matérias comuns:
+  			<a id="botao-matematica" class="waves-effect waves-light" style="margin-left: 10px; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Matemática</a>
+  			<a id="botao-portugues" class="waves-effect waves-light" style="margin-left: 10px; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Português</a>
+  			<a id="botao-fisica" class="waves-effect waves-light" style="margin-left: 10px; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Física</a>
+  		</div>
+
+  </nav>
+
+    <br>
+    <H4 style="color: #47525E; padding-left: 80px;">Preencha todos os campos a seguir:</H4>
+    <div class="container">
+      <form class="col s12">
+          <div class="input-field col s6">
+            <i class="material-icons prefix">account_circle</i>
+            <input id="icon_prefix" type="text" class="validate">
+            <label for="icon_prefix">Nome completo</label>
+          </div>
+          <br>
+          <br>
+          Data de nascimento:
+          <div class="input-field col s6">
+            <i class="material-icons prefix">perm_contact_calendar</i>
+            <input id="icon_telephone" type="date" class="validate">
+          </div>
+          <br>
+          <br>
+          <div class="input-field col s12">
+            <select>
+              <option value="" selected>Escolaridade</option>
+              <option value="1">Option 1</option>
+              <option value="2">Option 2</option>
+              <option value="3">Option 3</option>
+            </select>
+          </div>
+      </form>
+    </div>
+	
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+  <footer class="page-footer orange">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Quem somos</h5>
+          <p class="grey-text text-lighten-4">Fala q é nois</p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Settings</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="../js/materialize.js"></script>
+  <script src="../js/init.js"></script>
+
+  </body>
+</html>
