@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>EasyQuiz</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="../css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>  
+  <script type="text/javascript">
+
+    $(document).ready(function() {
+      $('select').material_select();
+    });
+
+  </script>
+
+</head>
+<body>
+  <nav style="background-color:#FFFFFF;">
+
+  	<div class="nav-wrapper container">
+      <a id="logo-container" href="#" style="color:#47525E; font-size: 32px;">EasyQuiz</a>
+      <a id="botao-menu" class="btn-small waves-effect waves-light grey">Menu</a>  
+      <a style="color: #000000; margin-left: 100px;" align="right">cole ze</a>
+    </div>
+  </nav>
+
+  <nav>
+  		<div style="margin-left: 20px;">Matérias comuns:
+  			<a id="botao-matematica" class="waves-effect waves-light" style="margin-left: 10px; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Matemática</a>
+  			<a id="botao-portugues" class="waves-effect waves-light" style="margin-left: 10px; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Português</a>
+  			<a id="botao-fisica" class="waves-effect waves-light" style="margin-left: 10px; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Física</a>
+  		</div>
+  </nav>
+
+    <br>
+
+    <H4 style="color: #47525E; padding-left: 80px;">Fórum</H4>
+    <div class="container #f4511e deep-orange darken-1 white-text">
+      <p><H8 style="color: #000000; display: inline;"> &nbsp &nbsp &nbsp Disciplina: </H8> <H8 style="color: #fbe9e7; display: inline;">Física  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</H8>
+      <H8 style="color: #000000; display: inline;">Dificuldade: </H8><H8 style="color: #fbe9e7; display: inline;">Desafio  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</H8>
+      <H8 style="color: #000000; display: inline;">Módulo: </H8> <H8 style="color: #fbe9e7; display: inline;">Termodinâmica</H8>
+    </div>
+
+    <div class="container">
+     <center><img src="Geladeira.png"></center>
+      <p><H8 id="enunciado">A invenção da geladeira proporcionou uma revolução no aproveitamento dos alimentos, ao permitir que fossem armazenados e transportados por longos períodos. A figura apresentada ilustra o processo cíclico de funcionamento de uma geladeira, em que um gás no interior de uma tubulação é forçado a circular entre o congelador e a parte externa da geladeira. É por meio dos processos de compressão, que ocorre na parte externa, e de expansão, que ocorre na parte interna, que o gás proporciona a troca de calor entre o interior e o exterior da geladeira. Nos processos de transformação de energia envolvidos no funcionamento da geladeira,</H8>
+    </div>
+
+     <div class="container">
+        <p><h8 class="deep-orange-text text-deep-orange"><b>Resposta correta: </b></h8>
+        <h8 id="respostaCorreta"><b>o calor flui de forma não-espontânea da parte mais fria, no interior, para a mais quente, no exterior da geladeira.</b></h8>
+        <br>
+        <br>
+        <hr>
+    </div>
+
+    <br>
+
+    <div class="container">
+      <h5 style="color: #C55353" href="" id="nomeUsuario">Romildo</h5>
+      <p><H8 id="comentario">Não entendi bem como funciona a compressão e a expansão. Alguém pode me ajudar?</H8>
+      <br>
+      <br>
+      <hr>
+    </div>
+
+    <br>
+
+    <div class="container">
+      <h5 style="color: #C55353" href="" id="nomeUsuario">Abelardo</h5>
+      <p><H8 id="comentario">Hey Romildo! Expansão é quando o gás aumenta de volume... E compressão é quando o gás diminui de volume, ou seja, quando é expansão o trabalho é positivo, quando é compressão o trabalho é negativo. Entendeu?</H8>
+      <br>
+      <br>
+    </div>
+
+    <br>
+
+    <H5 style="color: #47525E; padding-left: 180px;">Participe da discussão!</H5>
+    <div class="container">
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s12">
+          <textarea id="textarea1" class="materialize-textarea"></textarea>
+          <label for="textarea1">Insira aqui seu comentário:</label>
+        </div>
+      </div>
+    </form>
+  
+          <br>
+
+          <div align="right">
+            <button class="btn waves-effect waves-light" type="button" onclick="window.open('../Tela de questões/TelaQuestoes.html');">Cancelar</button>
+
+            <button class="btn waves-effect waves-light" type="submit" name="action" onclick="window.open('../Tela de questões/TelaQuestoes.html');">Enviar
+              <i class="material-icons right">send</i>
+            </button>
+          </div>
+          
+      </form>
+    </div>
+    </div>
+
+    <br>
+    <br>
+
+  <footer class="page-footer orange">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Quem somos</h5>
+          <p class="grey-text text-lighten-4">Fala q é nois</p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Settings</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="../js/materialize.js"></script>
+  <script src="../js/init.js"></script>
+
+  </body>
+</html>
