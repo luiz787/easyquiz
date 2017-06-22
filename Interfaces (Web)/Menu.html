@@ -9,6 +9,11 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <style type="text/css">
+    .pesquisa {
+
+    }
+  </style>
 </head>
 <body>
 
@@ -35,10 +40,13 @@
         
         <li> 
            <input id="email" placeholder="email" type="email" class="form-control" style="color: #696969;border: 1px solid;border-color:#D3D3D3;border-radius: 10px;"> 
-      	</li>
 
+      	</li>
+        
+        <li>&ensp;</li>
       
-       <li><input id="password" placeholder="senha" type="password" class="validate" style="color: #696969;border: 1px solid;border-color:#D3D3D3;border-radius: 10px;">
+       <li>
+          <input id="password" placeholder="senha" type="password" class="validate" style="color: #696969;border: 1px solid;border-color:#D3D3D3;border-radius: 10px;">
         </li>
 
         <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Login</a></li>
@@ -61,23 +69,26 @@
 
 		</div>
 	
-  <div class="row " id="pesquisa" style="display: none; position: absolute;">
-  		<div class="col s12 offset-s12" style="border: 4px solid;border-color:#D3D3D3; background-color: white;
- text-align:center;border-radius: 10px; z-index: 2;" >
+  <div class="row " id="pesquisa" style="display: none; position: absolute;   width: 47%; ">
+  		<div class="col s12 offset-s12" id="pesquisa" style="border: 4px solid;border-color:#D3D3D3; background-color: white;
+       text-align:center;border-radius: 10px; z-index: 2;" >
 
   			<form>
 
+
   				<input id="search" type="search" placeholder="Busque por palavras chave" style="color: #696969;">
 
-    			<select class="browser-default input-field col s6" style="color: #696969;">
+          <div class="row">
+    			<select id="nivel" class="browser-default input-field col s6" style="color: #696969;">
     				<option value="" disabled selected>Escolha uma Dificuldade</option>
     				<option value="1">Fácil</option>
     				<option value="2">Médio</option>
     				<option value="3">Difícil</option>
     				<option value="4">Desafio</option>
+            <option value="0">Nenhuma</option>
   				</select>
 
-  				<select class="browser-default input-field col s6" style="color: #696969;">
+  				<select id="materia" class="browser-default input-field col s6" style="color: #696969;">
     				<option value="" disabled selected>Escolha uma Matéria</option>
     				<option value="1">Matemática</option>
     				<option value="2">Português</option>
@@ -86,7 +97,25 @@
     				<option value="5">História</option>
     				<option value="6">Química</option>
     				<option value="7">Inglês</option>
+            <option value="0">Nenhuma</option>
   				</select>
+          </div>
+          <div class"row">
+
+          <select id="tipo" class="browser-default input-field col s6" style="color: #696969;">
+            <option value="" disabled selected>Escolha um tipo</option>
+            <option value="1">Aberta</option>
+            <option value="2">Fechada</option>
+            <option value="3">Ambos</option>
+            <option value="0">Desafio</option>
+          </select>
+
+          <select id="materia" class="browser-default input-field col s6" style="color: #696969;">
+            <option value="" disabled selected>Escolha um módulo</option>
+            <option value="0">Nenhuma</option>
+            
+          </select>
+        </div>
 
 			</form>
 
@@ -96,13 +125,24 @@
 
 		</div>
   	</div>
+
   
   </nav>
 
 
 
-    <div class="container" style="position: absolute; z-index: 1">
-   teste
+    <div class="container" style=" z-index: 1">
+   testeUm elemento fixo - fixed - é posicionado relativamente ao "viewport", isso significa que ele sempre ficará no mesmo lugar mesmo que haja rolagem na página. Assim como o relative, as propriedades top, right, bottom e left também são utilizadas.
+
+Tenho certeza que você notou um elemento fixo no canto direito da tela, estou te dando a permissão de observá-lo agora, e aqui está o CSS aplicado a ele:Um elemento fixo - fixed - é posicionado relativamente ao "viewport", isso significa que ele sempre ficará no mesmo lugar mesmo que haja rolagem na página. Assim como o relative, as propriedades top, right, bottom e left também são utilizadas.
+
+Tenho certeza que você notou um elemento fixo no canto direito da tela, estou te dando a permissão de observá-lo agora, e aqui está o CSS aplicado a ele:Um elemento fixo - fixed - é posicionado relativamente ao "viewport", isso significa que ele sempre ficará no mesmo lugar mesmo que haja rolagem na página. Assim como o relative, as propriedades top, right, bottom e left também são utilizadas.
+
+Tenho certeza que você notou um elemento fixo no canto direito da tela, estou te dando a permissão de observá-lo agora, e aqui está o CSS aplicado a ele:Um elemento fixo - fixed - é posicionado relativamente ao "viewport", isso significa que ele sempre ficará no mesmo lugar mesmo que haja rolagem na página. Assim como o relative, as propriedades top, right, bottom e left também são utilizadas.
+
+Tenho certeza que você notou um elemento fixo no canto direito da tela, estou te dando a permissão de observá-lo agora, e aqui está o CSS aplicado a ele:Um elemento fixo - fixed - é posicionado relativamente ao "viewport", isso significa que ele sempre ficará no mesmo lugar mesmo que haja rolagem na página. Assim como o relative, as propriedades top, right, bottom e left também são utilizadas.
+
+Tenho certeza que você notou um elemento fixo no canto direito da tela, estou te dando a permissão de observá-lo agora, e aqui está o CSS aplicado a ele:
     </div>
 
     
