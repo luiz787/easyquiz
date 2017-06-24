@@ -17,32 +17,114 @@
     });
 
   </script>
+   <script type="text/javascript">
 
+function escondeDiv(){
+  document.getElementById("campoResposta").style.display = "none";
+  document.getElementById("campoResposta2").style.display = "none";
+}
+
+function exibeRespostaComentario1() {
+  if (document.getElementById("campoResposta").style.display == "block"){
+    document.getElementById("campoResposta").style.display = "none";
+  } else{
+    document.getElementById("campoResposta").style.display = "block"
+  }
+}
+
+function exibeRespostaComentario2() {
+  if (document.getElementById("campoResposta2").style.display == "block"){
+    document.getElementById("campoResposta2").style.display = "none";
+  } else{
+    document.getElementById("campoResposta2").style.display = "block"
+  }
+}
+
+</script>
 </head>
-<body>
-  <nav style="background-color:#FFFFFF;">
+<body onload="escondeDiv()">
 
-  	<div class="nav-wrapper container">
-      <a id="logo-container" href="#" style="color:#47525E; font-size: 32px;">EasyQuiz</a>
-      <a id="botao-menu" class="btn-small waves-effect waves-light grey">Menu</a>  
-      <a style="color: #000000; margin-left: 100px;" align="right"></a>
+<!-- nav cor #EE6363 -->
+<nav class="nav-extended" style="background-color:#FFFFFF;">
+    
+    <div class="nav-wrapper">
+     <a id="logo-container" href="#" style="color:#47525E; font-size: 32px;">EasyQuiz</a>
+      <a id="botao-menu" class="btn-small waves-effect waves-light grey">Menu</a> 
+
+
+
+      <ul id="side-nav" class="right hide-on-med-and-down">
+        
+        <li> 
+           <input id="email" placeholder="email" type="email" class="form-control" style="color: #696969;border: 1px solid;border-color:#D3D3D3;border-radius: 10px;"> 
+        </li>
+
+      
+       <li><input id="password" placeholder="senha" type="password" class="validate" style="color: #696969;border: 1px solid;border-color:#D3D3D3;border-radius: 10px;">
+        </li>
+
+        <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Login</a></li>
+        <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Cadastrar</a></li>
+        </ul>
     </div>
-  </nav>
 
-  <nav>
-  		<div style="margin-left: 20px;">Matérias comuns:
-  			<a id="botao-matematica" class="waves-effect waves-light" style="margin-left: 10px; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Matemática</a>
-  			<a id="botao-portugues" class="waves-effect waves-light" style="margin-left: 10px; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Português</a>
-  			<a id="botao-fisica" class="waves-effect waves-light" style="margin-left: 10px; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Física</a>
-  		</div>
-  </nav>
 
-    <br>
+  <div class="row" style="background-color: #EE6363" >
+      <div  class="col s8" >Matérias comuns:
+        <a id="botao-matematica" class="waves-effect waves-light" style="margin-left: 10px; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 0px; background-color: #E5E9F2; color: #47525E">Matemática</a>
+        <a id="botao-portugues" class="waves-effect waves-light" style="margin-left: 10px; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 0px; background-color: #E5E9F2; color: #47525E">Português</a>
+        <a id="botao-fisica" class="waves-effect waves-light" style="margin-left: 10px; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 0px; background-color: #E5E9F2; color: #47525E">Física</a>
+      </div>
+      <div class="col s4">
+        <a class="waves-effect waves-light grey darken-2 btn" onclick="mostrarform()">Filtrar</a></li>
+        
+      </div>
+
+
+    </div>
+  
+  <div class="row " id="pesquisa" style="display: none; position: absolute;">
+      <div class="col s12 offset-s12" style="border: 4px solid;border-color:#D3D3D3; background-color: white;
+ text-align:center;border-radius: 10px; z-index: 2;" >
+
+        <form>
+
+          <input id="search" type="search" placeholder="Busque por palavras chave" style="color: #696969;">
+
+          <select class="browser-default input-field col s6" style="color: #696969;">
+            <option value="" disabled selected>Escolha uma Dificuldade</option>
+            <option value="1">Fácil</option>
+            <option value="2">Médio</option>
+            <option value="3">Difícil</option>
+            <option value="4">Desafio</option>
+          </select>
+
+          <select class="browser-default input-field col s6" style="color: #696969;">
+            <option value="" disabled selected>Escolha uma Matéria</option>
+            <option value="1">Matemática</option>
+            <option value="2">Português</option>
+            <option value="3">Física</option>
+            <option value="4">Geografia</option>
+            <option value="5">História</option>
+            <option value="6">Química</option>
+            <option value="7">Inglês</option>
+          </select>
+
+      </form>
+
+        <button class="btn waves-effect waves-light grey darken-2" type="submit" name="action">avançar
+          <i class="material-icons right">send</i>
+          </button>
+
+    </div>
+    </div>
+  
+  </nav>
 
     <H4 style="color: #47525E; padding-left: 80px;">Fórum</H4>
     <div class="container #f4511e deep-orange darken-1 white-text">
-      <p><H8 style="color: #000000; display: inline;"> &nbsp &nbsp &nbsp Disciplina: </H8> <H8 style="color: #fbe9e7; display: inline;">Física  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</H8>
-      <H8 style="color: #000000; display: inline;">Dificuldade: </H8><H8 style="color: #fbe9e7; display: inline;">Desafio  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</H8>
+      <p><H8 style="color: #000000; display: inline;"> &nbsp &nbsp &nbsp Disciplina: </H8> <H8 style="color: #fbe9e7; display: in line;">Física  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</H8>
+      <H8 style="color: #000000; display: inline;">Dificuldade: </H8><H8 style="color: #fbe9e7; display: inline;">Desafio &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</H8>
       <H8 style="color: #000000; display: inline;">Módulo: </H8> <H8 style="color: #fbe9e7; display: inline;">Termodinâmica</H8>
     </div>
 
@@ -63,7 +145,16 @@
 
     <div class="container">
       <h5 style="color: #C55353" href="" id="nomeUsuario">Romildo</h5>
-      <p><H8 id="comentario">Não entendi bem como funciona a compressão e a expansão. Alguém pode me ajudar?</H8>
+      <p><H8 id="comentario1">Não entendi bem como funciona a compressão e a expansão. Alguém pode me ajudar?</H8>
+      <br>
+      <div align="right">
+        <a id="btnResponder" class="btn waves-effect waves-light" type="submit" name="action" 
+        onclick="exibeRespostaComentario1()">Responder<i class="material-icons right">send</i></a></li>
+        <div id="campoResposta">        
+          <input type="text" placeholder="Insira sua resposta a este comentário." style="color: #696969;">
+          <button class="btn waves-effect waves-light" type="submit" name="action" onclick="escondeDiv(),Materialize.toast('Comentário enviado com sucesso!', 4000)">Enviar<i class="material-icons right">send</i></button>
+        </div>
+        </div>
       <br>
       <br>
       <hr>
@@ -72,8 +163,24 @@
     <br>
 
     <div class="container">
-      <h5 style="color: #C55353" href="" id="nomeUsuario">Abelardo</h5>
-      <p><H8 id="comentario">Hey Romildo! Expansão é quando o gás aumenta de volume... E compressão é quando o gás diminui de volume, ou seja, quando é expansão o trabalho é positivo, quando é compressão o trabalho é negativo. Entendeu?</H8>
+      <h5 style="color: #C55353" href="" id="nomeUsuario">Abelardo</h5><br>
+          <div class="row">
+        <div class="card-panel teal lighten-2">
+          <span class="white-text"><b><h7>Citando Romildo:</h7></b>
+          <p><i>Não entendi bem como funciona a compressão e a expansão. Alguém pode me ajudar?
+          </i></span>
+        </div>
+    </div>
+      <p><H8 id="comentario2"> Hey Romildo! Expansão é quando o gás aumenta de volume... E compressão é quando o gás diminui de volume, ou seja, quando é expansão o trabalho é positivo, quando é compressão o trabalho é negativo. Entendeu?</H8>
+      <br>
+      <div align="right">
+        <a id="btnResponder" class="btn waves-effect waves-light" type="submit" name="action" 
+        onclick="exibeRespostaComentario2()">Responder<i class="material-icons right">send</i></a></li>
+        <div id="campoResposta2">        
+          <input type="text" placeholder="Insira sua resposta a este comentário." style="color: #696969;">
+          <button class="btn waves-effect waves-light" type="submit" name="action" onclick="escondeDiv(),Materialize.toast('Comentário enviado com sucesso!', 4000)">Enviar<i class="material-icons right">send</i></button>
+        </div>
+        </div>
       <br>
       <br>
     </div>
@@ -92,11 +199,8 @@
     </form>
   
           <br>
-
           <div align="right">
-            <button class="btn waves-effect waves-light" type="button" onclick="window.open('../Tela de questões/TelaQuestoes.html');">Cancelar</button>
-
-            <button class="btn waves-effect waves-light" type="submit" name="action" onclick="window.open('../Tela de questões/TelaQuestoes.html');">Enviar
+            <button class="btn waves-effect waves-light" type="submit" name="action" onclick="Materialize.toast('Comentário enviado com sucesso!', 4000)";">Enviar
               <i class="material-icons right">send</i>
             </button>
           </div>
@@ -113,7 +217,7 @@
       <div class="row">
         <div class="col l6 s12">
           <h5 class="white-text">Quem somos</h5>
-          <p class="grey-text text-lighten-4"></p>
+          <p class="grey-text text-lighten-4">Fala q é nois</p>
 
 
         </div>
