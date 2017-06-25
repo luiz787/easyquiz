@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>EasyQuiz</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="../css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <style type="text/css">
+    .pesquisa {
+
+    }
+  </style>
+</head>
+<body>
+
+
+<!--- Javascrip -->
+<script type="text/javascript">
+	function mostrarform() {
+		var element = document.getElementById("pesquisa");
+		if (element.style.display =="none") {element.style.display = "block";} else {element.style.display = "none";}
+
+	}
+</script>
+
+<!-- nav cor #EE6363 -->
+<nav class="nav-extended" style="background-color:#FFFFFF;">
+    
+    <div class="nav-wrapper">
+     <a id="logo-container" href="#" style="color:#47525E; font-size: 32px;">EasyQuiz</a>
+      <a id="botao-menu" class="btn-small waves-effect waves-light grey">Menu</a> 
+
+
+
+      <ul id="side-nav" class="right hide-on-med-and-down">
+        
+        <li> 
+          <h5 style="color:#47525E; font-size: 32px;"> Bem vindo </h5>
+
+        </li>
+        <li>
+            <h5 style="color:#EE6363; font-size: 32px;">&ensp;Usuário</h5> 
+        </li>
+
+        <li><a class="waves-effect waves-light grey darken-2 btn" href="#">&ensp;Perfil&ensp;</a></li>
+        <!-- if(usuario = professor) -->
+        <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Questões</a></li>
+        </ul>
+    </div>
+
+
+	<div class="row" style="background-color: #EE6363" >
+    	<div  class="col s8" >Matérias comuns:
+  			<a id="botao-matematica" class="waves-effect waves-light" style="margin-left: 10px; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 0px; background-color: #E5E9F2; color: #47525E">Matemática</a>
+  			<a id="botao-portugues" class="waves-effect waves-light" style="margin-left: 10px; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 0px; background-color: #E5E9F2; color: #47525E">Português</a>
+  			<a id="botao-fisica" class="waves-effect waves-light" style="margin-left: 10px; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 0px; background-color: #E5E9F2; color: #47525E">Física</a>
+  		</div>
+  		<div class="col s4">
+  			<a class="waves-effect waves-light grey darken-2 btn" onclick="mostrarform()">Filtrar</a></li>
+  			
+  		</div>
+
+
+		</div>
+	
+  <div class="row " id="pesquisa" style="display: none; position: absolute;   width: 47%; ">
+  		<div class="col s12 offset-s12" id="pesquisa" style="border: 4px solid;border-color:#D3D3D3; background-color: white;
+       text-align:center;border-radius: 10px; z-index: 2;" >
+
+  			<form>
+
+
+  				<input id="search" type="search" placeholder="Busque por palavras chave" style="color: #696969;">
+
+          <div class="row">
+    			<select id="nivel" class="browser-default input-field col s6" style="color: #696969;">
+    				<option value="" disabled selected>Escolha uma Dificuldade</option>
+    				<option value="1">Fácil</option>
+    				<option value="2">Médio</option>
+    				<option value="3">Difícil</option>
+    				<option value="4">Desafio</option>
+            <option value="0">Nenhum</option>
+  				</select>
+
+  				<select id="materia" class="browser-default input-field col s6" style="color: #696969;">
+    				<option value="" disabled selected>Escolha uma Matéria</option>
+    				<option value="1">Matemática</option>
+    				<option value="2">Português</option>
+    				<option value="3">Física</option>
+    				<option value="4">Geografia</option>
+    				<option value="5">História</option>
+    				<option value="6">Química</option>
+    				<option value="7">Inglês</option>
+            <option value="0">Nenhum</option>
+  				</select>
+          </div>
+          <div class"row">
+
+          <select id="tipo" class="browser-default input-field col s6" style="color: #696969;">
+            <option value="" disabled selected>Escolha um tipo</option>
+            <option value="1">Aberta</option>
+            <option value="2">Fechada</option>
+            <option value="3">Nenhum</option>
+          </select>
+
+          <select id="materia" class="browser-default input-field col s6" style="color: #696969;">
+            <option value="" disabled selected>Escolha um módulo</option>
+            <option value="0">Nenhum</option>
+            
+          </select>
+        </div>
+
+			</form>
+
+				<button class="btn waves-effect waves-light grey darken-2" type="submit" name="action">avançar
+    			<i class="material-icons right">send</i>
+  				</button>
+
+		</div>
+  	</div>
+
+  
+  </nav>
+
+
+
+    <div class="container" style=" z-index: 1">
+   testeUm elemento fixo - fixed - é posicionado relativamente ao "viewport", isso significa que ele sempre ficará no mesmo lugar mesmo que haja rolagem na página. Assim como o relative, as propriedades top, right, bottom e left também são utilizadas.
+
+Tenho certeza que você notou um elemento fixo no canto direito da tela, estou te dando a permissão de observá-lo agora, e aqui está o CSS aplicado a ele:Um elemento fixo - fixed - é posicionado relativamente ao "viewport", isso significa que ele sempre ficará no mesmo lugar mesmo que haja rolagem na página. Assim como o relative, as propriedades top, right, bottom e left também são utilizadas.
+
+Tenho certeza que você notou um elemento fixo no canto direito da tela, estou te dando a permissão de observá-lo agora, e aqui está o CSS aplicado a ele:Um elemento fixo - fixed - é posicionado relativamente ao "viewport", isso significa que ele sempre ficará no mesmo lugar mesmo que haja rolagem na página. Assim como o relative, as propriedades top, right, bottom e left também são utilizadas.
+
+Tenho certeza que você notou um elemento fixo no canto direito da tela, estou te dando a permissão de observá-lo agora, e aqui está o CSS aplicado a ele:Um elemento fixo - fixed - é posicionado relativamente ao "viewport", isso significa que ele sempre ficará no mesmo lugar mesmo que haja rolagem na página. Assim como o relative, as propriedades top, right, bottom e left também são utilizadas.
+
+Tenho certeza que você notou um elemento fixo no canto direito da tela, estou te dando a permissão de observá-lo agora, e aqui está o CSS aplicado a ele:Um elemento fixo - fixed - é posicionado relativamente ao "viewport", isso significa que ele sempre ficará no mesmo lugar mesmo que haja rolagem na página. Assim como o relative, as propriedades top, right, bottom e left também são utilizadas.
+
+Tenho certeza que você notou um elemento fixo no canto direito da tela, estou te dando a permissão de observá-lo agora, e aqui está o CSS aplicado a ele:
+    </div>
+
+    
+    <br><br>
+
+  <footer class="page-footer orange">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Quem somos</h5>
+          <p class="grey-text text-lighten-4"></p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Settings</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="menu/js/materialize.js"></script>
+  <script src="menu/js/init.js"></script>
+  </body>
+</html>
