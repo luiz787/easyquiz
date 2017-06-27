@@ -144,7 +144,7 @@ public class ManterQuestaoImpl implements ManterQuestao {
             }
             throw new ExcecaoNegocio(errMsg);
         }
-        
+        questaoDAO.update(questao);
     }
 
     @Override
@@ -166,9 +166,7 @@ public class ManterQuestaoImpl implements ManterQuestao {
 
     @Override
     public List<Questao> listAll() throws ExcecaoPersistencia {
-
-        
-            return questaoDAO.listAll();
+        return questaoDAO.listAll();
     }
 
 }
