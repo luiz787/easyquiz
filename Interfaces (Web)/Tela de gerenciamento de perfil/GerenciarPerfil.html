@@ -9,32 +9,122 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="../css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>  
-  <script type="text/javascript">
-
-    $(document).ready(function() {
-      $('select').material_select();
-    });
-
-  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 </head>
 <body>
-  <nav style="background-color:#FFFFFF;">
 
-  	<div class="nav-wrapper container">
-      <a id="logo-container" href="#" style="color:#47525E; font-size: 32px;">EasyQuiz</a>
-      <a id="botao-menu" class="btn-small waves-effect waves-light grey">Menu</a>  
-      <a style="color: #000000; margin-left: 100px;" align="right"></a>
+
+<!--- Javascrip -->
+<script type="text/javascript">
+
+  $(document).ready(function() {
+      $('select').material_select();
+  });
+
+
+  function mostrarform() {
+    var element = document.getElementById("pesquisa");
+    if (element.style.display =="none") {element.style.display = "block";} else {element.style.display = "none";}
+  }
+</script>
+
+<!-- nav cor #EE6363 -->
+<nav class="nav-extended" style="background-color:#FFFFFF;">
+    
+  <div class="container" style="display: inline;">
+    <a id="logo-container" href="#" style="color:#47525E; font-size: 32px; margin-left: 50px;">EasyQuiz</a>
+    <a id="botao-menu" class="btn-small waves-effect waves-light grey">Menu</a> 
+  </div>
+
+    <ul id="side-nav" class="right hide-on-med-and-down" align="right">
+
+      <li> 
+        <h5 style="color:#47525E; font-size: 32px;"> Bem vindo </h5>
+
+      </li>
+      <li>
+        <h5 style="color:#EE6363; font-size: 32px;">&ensp;Usuário</h5> 
+      </li>
+
+      <li><a class="waves-effect waves-light grey darken-2 btn" href="#">&ensp;Perfil&ensp;</a></li>
+        <!-- if(usuario = professor) -->
+      <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Questões</a></li>
+      <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Sair</a></li>
+    </ul>
+
+  <div class="row" style="background-color: #EE6363; margin-top: 15px;" >
+      <div  class="col s8" >Matérias comuns:
+        <a id="botao-matematica" class="waves-effect waves-light" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Matemática</a>
+        <a id="botao-portugues" class="waves-effect waves-light" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Português</a>
+        <a id="botao-fisica" class="waves-effect waves-light" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top:    2px; background-color: #E5E9F2; color: #47525E">Física</a>
+      </div>
+      <div class="col s4">
+        <a class="btn-small waves-effect waves-light grey darken-2 btn" onclick="mostrarform()">Filtrar</a></li>        
+      </div>
+
     </div>
-  </nav>
+  
+  <div class="row " id="pesquisa" style="display: none; position: absolute;   width: 47%; background: rgba(255, 255, 255, 0.7);">
+      <div class="col s12 offset-s12" id="pesquisa" style="border: 4px solid; border-color:#D3D3D3; background: rgba(255, 255, 255, 1.0); ; text-align:center;border-radius: 10px; z-index: 2;" >
 
-  <nav>
-  		<div style="margin-left: 20px;">Matérias comuns:
-  			<a id="botao-matematica" class="waves-effect waves-light" style="margin-left: 10px; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Matemática</a>
-  			<a id="botao-portugues" class="waves-effect waves-light" style="margin-left: 10px; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Português</a>
-  			<a id="botao-fisica" class="waves-effect waves-light" style="margin-left: 10px; margin-right: 10px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Física</a>
-  		</div>
+        <form>
+
+          <input id="search" type="search" placeholder="Busque por palavras chave" style="color: #696969;">
+
+          <div class="row">
+            <div class="input-field col s6">
+              <select id="nivel">
+                <option value="" disabled selected>Escolha uma Dificuldade</option>
+                <option value="1">Fácil</option>
+                <option value="2">Médio</option>
+                <option value="3">Difícil</option>
+                <option value="4">Desafio</option>
+                <option value="0">Nenhum</option>
+              </select>
+            </div>
+
+            <div class="input-field col s6">
+              <select id="materia">
+                <option value="" disabled selected>Escolha uma Matéria</option>
+                <option value="1">Matemática</option>
+                <option value="2">Português</option>
+                <option value="3">Física</option>
+                <option value="4">Geografia</option>
+                <option value="5">História</option>
+                <option value="6">Química</option>
+                <option value="7">Inglês</option>
+                <option value="0">Nenhum</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s6">
+              <select id="tipo">
+                <option value="" disabled selected>Escolha um tipo</option>
+                <option value="1">Aberta</option>
+                <option value="2">Fechada</option>
+                <option value="3">Nenhum</option>
+              </select>
+            </div>
+
+            <div class="input-field col s6">
+              <select id="materia">
+                <option value="" disabled selected>Escolha um módulo</option>
+                <option value="0">Nenhum</option>
+              </select>
+            </div>
+          </div>
+
+      </form>
+        <button class="btn-large waves-effect waves-light grey darken-2" type="submit" name="action">avançar 
+          <i class="material-icons right">send</i>
+        </button>
+    </div>
+    </div>
+
+  
   </nav>
 
     <br>
@@ -128,33 +218,23 @@
       <div class="row">
         <div class="col l6 s12">
           <h5 class="white-text">Quem somos</h5>
-          <p class="grey-text text-lighten-4"></p>
-
-
+          <p class="grey-text text-lighten-4">Luiz Augusto Dias Berto</p>
+          <p class="grey-text text-lighten-4">Maria Carolina</p>
+          <p class="grey-text text-lighten-4">Rafael Gontijo</p>
+          <p class="grey-text text-lighten-4">Victor César</p>
+          <p class="grey-text text-lighten-4">Victor Gabriel</p>
         </div>
         <div class="col l3 s12">
-          <h5 class="white-text">Settings</h5>
+          <h5 class="white-text">Conecte-se</h5>
           <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
-          </ul>
-        </div>
-        <div class="col l3 s12">
-          <h5 class="white-text">Connect</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
+            <li><a class="white-text" href="http://www.cefetmg.br/">CEFET-MG</a></li>
           </ul>
         </div>
       </div>
     </div>
     <div class="footer-copyright">
       <div class="container">
-      Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+      Feito com <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
       </div>
     </div>
   </footer>
