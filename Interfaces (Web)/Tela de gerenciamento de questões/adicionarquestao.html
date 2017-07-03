@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	  	<title>EasyQuiz</title>
+
+	  	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	  	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+
+	  	<!-- CSS  -->
+	  	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+			<link rel="stylesheet" href="gq.css">
+	</head>
+	<body>
+		<form id="cadastro" action="#" class="container">
+			<div>
+			<h3>Cadastrar questão</h3>
+			Tipo da questão:
+			<p>
+      	<input name="tipo" type="radio" id="tipoAberta" onclick="questaoAberta()"/>
+      	<label for="tipoAberta">Aberta</label>
+    	</p>
+    	<p>
+      	<input name="tipo" type="radio" id="tipoFechada" checked="checked" onclick="window.location.reload()"/>
+      	<label for="tipoFechada">Fechada</label>
+    	</p>
+			</div>
+			<div class="row" id="dados">
+				<div class="input-field col s12">
+   		 		<select id="disciplina">
+      		<option value="" disabled selected>Escolha a disciplina</option>
+      		<option value="1">Física</option>
+      		<option value="2">Matemática</option>
+      		<option value="3">Sistemas Operacionais</option>
+    			</select>
+    			<label>Disciplina</label>
+  			</div>
+				<div class="input-field col s12">
+   		 		<select id="modulo">
+      		<option value="" disabled selected>Escolha o módulo</option>
+      		<option value="1">Máquinas térmicas</option>
+      		<option value="2">Óptica</option>
+      		<option value="3">Termodinâmica</option>
+    			</select>
+    			<label>Módulo</label>
+  			</div>
+			</div>
+			<div id="divEnunciado">
+			<h5>Enunciado</h5>
+			<div class="row">
+        <div class="input-field col s12">
+          <textarea id="enunciado" class="materialize-textarea"></textarea>
+          <label for="textarea1">Enunciado</label>
+        </div>
+      </div>
+			</div>
+			<div id="divAlternativas">
+			<h5>Alternativas</h5>
+			<div class="row">
+        <div class="input-field col s9">
+          <textarea id="alt1" class="materialize-textarea"></textarea>
+          <label for="textarea1">Alternativa</label>
+        </div>
+				<div class="col s3">
+          <a class="waves-effect waves-light btn" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
+        </div>
+      </div>
+    	<div class="row">
+        <div class="input-field col s9">
+          <textarea id="alt2" class="materialize-textarea"></textarea>
+          <label for="textarea1">Alternativa</label>
+        </div>
+				<div class="col s3">
+          <a class="waves-effect waves-light btn" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
+        </div>
+      </div>
+			<div class="row">
+        <div class="input-field col s9">
+          <textarea id="alt3" class="materialize-textarea"></textarea>
+          <label for="textarea1">Alternativa</label>
+        </div>
+				<div class="col s3">
+          <a class="waves-effect waves-light btn" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
+        </div>
+      </div>
+			<div class="row">
+        <div class="input-field col s9">
+          <textarea id="alt4" class="materialize-textarea"></textarea>
+          <label for="textarea1">Alternativa</label>
+        </div>
+				<div class="col s3">
+          <a class="waves-effect waves-light btn" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
+        </div>
+      </div>
+			<div class="row">
+				<div class="col s12">
+					<a class="waves-effect waves-light btn" onclick="addAlternativa(this)"><i class="material-icons left">add</i>Adicionar alternativa</a>
+				</div>
+			</div>
+			</div>
+			<div class="row" id="linhafinal">
+				<div class="col s6">
+					<button class="btn waves-effect waves-light" type="submit" name="action">Confirmar
+    				<i class="material-icons right">send</i>
+  				</button>
+				</div>
+				<div class="col s6">
+					<a class="waves-effect waves-light btn" href="gerenciamentoquestoes.html"><i class="material-icons left">cancel</i>Cancelar</a>
+				</div>
+			</div>
+		</form>
+		
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+		<script src="addQuestao.js"></script>
+		<script type="text/javascript">
+				$(document).ready(function() {
+    			$('select').material_select();
+  			});
+		</script>
+	</body>
