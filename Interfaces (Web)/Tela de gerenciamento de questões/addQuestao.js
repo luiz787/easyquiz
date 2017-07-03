@@ -8,7 +8,7 @@ function addAlternativa(botaoAdd) {
     let colBtn = document.createElement("div");
     colBtn.setAttribute("class", "col s3");
     let botaoExcluir = document.createElement("a");
-    botaoExcluir.setAttribute("class", "waves-effect waves-light btn");
+    botaoExcluir.setAttribute("class", "waves-effect waves-light btn deep-orange darken-1");
     //botaoExcluir.setAttribute("id", "botaoExcluirNova");
     botaoExcluir.setAttribute("onclick", "excluirAlternativa(this)");
     botaoExcluir.innerHTML = "Excluir";

@@ -18,6 +18,9 @@ label {
 .lbltipo {
     color: black;
 }
+ul.dropdown-content.select-dropdown li span {
+    color: #f4511e;
+}
 .botaoadd {
     background-color: palegreen;
 }

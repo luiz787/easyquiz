@@ -1,14 +1,26 @@
 /*Alterar para questões abertas (possuem ou não img), questões fechadas que não possuem img*/
 function editarquestao(idQuestao, botaoEditar) {
-    addBotoesImg(idQuestao);
+		//let nomeDivImg = "container-img"+idQuestao; // errado
+		let divImg = document.getElementById("container-img2");//valor tem que ser dinâmico
+		if (divImg!=null) {
+			addBotoesImg(idQuestao);
+		}
     enunToTextArea(idQuestao);
-    alternativasToTextArea(idQuestao);
+		let divAltFechada = document.getElementById("alternativas2"); //valor tem que ser dinâmico
+		let divQAberta = document.getElementById("resposta-aberta2"); //valor tem que ser dinâmico
+		if (divAltFechada!=null){
+			alternativasToTextArea(idQuestao);
+		} else if (divQAberta!=null){
+			//alert("OI")
+			respostaToTextArea(idQuestao);
+		}
+	
     let btnEditar = botaoEditar;
     let btnParent = btnEditar.parentElement;
-    let divBtnExcluir = btnParent.parentElement.getElementsByTagName("div").item(1);
-    let btnExcluir = divBtnExcluir.getElementsByTagName("a").item(0);
+    let divBtnExcluir = document.getElementsByName("divExcluir").item(0);
+    let btnExcluir = divBtnExcluir.childNodes.item(1);
     let botaoConfirma = document.createElement("button");
-    botaoConfirma.setAttribute("class", "btn waves-effect waves-light");
+    botaoConfirma.setAttribute("class", "btn waves-effect waves-light deep-orange darken-1");
     botaoConfirma.setAttribute("type", "submit");
     botaoConfirma.setAttribute("name", "submit");
     botaoConfirma.innerHTML = "Confirmar";
@@ -18,7 +30,7 @@ function editarquestao(idQuestao, botaoEditar) {
     botaoConfirma.appendChild(iconBtnConf);
     btnParent.replaceChild(botaoConfirma, btnEditar);
     let botaoCancela = document.createElement("a");
-    botaoCancela.setAttribute("class", "btn waves-effect waves-light");
+    botaoCancela.setAttribute("class", "btn waves-effect waves-light deep-orange darken-1");
     botaoCancela.innerHTML = "Cancelar";
     botaoCancela.setAttribute("onclick", "window.location.reload()")
     let iconBtnCancela = document.createElement("i");
@@ -28,9 +40,20 @@ function editarquestao(idQuestao, botaoEditar) {
     divBtnExcluir.replaceChild(botaoCancela, btnExcluir);
 }
 
+function respostaToTextArea(idQuestao){
+	let divResposta = document.getElementById("resposta-aberta2");
+	let paragrafo = divResposta.childNodes.item(1);
+	let texto = paragrafo.innerHTML;
+	let txtArea = document.createElement("textarea");
+	txtArea.setAttribute("id", "resposta-correta-2");
+	$(txtArea).val(texto);
+	divResposta.replaceChild(txtArea, paragrafo);
+	let id = idQuestao;
+	let questao = document.getElementById(id);
+}
+
 function addBotoesImg(idQuestao) {
     let id = idQuestao;
-    console.log("Id da questão: " + id);
     let content = document.getElementById(id).childNodes.item(3);
     let containerImg = content.childNodes.item(1);
     let row = document.createElement("div");
@@ -41,7 +64,7 @@ function addBotoesImg(idQuestao) {
     colBtnAlterar.setAttribute("class", "col s4");
 
     let botaoAlterar = document.createElement("a");
-    botaoAlterar.setAttribute("class", "waves-effect waves-light btn");
+    botaoAlterar.setAttribute("class", "waves-effect waves-light btn deep-orange darken-1");
     //botaoAlterar.innerHTML = "Alterar imagem";
     let iconBotaoAlterar = document.createElement("i");
     iconBotaoAlterar.className = "material-icons center";
@@ -49,7 +72,7 @@ function addBotoesImg(idQuestao) {
     botaoAlterar.appendChild(iconBotaoAlterar);
     botaoAlterar.setAttribute("onclick", "alterarImg(this)");
     let botaoExcluir = document.createElement("a");
-    botaoExcluir.setAttribute("class", "waves-effect waves-light btn");
+    botaoExcluir.setAttribute("class", "waves-effect waves-light btn deep-orange darken-1");
     botaoExcluir.setAttribute("onclick", "excluirImg(this)");
     let iconBotaoExcluir = document.createElement("i");
     iconBotaoExcluir.className = "material-icons center";
@@ -95,7 +118,7 @@ function enunToTextArea(idQuestao) {
     let contador = 0;
     let id = idQuestao;
     let content = document.getElementById(id).childNodes.item(3);
-    let form = content.childNodes.item(3);
+    let form = content.getElementsByTagName("form").item(0);
     let divForm = form.childNodes.item(1);
     let enunciado = divForm.childNodes.item(1);
     let paragrafoEnunciado = enunciado.childNodes.item(1);
@@ -120,7 +143,6 @@ function alternativasToTextArea(idQuestao) {
     let divAlt = divForm.childNodes.item(3); //DIV Alternativas
     let divAltChildren = divAlt.getElementsByTagName("p");
     let iteracao = divAltChildren.length;
-    console.log("Qtd de filhos de divAlt: " + divAltChildren.length);
     for (let i = 0; i < iteracao; i++) {
         let paragrafoAtual = divAltChildren[0];
         let label = paragrafoAtual.childNodes.item(3);
@@ -131,7 +153,7 @@ function alternativasToTextArea(idQuestao) {
         let colBtn = document.createElement("div");
         colBtn.setAttribute("class", "col s3");
         let botaoExcluir = document.createElement("a");
-        botaoExcluir.setAttribute("class", "waves-effect waves-light btn");
+        botaoExcluir.setAttribute("class", "waves-effect waves-light btn deep-orange darken-1");
         botaoExcluir.setAttribute("id", "botaoExcluir" + i);
         botaoExcluir.setAttribute("onclick", "excluirAlternativa(this)");
         let iconBotaoExcluir = document.createElement("i");
@@ -154,11 +176,8 @@ function alternativasToTextArea(idQuestao) {
 function excluirAlternativa(botaoExcluir) {
     let botao = botaoExcluir;
     let divCol = botao.parentElement;
-    console.log(divCol);
     let divRow = divCol.parentElement;
-    console.log(divRow);
     let divAlt = divRow.parentElement;
-    console.log(divAlt);
     divAlt.removeChild(divRow);
 }
 
@@ -168,7 +187,7 @@ function addBotaoAddAlternativas(divAlt) {
     let col = document.createElement("div");
     col.setAttribute("class", "col s12");
     let botaoAdd = document.createElement("a");
-    botaoAdd.setAttribute("class", "waves-effect waves-light btn");
+    botaoAdd.setAttribute("class", "waves-effect waves-light btn deep-orange darken-1");
     botaoAdd.setAttribute("id", "botaoAddAlt");
     botaoAdd.setAttribute("onclick", "addAlternativa(this)");
     botaoAdd.innerHTML = "Alternativa";
@@ -192,7 +211,7 @@ function addAlternativa(botaoAdd) {
     let colBtn = document.createElement("div");
     colBtn.setAttribute("class", "col s3");
     let botaoExcluir = document.createElement("a");
-    botaoExcluir.setAttribute("class", "waves-effect waves-light btn");
+    botaoExcluir.setAttribute("class", "waves-effect waves-light btn deep-orange darken-1");
     //botaoExcluir.setAttribute("id", "botaoExcluirNova");
     botaoExcluir.setAttribute("onclick", "excluirAlternativa(this)");
     let iconBotaoExcluir = document.createElement("i");

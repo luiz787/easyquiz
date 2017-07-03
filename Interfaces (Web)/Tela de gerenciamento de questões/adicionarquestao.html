@@ -17,11 +17,11 @@
 			<h3>Cadastrar questão</h3>
 			Tipo da questão:
 			<p>
-      	<input name="tipo" type="radio" id="tipoAberta" onclick="questaoAberta()"/>
+      	<input class="with-gap" name="tipo" type="radio" id="tipoAberta" onclick="questaoAberta()"/>
       	<label for="tipoAberta">Aberta</label>
     	</p>
     	<p>
-      	<input name="tipo" type="radio" id="tipoFechada" checked="checked" onclick="window.location.reload()"/>
+      	<input class="with-gap" name="tipo" type="radio" id="tipoFechada" checked="checked" onclick="window.location.reload()"/>
       	<label for="tipoFechada">Fechada</label>
     	</p>
 			</div>
@@ -62,7 +62,7 @@
           <label for="textarea1">Alternativa</label>
         </div>
 				<div class="col s3">
-          <a class="waves-effect waves-light btn" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
+          <a class="waves-effect waves-light btn deep-orange darken-1" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
         </div>
       </div>
     	<div class="row">
@@ -71,7 +71,7 @@
           <label for="textarea1">Alternativa</label>
         </div>
 				<div class="col s3">
-          <a class="waves-effect waves-light btn" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
+          <a class="waves-effect waves-light btn deep-orange darken-1" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
         </div>
       </div>
 			<div class="row">
@@ -80,7 +80,7 @@
           <label for="textarea1">Alternativa</label>
         </div>
 				<div class="col s3">
-          <a class="waves-effect waves-light btn" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
+          <a class="waves-effect waves-light btn deep-orange darken-1" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
         </div>
       </div>
 			<div class="row">
@@ -89,23 +89,23 @@
           <label for="textarea1">Alternativa</label>
         </div>
 				<div class="col s3">
-          <a class="waves-effect waves-light btn" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
+          <a class="waves-effect waves-light btn deep-orange darken-1" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
         </div>
       </div>
 			<div class="row">
 				<div class="col s12">
-					<a class="waves-effect waves-light btn" onclick="addAlternativa(this)"><i class="material-icons left">add</i>Adicionar alternativa</a>
+					<a class="waves-effect waves-light btn deep-orange darken-1" onclick="addAlternativa(this)"><i class="material-icons left">add</i>Adicionar alternativa</a>
 				</div>
 			</div>
 			</div>
 			<div class="row" id="linhafinal">
 				<div class="col s6">
-					<button class="btn waves-effect waves-light" type="submit" name="action">Confirmar
+					<button class="btn waves-effect waves-light deep-orange darken-1" type="submit" name="action">Confirmar
     				<i class="material-icons right">send</i>
   				</button>
 				</div>
 				<div class="col s6">
-					<a class="waves-effect waves-light btn" href="gerenciamentoquestoes.html"><i class="material-icons left">cancel</i>Cancelar</a>
+					<a class="waves-effect waves-light btn deep-orange darken-1" href="gerenciamentoquestoes.html"><i class="material-icons left">cancel</i>Cancelar</a>
 				</div>
 			</div>
 		</form>
