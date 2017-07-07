@@ -10,14 +10,14 @@ package model.domain;
  * @author Aluno
  */
 public class Disciplina {
-    private int cod_Disciplina;
+    private Long cod_Disciplina;
     private String nom_Disciplina;
 
-    public int getCod_Disciplina() {
+    public Long getCod_Disciplina() {
         return cod_Disciplina;
     }
 
-    public void setCod_Disciplina(int cod_Disciplina) {
+    public void setCod_Disciplina(Long cod_Disciplina) {
         this.cod_Disciplina = cod_Disciplina;
     }
 

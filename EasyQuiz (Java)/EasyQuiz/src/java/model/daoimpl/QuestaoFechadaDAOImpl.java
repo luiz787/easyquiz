@@ -5,62 +5,54 @@
  */
 package model.daoimpl;
 
-import util.db.JDBCManterConexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
+import model.dao.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.dao.PostDAO;
-import model.domain.Post;
+import model.domain.QuestaoFechada;
 import model.exception.ExcecaoPersistencia;
+import util.db.JDBCManterConexao;
 
 /**
  *
  * @author Aluno
  */
-public class PostDAOImpl implements PostDAO {
-    private static PostDAOImpl postDAO = null;
+public class QuestaoFechadaDAOImpl implements QuestaoFechadaDAO {
+    private static QuestaoFechadaDAOImpl questaoFechadaDAO = null;
 
-    private PostDAOImpl() {
+    private QuestaoFechadaDAOImpl() {
     }
 
-    public static PostDAOImpl getInstance() {
+    public static QuestaoFechadaDAOImpl getInstance() {
 
-        if (postDAO == null) {
-            postDAO = new PostDAOImpl();
+        if (questaoFechadaDAO == null) {
+            questaoFechadaDAO = new QuestaoFechadaDAOImpl();
         }
 
-        return postDAO;
+        return questaoFechadaDAO;
     }
 
     @Override
-    synchronized public void insert(Post post) throws ExcecaoPersistencia {
+    synchronized public void insert(List<QuestaoFechada> questaoFechada) throws ExcecaoPersistencia {
         try {
-            if (post == null) {
-                throw new ExcecaoPersistencia("Entidade não pode ser nula.");
+            if (questaoFechada.isEmpty() || questaoFechada==null) {
+                throw new ExcecaoPersistencia("Entidade não pode ser vazia ou nula.");
             }
 
             Connection connection = JDBCManterConexao.getInstancia().getConexao();
 
-            String sql = "INSERT INTO post (cod_questao, txt_conteudo, dat_criacao) VALUES(?, ?, ?) RETURNING cod_post";
+            String sql = "INSERT INTO questaoFechada (cod_questao, txt_alternativa) VALUES(?, ?)";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setLong(1, post.getCod_Questao());
-            pstmt.setString(2, post.getTxt_Conteudo());
-            pstmt.setTimestamp(3, java.sql.Timestamp.from(post.getDat_Criacao()));
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                Long cod_post = rs.getLong("cod_post");
-                post.setCod_Post(cod_post);
+            for(int i=0; i<questaoFechada.size(); i++) {
+                pstmt.setLong(1, questaoFechada.get(i).getCod_Questao());
+                pstmt.setString(2, questaoFechada.get(i).getTxt_Alternativa());
             }
-
-            rs.close();
             pstmt.close();
             connection.close();
         } catch (ClassNotFoundException | SQLException ex) {
@@ -69,24 +61,25 @@ public class PostDAOImpl implements PostDAO {
         }
     }
 
+
     @Override
-    synchronized public Post delete(Long cod_Post) throws ExcecaoPersistencia {
+    synchronized public List<QuestaoFechada> delete(Long cod_Questao) throws ExcecaoPersistencia {
         try {
-            Post post = this.getPostById(cod_Post);
+            List<QuestaoFechada> questoesFechada = this.listAll(cod_Questao);
 
             Connection connection = JDBCManterConexao.getInstancia().getConexao();
 
-            String sql = "DELETE FROM post WHERE cod_post = ?";
+            String sql = "DELETE FROM questaoFechada WHERE cod_questao = ?";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             
-            pstmt.setLong(1, cod_Post);
+            pstmt.setLong(1, cod_Questao);
             pstmt.executeUpdate();
 
             pstmt.close();
             connection.close();
 
-            return post;
+            return questoesFechada;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);
@@ -94,55 +87,55 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public Post getPostById(Long cod_Post) throws ExcecaoPersistencia {
+    public List<QuestaoFechada> listAll(Long cod_Questao) throws ExcecaoPersistencia {
         try {
             Connection connection = JDBCManterConexao.getInstancia().getConexao();
 
-            String sql = "SELECT * FROM post WHERE cod_post = ?";
+            String sql = "SELECT * FROM questaoFechada WHERE cod_questao = ? ORDER BY seq_alternativa;";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setLong(1, cod_Post);
             ResultSet rs = pstmt.executeQuery();
 
-            Post post = null;
+            List<QuestaoFechada> listAll = new ArrayList<>();
             if (rs.next()) {
-                post = new Post();
-                post.setCod_Post(rs.getLong("cod_post"));
-                post.setCod_Questao(rs.getLong("cod_questao"));
-                post.setTxt_Conteudo(rs.getString("txt_conteudo"));
-                post.setDat_Criacao((rs.getTimestamp("dat_criacao")).toInstant());
+                do {
+                    QuestaoFechada questaoFechada = new QuestaoFechada();
+                    questaoFechada.setCod_Questao(rs.getLong("cod_questao"));
+                    questaoFechada.setSeq_Alternativa(rs.getLong("seq_alternativa"));
+                    questaoFechada.setTxt_Alternativa(rs.getString("txt_alternativa"));
+                    listAll.add(questaoFechada);
+                } while (rs.next());
             }
 
             rs.close();
             pstmt.close();
             connection.close();
 
-            return post;
+            return listAll;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);
         }
     }
-
+    
     @Override
-    public List<Post> listAll() throws ExcecaoPersistencia {
+    public List<QuestaoFechada> listAll() throws ExcecaoPersistencia {
         try {
             Connection connection = JDBCManterConexao.getInstancia().getConexao();
 
-            String sql = "SELECT * FROM post ORDER BY cod_post;";
+            String sql = "SELECT * FROM questaoFechada ORDER BY seq_alternativa;";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
 
-            List<Post> listAll = new ArrayList<>();
+            List<QuestaoFechada> listAll = new ArrayList<>();
             if (rs.next()) {
                 do {
-                    Post post = new Post();
-                    post.setCod_Post(rs.getLong("cod_post"));
-                    post.setCod_Questao(rs.getLong("cod_questao"));
-                    post.setTxt_Conteudo(rs.getString("txt_conteudo"));
-                    post.setDat_Criacao((rs.getTimestamp("dat_criacao")).toInstant());
-                    listAll.add(post);
+                    QuestaoFechada questaoFechada = new QuestaoFechada();
+                    questaoFechada.setCod_Questao(rs.getLong("cod_questao"));
+                    questaoFechada.setSeq_Alternativa(rs.getLong("seq_alternativa"));
+                    questaoFechada.setTxt_Alternativa(rs.getString("txt_alternativa"));
+                    listAll.add(questaoFechada);
                 } while (rs.next());
             }
 

@@ -10,23 +10,23 @@ package model.domain;
  * @author Aluno
  */
 public class Modulo {
-    private int cod_Disciplina;
-    private int cod_Modulo;
+    private Long cod_Disciplina;
+    private Long cod_Modulo;
     private String nom_Modulo;
 
-    public int getCod_Disciplina() {
+    public Long getCod_Disciplina() {
         return cod_Disciplina;
     }
 
-    public void setCod_Disciplina(int cod_Disciplina) {
+    public void setCod_Disciplina(Long cod_Disciplina) {
         this.cod_Disciplina = cod_Disciplina;
     }
 
-    public int getCod_Modulo() {
+    public Long getCod_Modulo() {
         return cod_Modulo;
     }
 
-    public void setCod_Modulo(int cod_Modulo) {
+    public void setCod_Modulo(Long cod_Modulo) {
         this.cod_Modulo = cod_Modulo;
     }
 

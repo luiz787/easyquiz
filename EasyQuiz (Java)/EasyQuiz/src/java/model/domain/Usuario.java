@@ -18,19 +18,11 @@ public class Usuario {
         
     }
     private Long cod_Usuario;
-    private int cod_Perfil; //Tipo de usuário: Administrador (G), aluno(A), professor(P).
+    private Long cod_Perfil;
     private String nom_Usuario;
     private Date dat_Nascimento;
     private String txt_Email;
     private String txt_Senha;
-    /*private String nome;
-    private Date dataNascimento;
-    private String email;
-    private String senha;
-    private Long questoesRespondidas;
-    private Long questoesAcertadas;
-    private char perfil; /
-    */
 
     public Long getCod_Usuario() {
         return cod_Usuario;
@@ -40,11 +32,11 @@ public class Usuario {
         this.cod_Usuario = cod_Usuario;
     }
 
-    public int getCod_Perfil() {
+    public Long getCod_Perfil() {
         return cod_Perfil;
     }
 
-    public void setCod_Perfil(int cod_Perfil) {
+    public void setCod_Perfil(Long cod_Perfil) {
         this.cod_Perfil = cod_Perfil;
     }
 

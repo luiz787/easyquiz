@@ -10,14 +10,14 @@ package model.domain;
  * @author Aluno
  */
 public class Perfil {
-    private int cod_Perfil;
+    private Long cod_Perfil;
     private String nom_Perfil;
 
-    public int getCod_Perfil() {
+    public Long getCod_Perfil() {
         return cod_Perfil;
     }
 
-    public void setCod_Perfil(int cod_Perfil) {
+    public void setCod_Perfil(Long cod_Perfil) {
         this.cod_Perfil = cod_Perfil;
     }
 

@@ -5,21 +5,23 @@
  */
 package model.domain;
 
+import java.time.Instant;
+
 /**
  *
  * @author Aluno
  */
 public class QuestaoFechadaResposta {
-    private Long dat_Inicio;
+    private Instant dat_Inicio;
     private Long cod_Usuario;
     private Long cod_Questao;
-    private int seq_Questao_Resposta;
+    private Long seq_Questao_Resposta;
 
-    public Long getDat_Inicio() {
+    public Instant getDat_Inicio() {
         return dat_Inicio;
     }
 
-    public void setDat_Inicio(Long dat_Inicio) {
+    public void setDat_Inicio(Instant dat_Inicio) {
         this.dat_Inicio = dat_Inicio;
     }
 
@@ -39,13 +41,11 @@ public class QuestaoFechadaResposta {
         this.cod_Questao = cod_Questao;
     }
 
-    public int getSeq_Questao_Resposta() {
+    public Long getSeq_Questao_Resposta() {
         return seq_Questao_Resposta;
     }
 
-    public void setSeq_Questao_Resposta(int seq_Questao_Resposta) {
+    public void setSeq_Questao_Resposta(Long seq_Questao_Resposta) {
         this.seq_Questao_Resposta = seq_Questao_Resposta;
     }
-    
-    
 }

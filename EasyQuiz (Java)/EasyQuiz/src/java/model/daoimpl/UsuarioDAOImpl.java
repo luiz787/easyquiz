@@ -24,7 +24,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     private UsuarioDAOImpl() {
     }
 
-    public static UsuarioDAOImpl getInstancia() {
+    public static UsuarioDAOImpl getInstance() {
 
         if (usuarioDAO == null) {
             usuarioDAO = new UsuarioDAOImpl();
@@ -33,166 +33,166 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         return usuarioDAO;
     }
 
+    @Override
     synchronized public void insert(Usuario usuario) throws ExcecaoPersistencia {
         try {
             if (usuario == null) {
                 throw new ExcecaoPersistencia("Entidade não pode ser nula.");
             }
 
-            Connection conexao = JDBCManterConexao.getInstancia().getConexao();
-            
-            String sql = "INSERT INTO usuario (Nome, Data_Nascimento, Email, Senha) "
-                    + "VALUES (?,?,?,?)";
+            Connection connection = JDBCManterConexao.getInstancia().getConexao();
 
-            PreparedStatement pstmt = conexao.prepareStatement(sql);
-            pstmt.setString(1, usuario.getNome());
-            pstmt.setDate(2, usuario.getDataNascimento());
-            pstmt.setString(3, usuario.getEmail());
-            pstmt.setString(4, usuario.getSenha());
-            //pstmt.setInt(5, (int) usuario.getQuestoesRespondidas().longValue());
-            //pstmt.setInt(6, (int) usuario.getQuestoesAcertadas().longValue());
+            String sql = "INSERT INTO usuario ("
+                    + "cod_perfil, "
+                    + "nom_usuario, "
+                    + "dat_nascimento, "
+                    + "txt_email, "
+                    + "txt_senha"
+                    + ") VALUES(?, ?, ?, ?, ?) RETURNING cod_usuario";
+
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setLong(1, usuario.getCod_Perfil());
+            pstmt.setString(2, usuario.getNom_Usuario());
+            pstmt.setDate(3, usuario.getDat_Nascimento());
+            pstmt.setString(4, usuario.getTxt_Email());
+            pstmt.setString(5, usuario.getTxt_Senha());
             
-            pstmt.executeUpdate();
-            
-            ResultSet rs = pstmt.executeQuery("SELECT LAST_INSERT_ID() FROM usuario");
+            ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                long id = (long) rs.getInt(1);
-                usuario.setId(id);
+                Long cod_usuario = rs.getLong("cod_usuario");
+                usuario.setCod_Usuario(cod_usuario);
             }
-            
-            //System.out.println(usuario.getId());
-            
+
             rs.close();
             pstmt.close();
-            conexao.close();
-
+            connection.close();
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);
         }
     }
 
+    @Override
     synchronized public void update(Usuario usuario) throws ExcecaoPersistencia {
         try {
-
-            Connection conexao = JDBCManterConexao.getInstancia().getConexao();
-
-            String sql = "UPDATE usuario SET Nome = ?, Data_Nascimento = ?, "
-                    + "Email = ?, Senha = ?, Questoes_Respondidas = ?, "
-                    + "Questoes_Acertadas = ? WHERE Id = ?; ";
-
-            PreparedStatement pstmt = conexao.prepareStatement(sql);
-            pstmt.setString(1, usuario.getNome());
-            pstmt.setDate(2, usuario.getDataNascimento());
-            pstmt.setString(3, usuario.getEmail());
-            pstmt.setString(4, usuario.getSenha());
-            pstmt.setInt(5, (int) usuario.getQuestoesRespondidas().longValue());
-            pstmt.setInt(6, (int) usuario.getQuestoesAcertadas().longValue());
             
-            pstmt.setInt(7, (int) usuario.getId().longValue());
+            Connection connection = JDBCManterConexao.getInstancia().getConexao();
+
+            String sql = "UPDATE usuario "
+                    + "   SET "
+                    + "nom_usuario=?, "
+                    + "dat_nascimento=?, "
+                    + "txt_email=?, "
+                    + "txt_senha=?"
+                    + " WHERE cod_usuario = ?;";
+
+            PreparedStatement pstmt = connection.prepareStatement(sql);
             
+            
+            pstmt.setString(1, usuario.getNom_Usuario());
+            pstmt.setDate(2, usuario.getDat_Nascimento());
+            pstmt.setString(3, usuario.getTxt_Email());
+            pstmt.setString(4, usuario.getTxt_Senha());
+            pstmt.setLong(5, usuario.getCod_Usuario());
             pstmt.executeUpdate();
 
             pstmt.close();
-            conexao.close();
-
+            connection.close();
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);
         }
     }
 
-    synchronized public Usuario delete(Long usuarioId) throws ExcecaoPersistencia {
+    @Override
+    synchronized public Usuario delete(Long cod_Usuario) throws ExcecaoPersistencia {
         try {
-            Usuario usuario = this.getUsuarioById(usuarioId);
+            Usuario usuario = this.getUsuarioById(cod_Usuario);
 
-            Connection conexao = JDBCManterConexao.getInstancia().getConexao();
+            Connection connection = JDBCManterConexao.getInstancia().getConexao();
 
-            String sql = "DELETE FROM usuario WHERE Id = ?";
+            String sql = "DELETE FROM usuario WHERE cod_usuario = ?";
 
-            PreparedStatement pstmt = conexao.prepareStatement(sql);
-            pstmt.setInt(1, (int) usuarioId.longValue());
+            PreparedStatement pstmt = connection.prepareStatement(sql);
             
+            pstmt.setLong(1, cod_Usuario);
             pstmt.executeUpdate();
 
             pstmt.close();
-            conexao.close();
-            
+            connection.close();
+
             return usuario;
-            
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);
         }
     }
 
-    public Usuario getUsuarioById(Long usuarioId) throws ExcecaoPersistencia {
+    @Override
+    public Usuario getUsuarioById(Long cod_Usuario) throws ExcecaoPersistencia {
         try {
-            Connection conexao = JDBCManterConexao.getInstancia().getConexao();
+            Connection connection = JDBCManterConexao.getInstancia().getConexao();
 
-            String sql = "SELECT * FROM usuario WHERE Id = ?";
+            String sql = "SELECT * FROM usuario WHERE cod_usuario = ?";
 
-            PreparedStatement pstmt = conexao.prepareStatement(sql);
-            pstmt.setInt(1, (int) usuarioId.longValue());
-            
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setLong(1, cod_Usuario);
             ResultSet rs = pstmt.executeQuery();
 
             Usuario usuario = null;
             if (rs.next()) {
                 usuario = new Usuario();
-                usuario.setId(rs.getLong("Id"));
-                usuario.setNome(rs.getString("Nome"));
-                usuario.setDataNascimento(rs.getDate("Data_Nascimento"));
-                usuario.setEmail(rs.getString("Email"));
-                usuario.setSenha(rs.getString("Senha"));
-                usuario.setQuestoesRespondidas((long) rs.getInt("Questoes_Respondidas"));
-                usuario.setQuestoesAcertadas((long) rs.getInt("Questoes_Acertadas"));
-                
+                usuario.setCod_Usuario(rs.getLong("cod_usuario"));
+                usuario.setCod_Perfil(rs.getLong("cod_perfil"));
+                usuario.setNom_Usuario(rs.getString("nom_usuario"));
+                usuario.setDat_Nascimento(rs.getDate("dat_nascimento"));
+                usuario.setTxt_Email(rs.getString("txt_email"));
+                usuario.setTxt_Senha(rs.getString("txt_senha"));
             }
 
             rs.close();
             pstmt.close();
-            conexao.close();
+            connection.close();
 
             return usuario;
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);
         }
     }
 
+    @Override
     public List<Usuario> listAll() throws ExcecaoPersistencia {
         try {
-            Connection conexao = JDBCManterConexao.getInstancia().getConexao();
+            Connection connection = JDBCManterConexao.getInstancia().getConexao();
 
-            String sql = "SELECT * FROM usuario ORDER BY Id;";
+            String sql = "SELECT * FROM usuario ORDER BY cod_usuario;";
 
-            PreparedStatement pstmt = conexao.prepareStatement(sql);
+            PreparedStatement pstmt = connection.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
 
             List<Usuario> listAll = new ArrayList<>();
             if (rs.next()) {
                 do {
                     Usuario usuario = new Usuario();
-                    usuario.setId((long)rs.getInt("Id"));
-                    usuario.setNome(rs.getString("Nome"));
-                    usuario.setDataNascimento(rs.getDate("Data_Nascimento"));
-                    usuario.setEmail(rs.getString("Email"));
-                    usuario.setSenha(rs.getString("Senha"));
-                    usuario.setQuestoesRespondidas((long) rs.getInt("Questoes_Respondidas"));
-                    usuario.setQuestoesAcertadas((long) rs.getInt("Questoes_Acertadas"));
+                    usuario.setCod_Usuario(rs.getLong("cod_usuario"));
+                    usuario.setCod_Perfil(rs.getLong("cod_perfil"));
+                    usuario.setNom_Usuario(rs.getString("nom_usuario"));
+                    usuario.setDat_Nascimento(rs.getDate("dat_nascimento"));
+                    usuario.setTxt_Email(rs.getString("txt_email"));
+                    usuario.setTxt_Senha(rs.getString("txt_senha"));
                     listAll.add(usuario);
                 } while (rs.next());
             }
 
             rs.close();
             pstmt.close();
-            conexao.close();
+            connection.close();
 
             return listAll;
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);
         }
     }

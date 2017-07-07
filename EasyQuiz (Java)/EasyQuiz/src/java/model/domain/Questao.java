@@ -14,13 +14,13 @@ import java.awt.image.BufferedImage;
 public class Questao { //serializable?
 
     private Long cod_Questao;
-    private int cod_Dificuldade;
-    private int cod_Disciplina;
-    private int cod_Modulo;
+    private Long cod_Dificuldade;
+    private Long cod_Disciplina;
+    private Long cod_Modulo;
     private char cod_Tipo;
     private String txt_Enunciado;
     private BufferedImage img_Enunciado;
-    private int seq_Questao_Correta;
+    private Long seq_Questao_Correta;
     private String txt_Resposta_Aberta;
     
     /*
@@ -40,29 +40,31 @@ public class Questao { //serializable?
         this.cod_Questao = cod_Questao;
     }
 
-    public int getCod_Dificuldade() {
+    public Long getCod_Dificuldade() {
         return cod_Dificuldade;
     }
 
-    public void setCod_Dificuldade(int cod_Dificuldade) {
+    public void setCod_Dificuldade(Long cod_Dificuldade) {
         this.cod_Dificuldade = cod_Dificuldade;
     }
 
-    public int getCod_Disciplina() {
+    public Long getCod_Disciplina() {
         return cod_Disciplina;
     }
 
-    public void setCod_Disciplina(int cod_Disciplina) {
+    public void setCod_Disciplina(Long cod_Disciplina) {
         this.cod_Disciplina = cod_Disciplina;
     }
 
-    public int getCod_Modulo() {
+    public Long getCod_Modulo() {
         return cod_Modulo;
     }
 
-    public void setCod_Modulo(int cod_Modulo) {
+    public void setCod_Modulo(Long cod_Modulo) {
         this.cod_Modulo = cod_Modulo;
     }
+
+    
 
     public char getCod_Tipo() {
         return cod_Tipo;
@@ -88,13 +90,15 @@ public class Questao { //serializable?
         this.img_Enunciado = img_Enunciado;
     }
 
-    public int getSeq_Questao_Correta() {
+    public Long getSeq_Questao_Correta() {
         return seq_Questao_Correta;
     }
 
-    public void setSeq_Questao_Correta(int seq_Questao_Correta) {
+    public void setSeq_Questao_Correta(Long seq_Questao_Correta) {
         this.seq_Questao_Correta = seq_Questao_Correta;
     }
+
+    
 
     public String getTxt_Resposta_Aberta() {
         return txt_Resposta_Aberta;
