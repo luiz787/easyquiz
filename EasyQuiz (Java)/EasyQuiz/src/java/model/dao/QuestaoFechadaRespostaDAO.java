@@ -15,11 +15,5 @@ import model.exception.ExcecaoPersistencia;
  */
 public interface QuestaoFechadaRespostaDAO {
     public void insert(QuestaoFechadaResposta questaoFechadaResposta) throws ExcecaoPersistencia;
-    /*
-    public QuestaoFechadaResposta getSessaoByDia(Long cod_Sessao) throws ExcecaoPersistencia;//??
-    public QuestaoFechadaResposta getSessaoBySemana(Long cod_Sessao) throws ExcecaoPersistencia;//??
-    public QuestaoFechadaResposta getSessaoByMes(Long cod_Sessao) throws ExcecaoPersistencia;//??
-    public QuestaoFechadaResposta getSessaoByAno(Long cod_Sessao) throws ExcecaoPersistencia;//??
-    */
     public List<QuestaoFechadaResposta> listAll() throws ExcecaoPersistencia;
 }
