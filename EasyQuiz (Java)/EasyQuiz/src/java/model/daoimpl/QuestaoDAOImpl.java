@@ -16,8 +16,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.dao.QuestaoDAO;
-import model.domain.QuestaoAberta;
-import model.domain.QuestaoFechada;
 
 public class QuestaoDAOImpl implements QuestaoDAO {
     private static QuestaoDAOImpl questaoDAO = null;
@@ -25,7 +23,7 @@ public class QuestaoDAOImpl implements QuestaoDAO {
     private QuestaoDAOImpl() {
     }
 
-    public static QuestaoDAOImpl getInstancia() {
+    public static QuestaoDAOImpl getInstance() {
 
         if (questaoDAO == null) {
             questaoDAO = new QuestaoDAOImpl();
@@ -34,227 +32,131 @@ public class QuestaoDAOImpl implements QuestaoDAO {
         return questaoDAO;
     }
 
+    @Override
     synchronized public void insert(Questao questao) throws ExcecaoPersistencia {
         try {
             if (questao == null) {
                 throw new ExcecaoPersistencia("Entidade não pode ser nula.");
             }
 
-            Connection conexao = JDBCManterConexao.getInstancia().getConexao();
-            
-            String sql = "INSERT INTO questao (Enunciado, Imagem, Dificuldade, Disciplina, Tipo) VALUES (?,?,?,?,?)";
+            Connection connection = JDBCManterConexao.getInstancia().getConexao();
 
-            PreparedStatement pstmt = conexao.prepareStatement(sql);
-            
-            pstmt.setString(1, questao.getEnunciado());
-            pstmt.setBlob(2, (Blob) questao.getImagem());
-            pstmt.setInt(3, questao.getDificuldade());
-            pstmt.setString(4, questao.getDisciplina());
-            pstmt.setString(5, String.valueOf(questao.getTipo()));
-            
-            ResultSet rs;
-            
-            if(questao instanceof QuestaoAberta) {
-                pstmt.executeUpdate();
-                rs = pstmt.executeQuery("SELECT LAST_INSERT_ID() FROM questao");
-                if (rs.next()) {
-                    long id = (long) rs.getInt(1);
-                    questao.setId(id);
-                }
-                sql = "INSERT INTO questao_aberta (Id, Resposta) "
-                        + "VALUES (?,?)";
-                pstmt = conexao.prepareStatement(sql);
-                pstmt.setInt(1, (int) questao.getId().longValue());
-                pstmt.setString(2, ((QuestaoAberta)questao).getResposta());
-                pstmt.executeUpdate();
-            } else if(questao instanceof QuestaoFechada) {
-                pstmt.executeUpdate();
-                rs = pstmt.executeQuery("SELECT LAST_INSERT_ID() FROM questao");
-                if (rs.next()) {
-                    long id = (long) rs.getInt(1);
-                    questao.setId(id);
-                }
-                sql = "INSERT INTO questao_fechada (Id, Alternativas, "
-                        + "Alternativa_Correta)"
-                        + " VALUES (?,?,?)";
-                pstmt = conexao.prepareStatement(sql);
-                
-                String[] alternativas = ((QuestaoFechada)questao).getAlternativas();
-                String alternativasTexto = "";
-                for(int i=0; i<alternativas.length; i++) {
-                    if(i!=(alternativas.length-1)) {
-                        alternativasTexto += alternativas[i]+"_;_";
-                    } else {
-                        alternativasTexto += alternativas[i];
-                    }
-                }
-                
-                pstmt.setInt(1, (int) questao.getId().longValue());
-                pstmt.setString(2, alternativasTexto);
-                pstmt.setInt (3,(int) (((QuestaoFechada)questao).getAlternativaCorreta()).longValue());
-                pstmt.executeUpdate();
+            String sql = "INSERT INTO questao ("
+                    + "cod_dificuldade, "
+                    + "cod_disciplina, "
+                    + "cod_modulo, "
+                    + "cod_tipo, "
+                    + "txt_enunciado, "
+                    + "img_enunciado, "
+                    + "seq_questao_correta, "
+                    + "txt_resposta_aberta"
+                    + ") VALUES(?, ?, ?, ?, ?, ?, ?, ?) RETURNING cod_questao";
+
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setLong(1, questao.getCod_Dificuldade());
+            pstmt.setLong(2, questao.getCod_Disciplina());
+            pstmt.setLong(3, questao.getCod_Modulo());
+            pstmt.setString(4, String.valueOf(questao.getCod_Tipo()));
+            pstmt.setString(5, questao.getTxt_Enunciado());
+            if(questao.getImg_Enunciado()!=null) {
+                pstmt.setBlob(6, (Blob) questao.getImg_Enunciado());
             } else {
-                throw new ClassNotFoundException();
+                pstmt.setNull(6, java.sql.Types.NULL);
             }
-            //System.out.println(questao.getId());
-            
-            rs.close();
-            pstmt.close();
-            conexao.close();
-
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ExcecaoPersistencia(ex);
-        }
-    }
-
-    synchronized public void update(Questao questao) throws ExcecaoPersistencia {
-        try {
-
-            Connection conexao = JDBCManterConexao.getInstancia().getConexao();
-
-            String sql = "UPDATE questao SET Enunciado = ?, Imagem = ?, Dificuldade = ?, Disciplina = ?, Tipo = ? WHERE Id = ?; ";
-
-            PreparedStatement pstmt = conexao.prepareStatement(sql);
-
-            pstmt.setString(1, questao.getEnunciado());
-            pstmt.setBlob(2, (Blob) questao.getImagem());
-            pstmt.setInt(3, questao.getDificuldade());
-            pstmt.setString(4, questao.getDisciplina());
-            pstmt.setString(5, String.valueOf(questao.getTipo()));
-            
-            pstmt.setInt(6, (int) questao.getId().longValue());
-            
-            if(questao instanceof QuestaoAberta) {
-                pstmt.executeUpdate();
-                sql = "UPDATE questao_aberta SET Resposta = ? "
-                        + "WHERE id = ?;";
-                pstmt = conexao.prepareStatement(sql);
-                pstmt.setString(1, ((QuestaoAberta)questao).getResposta());
-                pstmt.setInt(2, (int) questao.getId().longValue());
-                pstmt.executeUpdate();
-            } else if(questao instanceof QuestaoFechada) {
-                pstmt.executeUpdate();
-                sql = "UPDATE questao_fechada SET Alternativas = ?, "
-                        + "Alternativa_Correta = ?"
-                        + " WHERE id = ?;";
-                pstmt = conexao.prepareStatement(sql);
-                String[] alternativas = ((QuestaoFechada)questao).getAlternativas();
-                String alternativasTexto = "";
-                for(int i=0; i<alternativas.length; i++) {
-                    if(i!=(alternativas.length-1)) {
-                        alternativasTexto += alternativas[i]+"_;_";
-                    } else {
-                        alternativasTexto += alternativas[i];
-                    }
-                }
-                pstmt.setString(1, alternativasTexto);
-                pstmt.setInt (2,(int) (((QuestaoFechada)questao).getAlternativaCorreta()).longValue());
-                pstmt.setInt(3, (int) questao.getId().longValue());
-                pstmt.executeUpdate();
+            if(questao.getSeq_Questao_Correta()!=null) {
+                pstmt.setLong(7, questao.getSeq_Questao_Correta());
             } else {
-                throw new ClassNotFoundException();
+                pstmt.setNull(7, java.sql.Types.NULL);
             }
-
-            pstmt.close();
-            conexao.close();
-
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ExcecaoPersistencia(ex);
-        }
-    }
-
-    synchronized public Questao delete(Long questaoId) throws ExcecaoPersistencia {
-        try {
-            Questao questao = this.getQuestaoById(questaoId);
-
-            Connection conexao = JDBCManterConexao.getInstancia().getConexao();
-
-            String sql = "DELETE FROM questao WHERE Id = ?";
-
-            PreparedStatement pstmt = conexao.prepareStatement(sql);
-            pstmt.setInt(1, (int) questaoId.longValue());
-            
-            if(questao instanceof QuestaoAberta) {
-                pstmt.executeUpdate();
-                sql = "DELETE FROM questao_aberta WHERE Id = ?";
-                pstmt = conexao.prepareStatement(sql);
-                pstmt.setInt(1, (int) questaoId.longValue());
-                pstmt.executeUpdate();
-            } else if(questao instanceof QuestaoFechada) {
-                pstmt.executeUpdate();
-                sql = "DELETE FROM questao_fechada WHERE Id = ?";
-                pstmt = conexao.prepareStatement(sql);
-                pstmt.setInt(1, (int) questaoId.longValue());
-                pstmt.executeUpdate();
+            if(questao.getTxt_Resposta_Aberta()!=null) {
+                pstmt.setString(8, questao.getTxt_Resposta_Aberta());
             } else {
-                throw new ClassNotFoundException();
+                pstmt.setNull(8, java.sql.Types.NULL);
             }
-
-            pstmt.close();
-            conexao.close();
             
-            return questao;
-            
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ExcecaoPersistencia(ex);
-        }
-    }
-
-    public Questao getQuestaoById(Long questaoId) throws ExcecaoPersistencia {
-        try {
-            Connection conexao = JDBCManterConexao.getInstancia().getConexao();
-
-            String sql = "SELECT * FROM questao WHERE Id = ?";
-
-            PreparedStatement pstmt = conexao.prepareStatement(sql);
-            pstmt.setInt(1, (int) questaoId.longValue());
             
             ResultSet rs = pstmt.executeQuery();
 
-            Questao questao = null;
             if (rs.next()) {
-                if(rs.getString("Tipo").charAt(0)=='A') {
-                    questao = new QuestaoAberta();
-                    questao.setId((long)rs.getInt("Id"));
-                    questao.setEnunciado(rs.getString("Enunciado"));
-                    questao.setImagem((BufferedImage)rs.getBlob("Imagem"));
-                    questao.setDificuldade(rs.getInt("Dificuldade"));
-                    questao.setDisciplina(rs.getString("Disciplina"));
-                    questao.setTipo(rs.getString("Tipo").charAt(0));
-                    sql = "SELECT * FROM questao_aberta WHERE Id = ?";
-                    pstmt = conexao.prepareStatement(sql);
-                    pstmt.setInt(1, (int) questaoId.longValue());
-                    ResultSet rsAberta = pstmt.executeQuery();
-                    if (rsAberta.next()) {
-                        ((QuestaoAberta)questao).setResposta(rsAberta.getString("Resposta"));
-                    }
-                    rsAberta.close();
-                } else {
-                    questao = new QuestaoFechada();
-                    questao.setId((long)rs.getInt("Id"));
-                    questao.setEnunciado(rs.getString("Enunciado"));
-                    questao.setImagem((BufferedImage)rs.getBlob("Imagem"));
-                    questao.setDificuldade(rs.getInt("Dificuldade"));
-                    questao.setDisciplina(rs.getString("Disciplina"));
-                    questao.setTipo(rs.getString("Tipo").charAt(0));
-                    sql = "SELECT * FROM questao_fechada WHERE Id = ?";
-                    pstmt = conexao.prepareStatement(sql);
-                    pstmt.setInt(1, (int) questaoId.longValue());
-                    ResultSet rsFechada = pstmt.executeQuery();
-                    if (rsFechada.next()) {
-                        ((QuestaoFechada)questao).setAlternativas(rsFechada.getString("Alternativas").split("_;_"));
-                        ((QuestaoFechada)questao).setAlternativaCorreta((long)rsFechada.getInt("Alternativa_Correta"));
-                    }
-                    rsFechada.close();
-                }
+                Long cod_questao = rs.getLong("cod_questao");
+                questao.setCod_Questao(cod_questao);
             }
 
             rs.close();
             pstmt.close();
-            conexao.close();
+            connection.close();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ExcecaoPersistencia(ex);
+        }
+    }
+
+    @Override
+    synchronized public void update(Questao questao) throws ExcecaoPersistencia {
+        try {
+            
+            Connection connection = JDBCManterConexao.getInstancia().getConexao();
+
+            String sql = "UPDATE questao "
+                    + "SET "
+                    + "cod_dificuldade=?, "
+                    + "cod_disciplina=?, "
+                    + "cod_modulo=?, "
+                    + "cod_tipo=?, "
+                    + "txt_enunciado=?, "
+                    + "img_enunciado=?, "
+                    + "seq_questao_correta=?, "
+                    + "txt_resposta_aberta=?"
+                    + " WHERE cod_questao = ?;";
+
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setLong(1, questao.getCod_Dificuldade());
+            pstmt.setLong(2, questao.getCod_Disciplina());
+            pstmt.setLong(3, questao.getCod_Modulo());
+            pstmt.setString(4, String.valueOf(questao.getCod_Tipo()));
+            pstmt.setString(5, questao.getTxt_Enunciado());
+            if(questao.getImg_Enunciado()!=null) {
+                pstmt.setBlob(6, (Blob) questao.getImg_Enunciado());
+            } else {
+                pstmt.setNull(6, java.sql.Types.NULL);
+            }
+            if(questao.getSeq_Questao_Correta()!=null) {
+                pstmt.setLong(7, questao.getSeq_Questao_Correta());
+            } else {
+                pstmt.setNull(7, java.sql.Types.NULL);
+            }
+            if(questao.getTxt_Resposta_Aberta()!=null) {
+                pstmt.setString(8, questao.getTxt_Resposta_Aberta());
+            } else {
+                pstmt.setNull(8, java.sql.Types.NULL);
+            }
+            pstmt.setLong(9, questao.getCod_Questao());
+            pstmt.executeUpdate();
+
+            pstmt.close();
+            connection.close();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ExcecaoPersistencia(ex);
+        }
+    }
+
+    @Override
+    synchronized public Questao delete(Long cod_Questao) throws ExcecaoPersistencia {
+        try {
+            Questao questao = this.getQuestaoById(cod_Questao);
+
+            Connection connection = JDBCManterConexao.getInstancia().getConexao();
+
+            String sql = "DELETE FROM questao WHERE cod_questao = ?";
+
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            
+            pstmt.setLong(1, cod_Questao);
+            pstmt.executeUpdate();
+
+            pstmt.close();
+            connection.close();
 
             return questao;
         } catch (ClassNotFoundException | SQLException ex) {
@@ -263,61 +165,71 @@ public class QuestaoDAOImpl implements QuestaoDAO {
         }
     }
 
+    @Override
+    public Questao getQuestaoById(Long cod_Questao) throws ExcecaoPersistencia {
+        try {
+            Connection connection = JDBCManterConexao.getInstancia().getConexao();
+
+            String sql = "SELECT * FROM questao WHERE cod_questao = ?";
+
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setLong(1, cod_Questao);
+            ResultSet rs = pstmt.executeQuery();
+            Questao questao = null;
+            if (rs.next()) {
+                questao = new Questao();
+                questao.setCod_Questao(rs.getLong("cod_questao"));
+                questao.setCod_Dificuldade(rs.getLong("cod_dificuldade"));
+                questao.setCod_Disciplina(rs.getLong("cod_disciplina"));
+                questao.setCod_Modulo(rs.getLong("cod_modulo"));
+                questao.setCod_Tipo(rs.getString("cod_tipo").charAt(0));
+                questao.setTxt_Enunciado(rs.getString("txt_enunciado"));
+                questao.setImg_Enunciado((BufferedImage) rs.getBlob("img_enunciado"));
+                questao.setSeq_Questao_Correta(rs.getLong("seq_questao_correta"));
+                questao.setTxt_Resposta_Aberta(rs.getString("txt_resposta_aberta"));
+            }
+
+            rs.close();
+            pstmt.close();
+            connection.close();
+
+            return questao;
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ExcecaoPersistencia(ex);
+        }
+    }
+
+    @Override
     public List<Questao> listAll() throws ExcecaoPersistencia {
         try {
-            Connection conexao = JDBCManterConexao.getInstancia().getConexao();
+            Connection connection = JDBCManterConexao.getInstancia().getConexao();
 
-            String sql = "SELECT * FROM questao ORDER BY Id;";
+            String sql = "SELECT * FROM questao ORDER BY cod_questao;";
 
-            PreparedStatement pstmt = conexao.prepareStatement(sql);
+            PreparedStatement pstmt = connection.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
 
             List<Questao> listAll = new ArrayList<>();
-            Questao questao = null;
             if (rs.next()) {
                 do {
-                    if(rs.getString("Tipo").charAt(0)=='A') {
-                        questao = new QuestaoAberta();
-                        questao.setId((long) rs.getInt("Id"));
-                        questao.setEnunciado(rs.getString("Enunciado"));
-                        questao.setImagem((BufferedImage)rs.getBlob("Imagem"));
-                        questao.setDificuldade(rs.getInt("Dificuldade"));
-                        questao.setDisciplina(rs.getString("Disciplina"));
-                        questao.setTipo(rs.getString("Tipo").charAt(0));
-                        sql = "SELECT * FROM questao_aberta WHERE Id = ?";
-                        pstmt = conexao.prepareStatement(sql);
-                        pstmt.setInt(1, rs.getInt("Id"));
-                        ResultSet rsAberta = pstmt.executeQuery();
-                        if (rsAberta.next()) {
-                            ((QuestaoAberta)questao).setResposta(rsAberta.getString("Resposta"));
-                        }
-                        rsAberta.close();
-                        listAll.add(questao);
-                    } else {
-                        questao = new QuestaoFechada();
-                        questao.setId((long) rs.getInt("Id"));
-                        questao.setEnunciado(rs.getString("Enunciado"));
-                        questao.setImagem((BufferedImage)rs.getBlob("Imagem"));
-                        questao.setDificuldade(rs.getInt("Dificuldade"));
-                        questao.setDisciplina(rs.getString("Disciplina"));
-                        questao.setTipo(rs.getString("Tipo").charAt(0));
-                        sql = "SELECT * FROM questao_fechada WHERE Id = ?";
-                        pstmt = conexao.prepareStatement(sql);
-                        pstmt.setInt(1, rs.getInt("Id"));
-                        ResultSet rsFechada = pstmt.executeQuery();
-                        if (rsFechada.next()) {
-                            ((QuestaoFechada)questao).setAlternativas(rsFechada.getString("Alternativas").split("_;_"));
-                            ((QuestaoFechada)questao).setAlternativaCorreta((long)rsFechada.getInt("Alternativa_Correta"));
-                        }
-                        rsFechada.close();
-                        listAll.add(questao);
-                    }
+                    Questao questao = new Questao();
+                    questao.setCod_Questao(rs.getLong("cod_questao"));
+                    questao.setCod_Dificuldade(rs.getLong("cod_dificuldade"));
+                    questao.setCod_Disciplina(rs.getLong("cod_disciplina"));
+                    questao.setCod_Modulo(rs.getLong("cod_modulo"));
+                    questao.setCod_Tipo(rs.getString("cod_tipo").charAt(0));
+                    questao.setTxt_Enunciado(rs.getString("txt_enunciado"));
+                    questao.setImg_Enunciado((BufferedImage) rs.getBlob("img_enunciado"));
+                    questao.setSeq_Questao_Correta(rs.getLong("seq_questao_correta"));
+                    questao.setTxt_Resposta_Aberta(rs.getString("txt_resposta_aberta"));
+                    listAll.add(questao);
                 } while (rs.next());
             }
 
             rs.close();
             pstmt.close();
-            conexao.close();
+            connection.close();
 
             return listAll;
         } catch (ClassNotFoundException | SQLException ex) {
@@ -330,52 +242,26 @@ public class QuestaoDAOImpl implements QuestaoDAO {
         try {
             Connection conexao = JDBCManterConexao.getInstancia().getConexao();
 
-            String sql = "SELECT * FROM questao WHERE Tipo = ? ORDER BY Id;";
+            String sql = "SELECT * FROM questao WHERE Tipo = ? ORDER BY cod_questao;";
 
             PreparedStatement pstmt = conexao.prepareStatement(sql);
             pstmt.setString(1, String.valueOf(tipo));
             ResultSet rs = pstmt.executeQuery();
 
             List<Questao> listAll = new ArrayList<>();
-            Questao questao = null;
             if (rs.next()) {
                 do {
-                    if(rs.getString("Tipo").charAt(0)=='A') {
-                        questao = new QuestaoAberta();
-                        questao.setId((long) rs.getInt("Id"));
-                        questao.setEnunciado(rs.getString("Enunciado"));
-                        questao.setImagem((BufferedImage)rs.getBlob("Imagem"));
-                        questao.setDificuldade(rs.getInt("Dificuldade"));
-                        questao.setDisciplina(rs.getString("Disciplina"));
-                        questao.setTipo(rs.getString("Tipo").charAt(0));
-                        sql = "SELECT * FROM questao_aberta WHERE Id = ?";
-                        pstmt = conexao.prepareStatement(sql);
-                        pstmt.setInt(1, rs.getInt("Id"));
-                        ResultSet rsAberta = pstmt.executeQuery();
-                        if (rsAberta.next()) {
-                            ((QuestaoAberta)questao).setResposta(rsAberta.getString("Resposta"));
-                        }
-                        rsAberta.close();
-                        listAll.add(questao);
-                    } else {
-                        questao = new QuestaoFechada();
-                        questao.setId((long) rs.getInt("Id"));
-                        questao.setEnunciado(rs.getString("Enunciado"));
-                        questao.setImagem((BufferedImage)rs.getBlob("Imagem"));
-                        questao.setDificuldade(rs.getInt("Dificuldade"));
-                        questao.setDisciplina(rs.getString("Disciplina"));
-                        questao.setTipo(rs.getString("Tipo").charAt(0));
-                        sql = "SELECT * FROM questao_fechada WHERE Id = ?";
-                        pstmt = conexao.prepareStatement(sql);
-                        pstmt.setInt(1, rs.getInt("Id"));
-                        ResultSet rsFechada = pstmt.executeQuery();
-                        if (rsFechada.next()) {
-                            ((QuestaoFechada)questao).setAlternativas(rsFechada.getString("Alternativas").split("_;_"));
-                            ((QuestaoFechada)questao).setAlternativaCorreta((long)rsFechada.getInt("Alternativa_Correta"));
-                        }
-                        rsFechada.close();
-                        listAll.add(questao);
-                    }
+                    Questao questao = new Questao();
+                    questao.setCod_Questao(rs.getLong("cod_questao"));
+                    questao.setCod_Dificuldade(rs.getLong("cod_dificuldade"));
+                    questao.setCod_Disciplina(rs.getLong("cod_disciplina"));
+                    questao.setCod_Modulo(rs.getLong("cod_modulo"));
+                    questao.setCod_Tipo(rs.getString("cod_tipo").charAt(0));
+                    questao.setTxt_Enunciado(rs.getString("txt_enunciado"));
+                    questao.setImg_Enunciado((BufferedImage) rs.getBlob("img_enunciado"));
+                    questao.setSeq_Questao_Correta(rs.getLong("seq_questao_correta"));
+                    questao.setTxt_Resposta_Aberta(rs.getString("txt_resposta_aberta"));
+                    listAll.add(questao);
                 } while (rs.next());
             }
 

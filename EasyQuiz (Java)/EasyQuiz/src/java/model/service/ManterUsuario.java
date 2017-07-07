@@ -9,15 +9,16 @@ import model.domain.Usuario;
 import model.exception.ExcecaoNegocio;
 import model.exception.ExcecaoPersistencia;
 import java.util.List;
+import model.domain.Usuario;
 
 /**
  *
  * @author Luiz
  */
 public interface ManterUsuario {
-    public Long cadastrarUsuario(Usuario usuario) throws ExcecaoNegocio, ExcecaoPersistencia;
-    public void alterarUsuario(Usuario usuario) throws ExcecaoNegocio, ExcecaoPersistencia;
-    public void deletarUsuario(Long usuarioId) throws ExcecaoPersistencia;
-    public Usuario getUsuarioById(Long usuarioid) throws ExcecaoPersistencia;
-    public List<Usuario> listAll() throws ExcecaoPersistencia;
+    public void cadastrarUsuario(Usuario usuario) throws ExcecaoPersistencia, ExcecaoNegocio;
+    public void alterarUsuario(Usuario usuario) throws ExcecaoPersistencia, ExcecaoNegocio;
+    public Usuario deletarUsuario(Long cod_Usuario) throws ExcecaoPersistencia;
+    public Usuario getUsuarioById(Long cod_Usuario) throws ExcecaoPersistencia;
+    public List<Usuario> getAll() throws ExcecaoPersistencia;
 }

@@ -5,8 +5,7 @@ import model.domain.Post;
 import model.exception.ExcecaoPersistencia;
 
 public interface PostDAO {
-   public void insert(Post post) throws ExcecaoPersistencia;
-    public void update(Post post) throws ExcecaoPersistencia;
+    public void insert(Post post) throws ExcecaoPersistencia;
     public Post delete(Long cod_Post) throws ExcecaoPersistencia;
     public Post getPostById(Long cod_Post) throws ExcecaoPersistencia;
     public List<Post> listAll() throws ExcecaoPersistencia;

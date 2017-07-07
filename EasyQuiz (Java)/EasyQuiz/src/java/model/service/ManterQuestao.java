@@ -9,15 +9,17 @@ import model.domain.Questao;
 import model.exception.ExcecaoNegocio;
 import model.exception.ExcecaoPersistencia;
 import java.util.List;
+import model.domain.Questao;
 
 /**
  *
  * @author Luiz
  */
 public interface ManterQuestao {
-    public Long cadastrarQuestao(Questao questao) throws ExcecaoNegocio, ExcecaoPersistencia;
-    public void alterarQuestao(Questao questao) throws ExcecaoNegocio, ExcecaoPersistencia;
-    public void deletarQuestao(Long id) throws ExcecaoPersistencia;
-    public Questao getQuestaoById(Long id) throws ExcecaoPersistencia;
-    public List<Questao> listAll() throws ExcecaoPersistencia;
+    public void cadastrarQuestao(Questao questao) throws ExcecaoPersistencia, ExcecaoNegocio;
+    public void alterarQuestao(Questao questao) throws ExcecaoPersistencia, ExcecaoNegocio;
+    public Questao deletarQuestao(Long cod_Questao) throws ExcecaoPersistencia;
+    public Questao getQuestaoById(Long cod_Questao) throws ExcecaoPersistencia;
+    public List<Questao> getAll() throws ExcecaoPersistencia;
+    public List<Questao> getAll(char cod_Tipo) throws ExcecaoPersistencia;
 }

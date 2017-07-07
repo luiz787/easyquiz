@@ -5,14 +5,16 @@
  */
 package model.domain;
 
+import java.time.Instant;
+
 /**
  *
  * @author Aluno
  */
 public class Sessao {
     private Long cod_Usuario;
-    private Long dat_Inicio;
-    private Long dat_Fim;
+    private Instant dat_Inicio;
+    private Instant dat_Fim;
 
     public Long getCod_Usuario() {
         return cod_Usuario;
@@ -22,19 +24,21 @@ public class Sessao {
         this.cod_Usuario = cod_Usuario;
     }
 
-    public Long getDat_Inicio() {
+    public Instant getDat_Inicio() {
         return dat_Inicio;
     }
 
-    public void setDat_Inicio(Long dat_Inicio) {
+    public void setDat_Inicio(Instant dat_Inicio) {
         this.dat_Inicio = dat_Inicio;
     }
 
-    public Long getDat_Fim() {
+    public Instant getDat_Fim() {
         return dat_Fim;
     }
 
-    public void setDat_Fim(Long dat_Fim) {
+    public void setDat_Fim(Instant dat_Fim) {
         this.dat_Fim = dat_Fim;
     }
+
+    
 }

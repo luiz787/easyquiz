@@ -6,6 +6,7 @@
 package model.domain;
 
 import java.sql.Date;
+import java.time.Instant;
 /**
  *
  * @author Luiz
@@ -14,14 +15,7 @@ public class Post {
     private Long cod_Post;
     private Long cod_Questao;
     private String txt_Conteudo;
-    private Long dat_Criacao;
-    /*
-    private Long id;
-    private String conteudo;
-    private Long idAutor;
-    private Date dataCriacao;
-    private Long idQuestao;
-    */
+    private Instant dat_Criacao;
 
     public Long getCod_Post() {
         return cod_Post;
@@ -47,11 +41,11 @@ public class Post {
         this.txt_Conteudo = txt_Conteudo;
     }
 
-    public Long getDat_Criacao() {
+    public Instant getDat_Criacao() {
         return dat_Criacao;
     }
 
-    public void setDat_Criacao(Long dat_Criacao) {
+    public void setDat_Criacao(Instant dat_Criacao) {
         this.dat_Criacao = dat_Criacao;
     }
     
