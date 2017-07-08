@@ -1,17 +1,9 @@
 package model.serviceimpl;
 
-import model.dao.PostDAO;
-import model.daoimpl.PostDAOImpl;
-import model.domain.Post;
-import model.exception.ExcecaoNegocio;
-import model.exception.ExcecaoPersistencia;
-import model.service.ManterPost;
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+
 
 public class ManterPostImplTest {
+    /*
     private static ManterPost manterPost;
     private static PostDAO postDAO;
     private Post post;
@@ -29,10 +21,6 @@ public class ManterPostImplTest {
     public void setUp() throws Exception {
         this.post = new Post();
     }
-
-    /**
-     * Test of inserirPost method, of class ManterPostImpl.
-     */
     @Test
     public void testInserirPostNulo() throws Exception {
         System.out.println("inserirPost - post nulo");
@@ -131,10 +119,6 @@ public class ManterPostImplTest {
         
         fail("A excecao de post com ID da questao nula nao foi capturada");
     }
-
-    /**
-     * Test of getAll method, of class ManterPostImpl.
-     */
     @Test
     public void testGetAll() throws Exception {
         System.out.println("teste getAll");
@@ -148,4 +132,5 @@ public class ManterPostImplTest {
         
         fail("A excecao de getAll com idQuestao nulo nao foi capturado");
     } 
+    */
 }

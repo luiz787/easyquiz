@@ -5,6 +5,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+        <script type="text/javascript" language="JavaScript" src="js/webvalida.js"></script>
         <title>EasyQuiz</title>
 
         <!-- CSS  -->
@@ -179,7 +180,7 @@
                             </div>
                         </div>
                         <div class="card-action">
-                            <button class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important;" form="form1" type="submit" id="responder1">Responder</button>
+                            <button onclick="teste()" class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important;" id="responder1">Responder</button>
                             <a id="forum1" href="#"><b>Forum</b></a>
                         </div>
                     </div>
