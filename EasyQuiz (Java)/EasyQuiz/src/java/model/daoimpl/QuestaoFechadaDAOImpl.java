@@ -46,12 +46,13 @@ public class QuestaoFechadaDAOImpl implements QuestaoFechadaDAO {
 
             Connection connection = JDBCManterConexao.getInstancia().getConexao();
 
-            String sql = "INSERT INTO questaoFechada (cod_questao, txt_alternativa) VALUES(?, ?)";
+            String sql = "INSERT INTO questaoFechada (cod_questao, seq_alternativa, txt_alternativa) VALUES(?, ?, ?)";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             for(int i=0; i<questaoFechada.size(); i++) {
                 pstmt.setLong(1, questaoFechada.get(i).getCod_Questao());
-                pstmt.setString(2, questaoFechada.get(i).getTxt_Alternativa());
+                pstmt.setLong(2, questaoFechada.get(i).getSeq_Alternativa());
+                pstmt.setString(3, questaoFechada.get(i).getTxt_Alternativa());
             }
             pstmt.close();
             connection.close();
@@ -123,7 +124,7 @@ public class QuestaoFechadaDAOImpl implements QuestaoFechadaDAO {
         try {
             Connection connection = JDBCManterConexao.getInstancia().getConexao();
 
-            String sql = "SELECT * FROM questaoFechada ORDER BY seq_alternativa;";
+            String sql = "SELECT * FROM questaoFechada ORDER BY cod_questao;";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();

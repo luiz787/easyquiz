@@ -10,24 +10,17 @@ import java.util.List;
 import model.dao.QuestaoDAO;
 import model.daoimpl.QuestaoDAOImpl;
 import model.domain.Questao;
-import model.domain.QuestaoAberta;
 import model.domain.QuestaoFechada;
 import model.exception.ExcecaoNegocio;
 import model.exception.ExcecaoPersistencia;
 import model.service.ManterQuestao;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
  * @author F43L
  */
 public class ManterQuestaoImplTest {
-    
+    /*
     private static ManterQuestao questaoManagement;
     private static QuestaoDAO questaoDAO;
     private Questao questao;
@@ -60,13 +53,8 @@ public class ManterQuestaoImplTest {
      /*for(Long id: questaoList){
                 questaoDAO.delete(id);
 
+        }
     }
-*/
-    }
-
-    /**
-     * Test of cadastrarQuestao method, of class ManterQuestaoImpl.
-     */
     @Test
     public void testCadastrarQuestao1() throws Exception {
         
@@ -578,6 +566,4 @@ public class ManterQuestaoImplTest {
     /**
      * Test of alterarQuestao method, of class ManterQuestaoImpl.
      */
-    
-    
 }

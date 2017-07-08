@@ -17,19 +17,13 @@ import model.domain.Usuario;
 import model.exception.ExcecaoNegocio;
 import model.exception.ExcecaoPersistencia;
 import model.service.ManterUsuario;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
  * @author Anonymous
  */
 public class ManterUsuarioImplTest {
-    
+    /*
     private static ManterUsuario usuarioManagement;
     private static UsuarioDAO usuarioDAO;
     private Usuario usuario;
@@ -61,7 +55,7 @@ public class ManterUsuarioImplTest {
                 usuarioDAO.delete(id);
             } catch (ExcecaoPersistencia ex) {
                 Logger.getLogger(ManterUsuarioImplTest.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
+            }
     }
     
     @Test
@@ -449,5 +443,5 @@ public class ManterUsuarioImplTest {
         
         fail("Falha não identificada.");
     }  
-
+    */
 }
