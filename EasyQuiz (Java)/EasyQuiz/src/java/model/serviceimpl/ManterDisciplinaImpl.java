@@ -7,6 +7,7 @@ package model.serviceimpl;
 
 import model.service.*;
 import java.util.List;
+import model.dao.DisciplinaDAO;
 import model.domain.Disciplina;
 import model.exception.ExcecaoNegocio;
 import model.exception.ExcecaoPersistencia;
@@ -16,29 +17,36 @@ import model.exception.ExcecaoPersistencia;
  * @author andro
  */
 public class ManterDisciplinaImpl implements ManterDisciplina {
-
+    private final DisciplinaDAO disciplinaDAO;
+    
+    public ManterDisciplinaImpl(DisciplinaDAO disciplinaDAO) {
+        this.disciplinaDAO = disciplinaDAO;
+    }
     @Override
     public void cadastrarDisciplina(Disciplina disciplina) throws ExcecaoPersistencia, ExcecaoNegocio {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        disciplinaDAO.insert(disciplina);
     }
 
     @Override
     public void alterarDisciplina(Disciplina disciplina) throws ExcecaoPersistencia, ExcecaoNegocio {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        disciplinaDAO.update(disciplina);
     }
 
     @Override
     public Disciplina deletarDisciplina(Long cod_Disciplina) throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Disciplina result = disciplinaDAO.delete(cod_Disciplina);
+        return result;
     }
 
     @Override
     public Disciplina getDisciplinaById(Long cod_Disciplina) throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Disciplina result = disciplinaDAO.getDisciplinaById(cod_Disciplina);
+        return result;
     }
 
     @Override
     public List<Disciplina> getAll() throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Disciplina> result = disciplinaDAO.listAll();
+        return result;
     }
 }

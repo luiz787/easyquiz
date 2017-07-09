@@ -25,17 +25,18 @@ public class ManterUsuarioImpl implements ManterUsuario {
     }
     @Override
     public void cadastrarUsuario(Usuario usuario) throws ExcecaoPersistencia, ExcecaoNegocio {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        usuarioDAO.insert(usuario);
     }
 
     @Override
     public void alterarUsuario(Usuario usuario) throws ExcecaoPersistencia, ExcecaoNegocio {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        usuarioDAO.update(usuario);
     }
 
     @Override
     public Usuario deletarUsuario(Long cod_Usuario) throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Usuario result = usuarioDAO.delete(cod_Usuario);
+        return result;
     }
 
     @Override
@@ -46,7 +47,8 @@ public class ManterUsuarioImpl implements ManterUsuario {
 
     @Override
     public List<Usuario> getAll() throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Usuario> result = usuarioDAO.listAll();
+        return result;
     }
 
     @Override

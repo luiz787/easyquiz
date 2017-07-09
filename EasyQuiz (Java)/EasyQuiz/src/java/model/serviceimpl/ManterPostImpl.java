@@ -7,6 +7,7 @@ package model.serviceimpl;
 
 import model.service.*;
 import java.util.List;
+import model.dao.PostDAO;
 import model.domain.Post;
 import model.exception.ExcecaoNegocio;
 import model.exception.ExcecaoPersistencia;
@@ -16,29 +17,31 @@ import model.exception.ExcecaoPersistencia;
  * @author Luiz
  */
 public class ManterPostImpl implements ManterPost {
-
+    private final PostDAO postDAO;
+    
+    public ManterPostImpl(PostDAO postDAO) {
+        this.postDAO = postDAO;
+    }
     @Override
     public void cadastrarPost(Post post) throws ExcecaoPersistencia, ExcecaoNegocio {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void alterarPost(Post post) throws ExcecaoPersistencia, ExcecaoNegocio {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        postDAO.insert(post);
     }
 
     @Override
     public Post deletarPost(Long cod_Post) throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Post result = postDAO.delete(cod_Post);
+        return result;
     }
 
     @Override
     public Post getPostById(Long cod_Post) throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Post result = postDAO.getPostById(cod_Post);
+        return result;
     }
 
     @Override
     public List<Post> getAll() throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Post> result = postDAO.listAll();
+        return result;
     }
 }

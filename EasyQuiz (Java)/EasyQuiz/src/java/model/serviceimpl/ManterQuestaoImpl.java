@@ -27,17 +27,18 @@ public class ManterQuestaoImpl implements ManterQuestao {
 
     @Override
     public void cadastrarQuestao(Questao questao) throws ExcecaoPersistencia, ExcecaoNegocio {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        questaoDAO.insert(questao);
     }
 
     @Override
     public void alterarQuestao(Questao questao) throws ExcecaoPersistencia, ExcecaoNegocio {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        questaoDAO.update(questao);
     }
 
     @Override
     public Questao deletarQuestao(Long cod_Questao) throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Questao result = questaoDAO.delete(cod_Questao);
+        return result;
     }
 
     @Override
@@ -54,6 +55,7 @@ public class ManterQuestaoImpl implements ManterQuestao {
 
     @Override
     public List<Questao> getAll(char cod_Tipo) throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Questao> result = questaoDAO.listAll(cod_Tipo);
+        return result;
     }
 }

@@ -7,6 +7,7 @@ package model.serviceimpl;
 
 import model.service.*;
 import java.util.List;
+import model.dao.DificuldadeDAO;
 import model.domain.Dificuldade;
 import model.exception.ExcecaoPersistencia;
 
@@ -15,14 +16,20 @@ import model.exception.ExcecaoPersistencia;
  * @author andro
  */
 public class ManterDificuldadeImpl implements ManterDificuldade {
-
+    private final DificuldadeDAO dificuldadeDAO;
+    
+    public ManterDificuldadeImpl(DificuldadeDAO dificuldadeDAO) {
+        this.dificuldadeDAO = dificuldadeDAO;
+    }
     @Override
     public Dificuldade getDificuldadeById(Long cod_Dificuldade) throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Dificuldade result = dificuldadeDAO.getDificuldadeById(cod_Dificuldade);
+        return result;
     }
 
     @Override
     public List<Dificuldade> listAll() throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Dificuldade> result = dificuldadeDAO.listAll();
+        return result;
     }
 }

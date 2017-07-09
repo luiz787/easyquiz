@@ -25,22 +25,24 @@ public class ManterSessaoImpl implements ManterSessao {
     }
     @Override
     public void cadastrarSessao(Sessao sessao) throws ExcecaoPersistencia, ExcecaoNegocio {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        sessaoDAO.insert(sessao);
     }
 
     @Override
     public void alterarSessao(Sessao sessao) throws ExcecaoPersistencia, ExcecaoNegocio {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        sessaoDAO.update(sessao);
     }
 
     @Override
     public List<Sessao> getSessaoByUsuario(Long cod_Usuario) throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Sessao> result = sessaoDAO.getSessaoByUsuario(cod_Usuario);
+        return result;
     }
 
     @Override
     public List<Sessao> getAll() throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Sessao> result = sessaoDAO.listAll();
+        return result;
     }
 
     @Override
