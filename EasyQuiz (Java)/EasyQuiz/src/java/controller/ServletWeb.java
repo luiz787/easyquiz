@@ -19,8 +19,11 @@ public class ServletWeb extends HttpServlet {
             jsp = ListarQuestao.execute(request);
         else if (acao.equals("PaginaAnterior"))
             jsp = ListarQuestao.execute(request);
+        else if (acao.equals("GravarQuestaoFechadaResposta"))
+            jsp = GravarQuestaoFechadaResposta.execute(request);
+        
         
         RequestDispatcher rd = request.getRequestDispatcher(jsp);
-        rd.forward(request, response);
+        rd.forward(request, response);  
     }    
 }

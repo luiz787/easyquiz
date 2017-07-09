@@ -21,29 +21,33 @@ public class ListarQuestao {
                     new ManterQuestaoFechadaImpl(QuestaoFechadaDAOImpl.getInstance());
             List<QuestaoFechada> listQuestaoFechada = manterQuestaoFechada.getAll();
             
-            if (listQuestao != null && listQuestaoFechada != null) {
+            if (listQuestao != null) {
                 
                 request.setAttribute("listQuestao", listQuestao);
                 request.setAttribute("listQuestaoFechada", listQuestaoFechada);
-                if(request.getAttribute("numeroPagina") == null) {
-                    request.setAttribute("numeroPagina", 0);
+                
+                if(request.getSession().getAttribute("numeroPagina")==null) {
+                    request.getSession().setAttribute("numeroPagina", 0);
+                    System.out.println("Criou numeroPagina");
                 } else {
                     String acao = request.getParameter("acao");
-                    System.out.println("Que bosta");
-                    if(acao.equals("ProximaPagina")) {
-                        int numeroPagina = (Integer) request.getAttribute("numeroPagina");
-                        System.out.println("(Proxima)ListarQuestao: "+numeroPagina);
-                        request.setAttribute("numeroPagina", ++numeroPagina);
-                    } else if(acao.equals("PaginaAnterior")) {
-                        int numeroPagina = (Integer) request.getAttribute("numeroPagina");
-                        System.out.println("(Anterior)ListarQuestao: "+numeroPagina);
-                        request.setAttribute("numeroPagina", --numeroPagina);
+                    System.out.println("ACAO: "+acao);
+                    if(acao!=null) {
+                        if(acao.equals("ProximaPagina")) {
+                            int numeroPagina = (Integer) request.getSession().getAttribute("numeroPagina");
+                            System.out.println("ProximaPagina: "+numeroPagina);
+                            request.getSession().setAttribute("numeroPagina", ++numeroPagina);
+                        } else if(acao.equals("PaginaAnterior")) {
+                            int numeroPagina = (Integer) request.getSession().getAttribute("numeroPagina");
+                            System.out.println("PaginaAnterior"+numeroPagina);
+                            request.getSession().setAttribute("numeroPagina", --numeroPagina);
+                        }
                     }
-                    
                 }
+                System.out.println("KKKKKKKKKKKKKK");
                 jsp = "/TelaQuestoes.jsp";
             } else {
-                String erro = "Não existe Clientes!";
+                String erro = "Não existe Questoes!";
                 request.setAttribute("erro", erro);
                 jsp = "/erro.jsp";
             }

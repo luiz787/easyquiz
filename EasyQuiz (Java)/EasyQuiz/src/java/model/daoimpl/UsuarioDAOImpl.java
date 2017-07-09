@@ -50,7 +50,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                     + "dat_nascimento, "
                     + "txt_email, "
                     + "txt_senha"
-                    + ") VALUES(?, ?, ?, ?, ?) RETURNING cod_usuario";
+                    + ") VALUES(?, ?, ?, ?, md5(?)) RETURNING cod_usuario";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setLong(1, usuario.getPerfil().getCod_Perfil());
@@ -86,7 +86,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                     + "nom_usuario=?, "
                     + "dat_nascimento=?, "
                     + "txt_email=?, "
-                    + "txt_senha=?"
+                    + "txt_senha = md5(?)"
                     + " WHERE cod_usuario = ?;";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
@@ -197,6 +197,42 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             connection.close();
 
             return listAll;
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ExcecaoPersistencia(ex);
+        }
+    }
+
+    @Override
+    public Usuario getUsuarioByEmailSenha(String email, String senha) throws ExcecaoPersistencia {
+        try {
+            Connection connection = JDBCManterConexao.getInstancia().getConexao();
+
+            String sql = "SELECT * FROM usuario WHERE txt_email = ? AND txt_senha = md5(?)";
+
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, email);
+            pstmt.setString(2, senha);
+            ResultSet rs = pstmt.executeQuery();
+
+            Usuario usuario = null;
+            PerfilDAO perfilDAOImpl = PerfilDAOImpl.getInstance();
+            if (rs.next()) {
+                usuario = new Usuario();
+                usuario.setCod_Usuario(rs.getLong("cod_usuario"));
+                Perfil perfil = perfilDAOImpl.getPerfilById(rs.getLong("cod_perfil"));
+                usuario.setPerfil(perfil);
+                usuario.setNom_Usuario(rs.getString("nom_usuario"));
+                usuario.setDat_Nascimento(rs.getDate("dat_nascimento"));
+                usuario.setTxt_Email(rs.getString("txt_email"));
+                usuario.setTxt_Senha(rs.getString("txt_senha"));
+            }
+
+            rs.close();
+            pstmt.close();
+            connection.close();
+
+            return usuario;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);
