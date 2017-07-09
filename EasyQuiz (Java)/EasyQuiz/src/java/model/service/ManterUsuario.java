@@ -20,5 +20,6 @@ public interface ManterUsuario {
     public void alterarUsuario(Usuario usuario) throws ExcecaoPersistencia, ExcecaoNegocio;
     public Usuario deletarUsuario(Long cod_Usuario) throws ExcecaoPersistencia;
     public Usuario getUsuarioById(Long cod_Usuario) throws ExcecaoPersistencia;
+    public Usuario getUsuarioByEmailSenha(String email, String senha) throws ExcecaoPersistencia;
     public List<Usuario> getAll() throws ExcecaoPersistencia;
 }

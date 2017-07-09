@@ -1,3 +1,7 @@
+<%@page import="java.time.ZoneId"%>
+<%@page import="java.sql.Timestamp"%>
+<%@page import="java.time.Instant"%>
+<%@page import="controller.Login"%>
 <%@page import="model.domain.QuestaoFechada"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Enumeration"%>
@@ -6,13 +10,22 @@
 <%@page import="controller.ListarQuestao"%>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
+<%
+    
+    
+    int logado = Login.validarSessao(request, response);
+%>
+
 
 <%
-    ListarQuestao.execute(request);
+    if(request.getSession().getAttribute("numeroPagina")==null) {
+        ListarQuestao.execute(request);
+    }
+    
     List<Questao> listQuestao = (List<Questao>) request.getAttribute("listQuestao");
     List<QuestaoFechada> listQuestaoFechada = (List<QuestaoFechada>) request.getAttribute("listQuestaoFechada");
     
-    int numeroPagina = (Integer) request.getAttribute("numeroPagina");
+    int numeroPagina = (Integer) request.getSession().getAttribute("numeroPagina");
     System.out.println("NumeroPagina: "+numeroPagina);
     int maxQuestao;
     if((listQuestao.size()-(numeroPagina*5))<5) {
@@ -158,7 +171,6 @@
 
         <div class="container" >
 <%
-        int idAlternativa=0;
         for(int i=(5*numeroPagina); i<maxQuestao; i++) {
             Questao questao = listQuestao.get(i);
             if(questao.getCod_Tipo()=='F') {
@@ -190,25 +202,33 @@
                                 <p><b><%= questao.getTxt_Enunciado() %></b></p>
                             </div>
                             <div id='<%="alternativas"+i%>'>
-                                <form method="post" id='<%="form"+i%>'>
+                                <form method="post" name='<%="formInserirResposta"+i%>'>
+                                    <input type='hidden' name='table' value='QuestaoFechadaResposta'>
+                                    <input type='hidden' name='acao' value='gravar'>
+                                    <input type='hidden' name='logado' value='<%= logado %>'>
+                                    <input type='hidden' name='questao' value='<%= questao.getCod_Questao() %>'>
+                                    <input type='hidden' name='tipoQuestao' value='<%= questao.getCod_Tipo() %>'>
+                                    <input type='hidden' name='respostaCorreta' value='<%= questao.getSeq_Questao_Correta() %>'>
+                                    <input type='hidden' name='resposta' value=''>
 <%
                                     char letra='a';
                                     for(int j=0; j<alternativas.size(); j++) {
                                         
 %>
                                     <p>
-                                        <input class="with-gap" name='<%="grupo"+i%>' type="radio" id='<%="alternativa"+idAlternativa%>'  />
-                                        <label for='<%="alternativa"+idAlternativa%>'><b><%=((char)(letra+j))+")"%></b> <%= alternativas.get(j).getTxt_Alternativa() %> </label>
+                                        <input class="with-gap" name='<%="grupo"+i%>' type="radio" id='<%="grupo"+i+"alternativa"+j%>'  />
+                                        <label id='<%="grupo"+i+"txtAlternativa"+j%>' for='<%="grupo"+i+"alternativa"+j%>'><b><%=((char)(letra+j))+")"%></b> <%= alternativas.get(j).getTxt_Alternativa() %> </label>
                                     </p>
 <%
-                                        idAlternativa++;
                                     }
 %>
                                 </form>
+                                <br>
+                                <h6 id='<%="resultado"+i%>' ></h6>
                             </div>
                         </div>
                         <div class="card-action">
-                            <button onclick="teste()" class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important;" id='<%="responder"+i%>'>Responder</button>
+                            <button onclick="Responder(document.<%="formInserirResposta"+i%>)" class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important;" id='<%="responder"+i%>'>Responder</button>
                             <a id='<%="forum"+i%>' href="#"><b>Forum</b></a>
                         </div>
                     </div>
@@ -239,7 +259,13 @@
                                 <p><b><%= questao.getTxt_Enunciado() %></b></p>
                             </div>
                             <div id='<%="respostaAberta"+i%>'>
-                                <form action="post" id='<%="form"+i%>'>
+                                <form action="post" id='<%="formInserirResposta"+i%>'>
+                                    <input type='hidden' name='table' value='QuestaoAbertaResposta'>
+                                    <input type='hidden' name='logado' value='<%= logado %>'>
+                                    <input type='hidden' name='questao' value='<%= questao.getCod_Questao() %>'>
+                                    <input type='hidden' name='tipoQuestao' value='<%= questao.getCod_Tipo() %>'>
+                                    <input type='hidden' name='respostaCorreta' value='<%= questao.getTxt_Resposta_Aberta() %>'>
+                                    <input type='hidden' name='resposta' value=''>
                                     <div class="row">
                                         <div class="input-field col s12">
                                             <textarea id='<%="textArea"+i%>' class="materialize-textarea"></textarea>
@@ -251,7 +277,7 @@
                         </div>
 
                         <div class="card-action">
-                            <button onclick="teste()" class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important;" id='<%="responder"+i%>'>Responder</button>
+                            <button onclick="Responder(document.<%="formInserirResposta"+i%>)" class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important;" id='<%="responder"+i%>'>Responder</button>
                             <a id='<%="forum"+i%>' href="#"><b>Forum</b></a>
                         </div>
 
@@ -267,7 +293,9 @@
         <h6 style="text-align: center;">Página: <%=(numeroPagina+1)%></h6>
         <form name="formPagina" action='post'>
             <input type='hidden' name='acao' value=''>
-            <button onclick="proximaPagina(document.formPagina)" class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important; margin-left: 70%; " id='teste75'>Próxima Página</button>
+            <input type='hidden' name='numeroPagina' value='<%=(numeroPagina+1)%>'>
+            <input type='hidden' name='maxQuestao' value='<%=maxQuestao%>'>
+            <button onclick="proximaPagina(document.formPagina)" class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important; margin-left: 70%;" id='teste75'>Próxima Página</button>
             <button onclick="paginaAnterior(document.formPagina)" class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important;" id='1'>Página Anterior</button>
         </form>
         </div>

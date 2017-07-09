@@ -5,8 +5,10 @@
  */
 package model.serviceimpl;
 
+import java.time.Instant;
 import model.service.*;
 import java.util.List;
+import model.dao.SessaoDAO;
 import model.domain.Sessao;
 import model.exception.ExcecaoNegocio;
 import model.exception.ExcecaoPersistencia;
@@ -16,6 +18,11 @@ import model.exception.ExcecaoPersistencia;
  * @author aluno
  */
 public class ManterSessaoImpl implements ManterSessao {
+    private final SessaoDAO sessaoDAO;
+    
+    public ManterSessaoImpl(SessaoDAO sessaoDAO) {
+        this.sessaoDAO = sessaoDAO;
+    }
     @Override
     public void cadastrarSessao(Sessao sessao) throws ExcecaoPersistencia, ExcecaoNegocio {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -34,5 +41,11 @@ public class ManterSessaoImpl implements ManterSessao {
     @Override
     public List<Sessao> getAll() throws ExcecaoPersistencia {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Sessao getSessaoByUsuarioData(Long cod_Usuario, Instant dat_Inicio) throws ExcecaoPersistencia {
+        Sessao result = sessaoDAO.getSessaoByUsuarioData(cod_Usuario, dat_Inicio);
+        return result;
     }
 }

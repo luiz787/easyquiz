@@ -42,7 +42,8 @@ public class ManterQuestaoImpl implements ManterQuestao {
 
     @Override
     public Questao getQuestaoById(Long cod_Questao) throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Questao result = questaoDAO.getQuestaoById(cod_Questao);
+        return result;
     }
 
     @Override

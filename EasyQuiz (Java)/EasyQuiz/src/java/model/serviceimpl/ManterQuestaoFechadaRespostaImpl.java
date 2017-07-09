@@ -7,6 +7,7 @@ package model.serviceimpl;
 
 import model.service.*;
 import java.util.List;
+import model.dao.QuestaoFechadaRespostaDAO;
 import model.domain.QuestaoFechadaResposta;
 import model.exception.ExcecaoNegocio;
 import model.exception.ExcecaoPersistencia;
@@ -16,9 +17,15 @@ import model.exception.ExcecaoPersistencia;
  * @author aluno
  */
 public class ManterQuestaoFechadaRespostaImpl implements ManterQuestaoFechadaResposta {
+    private final QuestaoFechadaRespostaDAO questaoFechadaRespostaDAO;
+    
+    public ManterQuestaoFechadaRespostaImpl(QuestaoFechadaRespostaDAO questaoFechadaRespostaDAO) {
+        this.questaoFechadaRespostaDAO = questaoFechadaRespostaDAO;
+    }
+    
     @Override
     public void cadastrarQuestaoFechadaResposta(QuestaoFechadaResposta questaoFechadaResposta) throws ExcecaoPersistencia, ExcecaoNegocio {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        questaoFechadaRespostaDAO.insert(questaoFechadaResposta);
     }
 
     @Override
