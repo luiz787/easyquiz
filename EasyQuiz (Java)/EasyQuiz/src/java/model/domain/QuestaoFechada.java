@@ -10,16 +10,16 @@ package model.domain;
  * @author Luiz
  */
 public class QuestaoFechada {
-    private Long cod_Questao;
+    private Questao questao;
     private Long seq_Alternativa;
     private String txt_Alternativa;
 
-    public Long getCod_Questao() {
-        return cod_Questao;
+    public Questao getQuestao() {
+        return questao;
     }
 
-    public void setCod_Questao(Long cod_Questao) {
-        this.cod_Questao = cod_Questao;
+    public void setQuestao(Questao questao) {
+        this.questao = questao;
     }
 
     public Long getSeq_Alternativa() {

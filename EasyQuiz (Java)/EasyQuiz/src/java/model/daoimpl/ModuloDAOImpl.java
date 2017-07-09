@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.dao.DisciplinaDAO;
 import model.dao.ModuloDAO;
+import model.domain.Disciplina;
 import model.domain.Modulo;
 import model.exception.ExcecaoPersistencia;
 import util.db.JDBCManterConexao;
@@ -50,7 +52,7 @@ public class ModuloDAOImpl implements ModuloDAO {
             String sql = "INSERT INTO modulo (cod_disciplina, nom_modulo) VALUES(?, ?) RETURNING cod_modulo";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setLong(1, modulo.getCod_Disciplina());
+            pstmt.setLong(1, modulo.getDisciplina().getCod_Disciplina());
             pstmt.setString(2, modulo.getNom_Modulo());
             
             ResultSet rs = pstmt.executeQuery();
@@ -129,11 +131,13 @@ public class ModuloDAOImpl implements ModuloDAO {
             ResultSet rs = pstmt.executeQuery();
 
             Modulo modulo = null;
+            DisciplinaDAO disciplinaDAOImpl = DisciplinaDAOImpl.getInstance();
             if (rs.next()) {
                 modulo = new Modulo();
-                modulo.setCod_Disciplina(rs.getLong("cod_disciplina"));
+                Disciplina disciplina = disciplinaDAOImpl.getDisciplinaById(rs.getLong("cod_disciplina"));
+                modulo.setDisciplina(disciplina);
                 modulo.setCod_Modulo(rs.getLong("cod_modulo"));
-                modulo.setNom_Modulo(rs.getString("des_modulo"));
+                modulo.setNom_Modulo(rs.getString("nom_modulo"));
             }
 
             rs.close();
@@ -158,12 +162,14 @@ public class ModuloDAOImpl implements ModuloDAO {
             ResultSet rs = pstmt.executeQuery();
 
             List<Modulo> listAll = new ArrayList<>();
+            DisciplinaDAO disciplinaDAOImpl = DisciplinaDAOImpl.getInstance();
             if (rs.next()) {
                 do {
                     Modulo modulo = new Modulo();
-                    modulo.setCod_Disciplina(rs.getLong("cod_disciplina"));
+                    Disciplina disciplina = disciplinaDAOImpl.getDisciplinaById(rs.getLong("cod_disciplina"));
+                    modulo.setDisciplina(disciplina);
                     modulo.setCod_Modulo(rs.getLong("cod_modulo"));
-                    modulo.setNom_Modulo(rs.getString("des_modulo"));
+                    modulo.setNom_Modulo(rs.getString("nom_modulo"));
                     listAll.add(modulo);
                 } while (rs.next());
             }

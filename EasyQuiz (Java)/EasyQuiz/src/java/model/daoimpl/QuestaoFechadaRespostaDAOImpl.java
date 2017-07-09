@@ -14,7 +14,9 @@ import model.dao.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.domain.Questao;
 import model.domain.QuestaoFechadaResposta;
+import model.domain.Sessao;
 import model.exception.ExcecaoPersistencia;
 import util.db.JDBCManterConexao;
 
@@ -48,9 +50,9 @@ public class QuestaoFechadaRespostaDAOImpl implements QuestaoFechadaRespostaDAO 
             String sql = "INSERT INTO questaoFechadaResposta (dat_inicio, cod_usuario, cod_questao, seq_questao_resposta) VALUES(?, ?, ?, ?)";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setTimestamp(1, java.sql.Timestamp.from(questaoFechadaResposta.getDat_Inicio()));
-            pstmt.setLong(2, questaoFechadaResposta.getCod_Usuario());
-            pstmt.setLong(3, questaoFechadaResposta.getCod_Questao());
+            pstmt.setTimestamp(1, java.sql.Timestamp.from(questaoFechadaResposta.getSessao().getDat_Inicio()));
+            pstmt.setLong(2, questaoFechadaResposta.getSessao().getUsuario().getCod_Usuario());
+            pstmt.setLong(3, questaoFechadaResposta.getQuestao().getCod_Questao());
             pstmt.setLong(4, questaoFechadaResposta.getSeq_Questao_Resposta());
             
             pstmt.executeUpdate();
@@ -74,12 +76,17 @@ public class QuestaoFechadaRespostaDAOImpl implements QuestaoFechadaRespostaDAO 
             ResultSet rs = pstmt.executeQuery();
 
             List<QuestaoFechadaResposta> listAll = new ArrayList<>();
+            SessaoDAO sessaoDAOImpl = SessaoDAOImpl.getInstance();
+            QuestaoDAO questaoDAOImpl = QuestaoDAOImpl.getInstance();
             if (rs.next()) {
                 do {
                     QuestaoFechadaResposta questaoFechadaResposta = new QuestaoFechadaResposta();
-                    questaoFechadaResposta.setDat_Inicio((rs.getTimestamp("dat_inicio")).toInstant());
-                    questaoFechadaResposta.setCod_Usuario(rs.getLong("cod_usuario"));
-                    questaoFechadaResposta.setCod_Questao(rs.getLong("cod_questao"));
+                    
+                    Sessao sessao = sessaoDAOImpl.getSessaoByUsuarioData(
+                            rs.getLong("cod_usuario"), rs.getTimestamp("dat_inicio").toInstant());
+                    questaoFechadaResposta.setSessao(sessao);
+                    Questao questao = questaoDAOImpl.getQuestaoById(rs.getLong("cod_questao"));
+                    questaoFechadaResposta.setQuestao(questao);
                     questaoFechadaResposta.setSeq_Questao_Resposta(rs.getLong("seq_questao_resposta"));
                     listAll.add(questaoFechadaResposta);
                 } while (rs.next());

@@ -15,7 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.dao.DificuldadeDAO;
+import model.dao.DisciplinaDAO;
+import model.dao.ModuloDAO;
 import model.dao.QuestaoDAO;
+import model.domain.Dificuldade;
+import model.domain.Disciplina;
+import model.domain.Modulo;
 
 public class QuestaoDAOImpl implements QuestaoDAO {
     private static QuestaoDAOImpl questaoDAO = null;
@@ -53,9 +59,9 @@ public class QuestaoDAOImpl implements QuestaoDAO {
                     + ") VALUES(?, ?, ?, ?, ?, ?, ?, ?) RETURNING cod_questao";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setLong(1, questao.getCod_Dificuldade());
-            pstmt.setLong(2, questao.getCod_Disciplina());
-            pstmt.setLong(3, questao.getCod_Modulo());
+            pstmt.setLong(1, questao.getDificuldade().getCod_Dificuldade());
+            pstmt.setLong(2, questao.getDisciplina().getCod_Disciplina());
+            pstmt.setLong(3, questao.getModulo().getCod_Modulo());
             pstmt.setString(4, String.valueOf(questao.getCod_Tipo()));
             pstmt.setString(5, questao.getTxt_Enunciado());
             if(questao.getImg_Enunciado()!=null) {
@@ -110,9 +116,9 @@ public class QuestaoDAOImpl implements QuestaoDAO {
                     + " WHERE cod_questao = ?;";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setLong(1, questao.getCod_Dificuldade());
-            pstmt.setLong(2, questao.getCod_Disciplina());
-            pstmt.setLong(3, questao.getCod_Modulo());
+            pstmt.setLong(1, questao.getDificuldade().getCod_Dificuldade());
+            pstmt.setLong(2, questao.getDisciplina().getCod_Disciplina());
+            pstmt.setLong(3, questao.getModulo().getCod_Modulo());
             pstmt.setString(4, String.valueOf(questao.getCod_Tipo()));
             pstmt.setString(5, questao.getTxt_Enunciado());
             if(questao.getImg_Enunciado()!=null) {
@@ -175,13 +181,20 @@ public class QuestaoDAOImpl implements QuestaoDAO {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setLong(1, cod_Questao);
             ResultSet rs = pstmt.executeQuery();
+            
             Questao questao = null;
+            DificuldadeDAO dificuldadeDAOImpl = DificuldadeDAOImpl.getInstance();
+            DisciplinaDAO disciplinaDAOImpl = DisciplinaDAOImpl.getInstance();
+            ModuloDAO moduloDAOImpl = ModuloDAOImpl.getInstance();
             if (rs.next()) {
                 questao = new Questao();
                 questao.setCod_Questao(rs.getLong("cod_questao"));
-                questao.setCod_Dificuldade(rs.getLong("cod_dificuldade"));
-                questao.setCod_Disciplina(rs.getLong("cod_disciplina"));
-                questao.setCod_Modulo(rs.getLong("cod_modulo"));
+                Dificuldade dificuldade = dificuldadeDAOImpl.getDificuldadeById(rs.getLong("cod_dificuldade"));
+                questao.setDificuldade(dificuldade);
+                Disciplina disciplina = disciplinaDAOImpl.getDisciplinaById(rs.getLong("cod_disciplina"));
+                questao.setDisciplina(disciplina);
+                Modulo modulo = moduloDAOImpl.getModuloById(rs.getLong("cod_modulo"));
+                questao.setModulo(modulo);
                 questao.setCod_Tipo(rs.getString("cod_tipo").charAt(0));
                 questao.setTxt_Enunciado(rs.getString("txt_enunciado"));
                 questao.setImg_Enunciado((BufferedImage) rs.getBlob("img_enunciado"));
@@ -211,13 +224,19 @@ public class QuestaoDAOImpl implements QuestaoDAO {
             ResultSet rs = pstmt.executeQuery();
 
             List<Questao> listAll = new ArrayList<>();
+            DificuldadeDAO dificuldadeDAOImpl = DificuldadeDAOImpl.getInstance();
+            DisciplinaDAO disciplinaDAOImpl = DisciplinaDAOImpl.getInstance();
+            ModuloDAO moduloDAOImpl = ModuloDAOImpl.getInstance();
             if (rs.next()) {
                 do {
                     Questao questao = new Questao();
                     questao.setCod_Questao(rs.getLong("cod_questao"));
-                    questao.setCod_Dificuldade(rs.getLong("cod_dificuldade"));
-                    questao.setCod_Disciplina(rs.getLong("cod_disciplina"));
-                    questao.setCod_Modulo(rs.getLong("cod_modulo"));
+                    Dificuldade dificuldade = dificuldadeDAOImpl.getDificuldadeById(rs.getLong("cod_dificuldade"));
+                    questao.setDificuldade(dificuldade);
+                    Disciplina disciplina = disciplinaDAOImpl.getDisciplinaById(rs.getLong("cod_disciplina"));
+                    questao.setDisciplina(disciplina);
+                    Modulo modulo = moduloDAOImpl.getModuloById(rs.getLong("cod_modulo"));
+                    questao.setModulo(modulo);
                     questao.setCod_Tipo(rs.getString("cod_tipo").charAt(0));
                     questao.setTxt_Enunciado(rs.getString("txt_enunciado"));
                     questao.setImg_Enunciado((BufferedImage) rs.getBlob("img_enunciado"));
@@ -249,13 +268,19 @@ public class QuestaoDAOImpl implements QuestaoDAO {
             ResultSet rs = pstmt.executeQuery();
 
             List<Questao> listAll = new ArrayList<>();
+            DificuldadeDAO dificuldadeDAOImpl = DificuldadeDAOImpl.getInstance();
+            DisciplinaDAO disciplinaDAOImpl = DisciplinaDAOImpl.getInstance();
+            ModuloDAO moduloDAOImpl = ModuloDAOImpl.getInstance();
             if (rs.next()) {
                 do {
                     Questao questao = new Questao();
                     questao.setCod_Questao(rs.getLong("cod_questao"));
-                    questao.setCod_Dificuldade(rs.getLong("cod_dificuldade"));
-                    questao.setCod_Disciplina(rs.getLong("cod_disciplina"));
-                    questao.setCod_Modulo(rs.getLong("cod_modulo"));
+                    Dificuldade dificuldade = dificuldadeDAOImpl.getDificuldadeById(rs.getLong("cod_dificuldade"));
+                    questao.setDificuldade(dificuldade);
+                    Disciplina disciplina = disciplinaDAOImpl.getDisciplinaById(rs.getLong("cod_disciplina"));
+                    questao.setDisciplina(disciplina);
+                    Modulo modulo = moduloDAOImpl.getModuloById(rs.getLong("cod_modulo"));
+                    questao.setModulo(modulo);
                     questao.setCod_Tipo(rs.getString("cod_tipo").charAt(0));
                     questao.setTxt_Enunciado(rs.getString("txt_enunciado"));
                     questao.setImg_Enunciado((BufferedImage) rs.getBlob("img_enunciado"));

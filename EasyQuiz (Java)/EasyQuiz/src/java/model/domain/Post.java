@@ -13,7 +13,7 @@ import java.time.Instant;
  */
 public class Post {
     private Long cod_Post;
-    private Long cod_Questao;
+    private Questao questao;
     private String txt_Conteudo;
     private Instant dat_Criacao;
 
@@ -25,12 +25,12 @@ public class Post {
         this.cod_Post = cod_Post;
     }
 
-    public Long getCod_Questao() {
-        return cod_Questao;
+    public Questao getQuestao() {
+        return questao;
     }
 
-    public void setCod_Questao(Long cod_Questao) {
-        this.cod_Questao = cod_Questao;
+    public void setQuestao(Questao questao) {
+        this.questao = questao;
     }
 
     public String getTxt_Conteudo() {

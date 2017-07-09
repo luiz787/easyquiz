@@ -12,34 +12,27 @@ import java.time.Instant;
  * @author Aluno
  */
 public class QuestaoFechadaResposta {
-    private Instant dat_Inicio;
-    private Long cod_Usuario;
-    private Long cod_Questao;
+    private Sessao sessao;
+    private Questao questao;
     private Long seq_Questao_Resposta;
 
-    public Instant getDat_Inicio() {
-        return dat_Inicio;
+    public Sessao getSessao() {
+        return sessao;
     }
 
-    public void setDat_Inicio(Instant dat_Inicio) {
-        this.dat_Inicio = dat_Inicio;
+    public void setSessao(Sessao sessao) {
+        this.sessao = sessao;
     }
 
-    public Long getCod_Usuario() {
-        return cod_Usuario;
+    public Questao getQuestao() {
+        return questao;
     }
 
-    public void setCod_Usuario(Long cod_Usuario) {
-        this.cod_Usuario = cod_Usuario;
+    public void setQuestao(Questao questao) {
+        this.questao = questao;
     }
 
-    public Long getCod_Questao() {
-        return cod_Questao;
-    }
-
-    public void setCod_Questao(Long cod_Questao) {
-        this.cod_Questao = cod_Questao;
-    }
+    
 
     public Long getSeq_Questao_Resposta() {
         return seq_Questao_Resposta;

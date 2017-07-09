@@ -14,23 +14,14 @@ import java.awt.image.BufferedImage;
 public class Questao { //serializable?
 
     private Long cod_Questao;
-    private Long cod_Dificuldade;
-    private Long cod_Disciplina;
-    private Long cod_Modulo;
+    private Dificuldade dificuldade;
+    private Disciplina disciplina;
+    private Modulo modulo;
     private char cod_Tipo;
     private String txt_Enunciado;
     private BufferedImage img_Enunciado;
     private Long seq_Questao_Correta;
     private String txt_Resposta_Aberta;
-    
-    /*
-    private Long id;
-    private String enunciado;
-    private BufferedImage imagem; //Avaliar como a imagem será armazenada
-    private int dificuldade;
-    private String disciplina;
-    private char tipo; //Aberta (A) ou Fechada (F)
-    */
 
     public Long getCod_Questao() {
         return cod_Questao;
@@ -40,30 +31,29 @@ public class Questao { //serializable?
         this.cod_Questao = cod_Questao;
     }
 
-    public Long getCod_Dificuldade() {
-        return cod_Dificuldade;
+    public Dificuldade getDificuldade() {
+        return dificuldade;
     }
 
-    public void setCod_Dificuldade(Long cod_Dificuldade) {
-        this.cod_Dificuldade = cod_Dificuldade;
+    public void setDificuldade(Dificuldade dificuldade) {
+        this.dificuldade = dificuldade;
     }
 
-    public Long getCod_Disciplina() {
-        return cod_Disciplina;
+    public Disciplina getDisciplina() {
+        return disciplina;
     }
 
-    public void setCod_Disciplina(Long cod_Disciplina) {
-        this.cod_Disciplina = cod_Disciplina;
+    public void setDisciplina(Disciplina disciplina) {
+        this.disciplina = disciplina;
     }
 
-    public Long getCod_Modulo() {
-        return cod_Modulo;
+    public Modulo getModulo() {
+        return modulo;
     }
 
-    public void setCod_Modulo(Long cod_Modulo) {
-        this.cod_Modulo = cod_Modulo;
+    public void setModulo(Modulo modulo) {
+        this.modulo = modulo;
     }
-
     
 
     public char getCod_Tipo() {
