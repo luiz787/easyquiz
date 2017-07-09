@@ -30,6 +30,7 @@ public class ManterQuestaoFechadaRespostaImpl implements ManterQuestaoFechadaRes
 
     @Override
     public List<QuestaoFechadaResposta> getAll() throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<QuestaoFechadaResposta> result = questaoFechadaRespostaDAO.listAll();
+        return result;
     }
 }

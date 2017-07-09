@@ -7,6 +7,7 @@ package model.serviceimpl;
 
 import model.service.*;
 import java.util.List;
+import model.dao.PerfilDAO;
 import model.domain.Perfil;
 import model.exception.ExcecaoPersistencia;
 
@@ -15,14 +16,20 @@ import model.exception.ExcecaoPersistencia;
  * @author andro
  */
 public class ManterPerfilImpl implements ManterPerfil {
-
+    private final PerfilDAO perfilDAO;
+    
+    public ManterPerfilImpl(PerfilDAO perfilDAO) {
+        this.perfilDAO = perfilDAO;
+    }
     @Override
     public Perfil getPerfilById(Long cod_Perfil) throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Perfil result = perfilDAO.getPerfilById(cod_Perfil);
+        return result;
     }
 
     @Override
     public List<Perfil> getAll() throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Perfil> result = perfilDAO.listAll();
+        return result;
     }
 }

@@ -7,6 +7,7 @@ package model.serviceimpl;
 
 import model.service.*;
 import java.util.List;
+import model.dao.ModuloDAO;
 import model.domain.Modulo;
 import model.exception.ExcecaoNegocio;
 import model.exception.ExcecaoPersistencia;
@@ -16,29 +17,36 @@ import model.exception.ExcecaoPersistencia;
  * @author andro
  */
 public class ManterModuloImpl implements ManterModulo {
-
+    private final ModuloDAO moduloDAO;
+    
+    public ManterModuloImpl(ModuloDAO moduloDAO) {
+        this.moduloDAO = moduloDAO;
+    }
     @Override
     public void cadastrarModulo(Modulo modulo) throws ExcecaoPersistencia, ExcecaoNegocio {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        moduloDAO.insert(modulo);
     }
 
     @Override
     public void alterarModulo(Modulo modulo) throws ExcecaoPersistencia, ExcecaoNegocio {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        moduloDAO.update(modulo);
     }
 
     @Override
     public Modulo deletarModulo(Long cod_Modulo) throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Modulo result = moduloDAO.delete(cod_Modulo);
+        return result;
     }
 
     @Override
     public Modulo getModuloById(Long cod_Modulo) throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Modulo result = moduloDAO.getModuloById(cod_Modulo);
+        return result;
     }
 
     @Override
     public List<Modulo> getAll() throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Modulo> result = moduloDAO.listAll();
+        return result;
     }
 }

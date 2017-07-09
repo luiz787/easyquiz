@@ -26,17 +26,19 @@ public class ManterQuestaoFechadaImpl implements ManterQuestaoFechada {
 
     @Override
     public void cadastrarQuestaoFechada(List<QuestaoFechada> questoesFechada) throws ExcecaoPersistencia, ExcecaoNegocio {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        questaoFechadaDAO.insert(questoesFechada);
     }
 
     @Override
     public List<QuestaoFechada> deletarQuestaoFechada(Long cod_Questao) throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<QuestaoFechada> result = questaoFechadaDAO.delete(cod_Questao);
+        return result;
     }
 
     @Override
     public List<QuestaoFechada> getAll(Long cod_Questao) throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<QuestaoFechada> result = questaoFechadaDAO.listAll(cod_Questao);
+        return result;
     }
 
     @Override
