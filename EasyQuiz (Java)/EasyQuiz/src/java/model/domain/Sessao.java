@@ -12,17 +12,19 @@ import java.time.Instant;
  * @author Aluno
  */
 public class Sessao {
-    private Long cod_Usuario;
+    private Usuario usuario;
     private Instant dat_Inicio;
     private Instant dat_Fim;
 
-    public Long getCod_Usuario() {
-        return cod_Usuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setCod_Usuario(Long cod_Usuario) {
-        this.cod_Usuario = cod_Usuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
+
+    
 
     public Instant getDat_Inicio() {
         return dat_Inicio;

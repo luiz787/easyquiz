@@ -7,6 +7,7 @@ package model.serviceimpl;
 
 import model.service.*;
 import java.util.List;
+import model.dao.QuestaoFechadaDAO;
 import model.domain.Questao;
 import model.domain.QuestaoFechada;
 import model.exception.ExcecaoNegocio;
@@ -17,6 +18,11 @@ import model.exception.ExcecaoPersistencia;
  * @author andro
  */
 public class ManterQuestaoFechadaImpl implements ManterQuestaoFechada {
+    private final QuestaoFechadaDAO questaoFechadaDAO;
+    
+    public ManterQuestaoFechadaImpl(QuestaoFechadaDAO questaoFechadaDAO) {
+        this.questaoFechadaDAO = questaoFechadaDAO;
+    }
 
     @Override
     public void cadastrarQuestaoFechada(List<QuestaoFechada> questoesFechada) throws ExcecaoPersistencia, ExcecaoNegocio {
@@ -35,7 +41,8 @@ public class ManterQuestaoFechadaImpl implements ManterQuestaoFechada {
 
     @Override
     public List<QuestaoFechada> getAll() throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<QuestaoFechada> result = questaoFechadaDAO.listAll();
+        return result;
     }
     
 }

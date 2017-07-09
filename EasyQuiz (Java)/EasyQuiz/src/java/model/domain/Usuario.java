@@ -18,7 +18,7 @@ public class Usuario {
         
     }
     private Long cod_Usuario;
-    private Long cod_Perfil;
+    private Perfil perfil;
     private String nom_Usuario;
     private Date dat_Nascimento;
     private String txt_Email;
@@ -32,12 +32,12 @@ public class Usuario {
         this.cod_Usuario = cod_Usuario;
     }
 
-    public Long getCod_Perfil() {
-        return cod_Perfil;
+    public Perfil getPerfil() {
+        return perfil;
     }
 
-    public void setCod_Perfil(Long cod_Perfil) {
-        this.cod_Perfil = cod_Perfil;
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
     }
 
     public String getNom_Usuario() {

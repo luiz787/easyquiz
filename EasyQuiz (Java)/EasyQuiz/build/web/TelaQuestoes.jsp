@@ -1,4 +1,26 @@
+<%@page import="model.domain.QuestaoFechada"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Enumeration"%>
+<%@page import="model.domain.Questao"%>
+<%@page import="java.util.List"%>
+<%@page import="controller.ListarQuestao"%>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+
+<%
+    ListarQuestao.execute(request);
+    List<Questao> listQuestao = (List<Questao>) request.getAttribute("listQuestao");
+    List<QuestaoFechada> listQuestaoFechada = (List<QuestaoFechada>) request.getAttribute("listQuestaoFechada");
+    
+    int numeroPagina = (Integer) request.getAttribute("numeroPagina");
+    System.out.println("NumeroPagina: "+numeroPagina);
+    int maxQuestao;
+    if((listQuestao.size()-(numeroPagina*5))<5) {
+        maxQuestao=listQuestao.size();
+    } else {
+        maxQuestao=((numeroPagina*5)+5);
+    }
+%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -135,68 +157,76 @@
         </nav>
 
         <div class="container" >
+<%
+        int idAlternativa=0;
+        for(int i=(5*numeroPagina); i<maxQuestao; i++) {
+            Questao questao = listQuestao.get(i);
+            if(questao.getCod_Tipo()=='F') {
+                ArrayList<QuestaoFechada> alternativas = new ArrayList();
+                Long cod_Questao = questao.getCod_Questao();
+                for (QuestaoFechada object : listQuestaoFechada) {
+                    if (object.getQuestao().getCod_Questao() == cod_Questao) {
+                        alternativas.add(object);
+                    }
+                }
+%>
             <div class="row" >
                 <div class="col s12 m4" > 
                     <div class="card" >
                         <div class="card-panel #f4511e deep-orange darken-1 white-text">
-                            <div style="">
-                                <b style="padding-top: 0px">Disciplina: </b><span id="disciplina1">Física</span>
-                                <b style="padding-left:50%;padding-top: 0px">Dificuldade: </b><span id="dificuldade1">Desafio</span>
+                            <div>
+                                <b style="padding-top: 0px">Disciplina: </b><span id='<%="disciplina"+i%>'><%= questao.getDisciplina().getNom_Disciplina() %></span>
+                                <b style="padding-left:50%;padding-top: 0px">Dificuldade: </b><span id='<%="dificuldade"+i%>'><%= questao.getDificuldade().getDes_Dificuldade() %></span>
                             </div>
                             <div>
-                                <span id="modulo1" style=""><b>Módulo: </b>Termodinâmica</span>
+                                <span id='<%="modulo"+i%>' style=""><b>Módulo: </b><%= questao.getModulo().getNom_Modulo() %></span>
                             </div>
                         </div>
                         <div class="card-image">
-                            <img id="imagem1" class="responsive-img" src="img/Geladeira.png">
+                            <img id='<%="imagem"+i%>' class="responsive-img" src="img/Geladeira.png">
                         </div>
                         <div class="card-content">
-                            <div id="enunciado1">
-                                <p><b>A invenção da geladeira proporcionou uma revolução no aproveitamento dos alimentos, ao permitir que fossem armazenados e transportados por longos períodos. A figura apresentada ilustra o processo cíclico de funcionamento de uma geladeira, em que um gás no interior de uma tubulação é forçado a circular entre o congelador e a parte externa da geladeira. É por meio dos processos de compressão, que ocorre na parte externa, e de expansão, que ocorre na parte interna, que o gás proporciona a troca de calor entre o interior e o exterior da geladeira. Nos processos de transformação de energia envolvidos no funcionamento da geladeira, </b></p>
+                            <div id='<%="enunciado"+i%>'>
+                                <p><b><%= questao.getTxt_Enunciado() %></b></p>
                             </div>
-                            <div id="alternativas1">
-                                <form action="#" id="form1">
+                            <div id='<%="alternativas"+i%>'>
+                                <form method="post" id='<%="form"+i%>'>
+<%
+                                    char letra='a';
+                                    for(int j=0; j<alternativas.size(); j++) {
+                                        
+%>
                                     <p>
-                                        <input class="with-gap" name="grupo1" type="radio" id="alternativa1"  />
-                                        <label for="alternativa1"><b>a)</b> a expansão do gás é um processo que cede a energia necessária ao resfriamento da parte interna da geladeira. </label>
+                                        <input class="with-gap" name='<%="grupo"+i%>' type="radio" id='<%="alternativa"+idAlternativa%>'  />
+                                        <label for='<%="alternativa"+idAlternativa%>'><b><%=((char)(letra+j))+")"%></b> <%= alternativas.get(j).getTxt_Alternativa() %> </label>
                                     </p>
-                                    <p>
-                                        <input class="with-gap" name="grupo1" type="radio" id="alternativa2"  />
-                                        <label for="alternativa2"><b>b)</b> o calor flui de forma não espontânea da parte mais fria, no interior, para a mais quente, no exterior da geladeira. </label>
-                                    </p>
-                                    <p>
-                                        <input class="with-gap" name="grupo1" type="radio" id="alternativa3"  />
-                                        <label for="alternativa3"><b>c)</b> a quantidade de calor cedida ao meio externo é igual ao calor retirado da geladeira.</label>
-                                    </p>
-                                    <p >
-                                        <input class="with-gap" name="grupo1" type="radio" id="alternativa4"  />
-                                        <label for="alternativa4"><b>d)</b> a eficiência é tanto maior quanto menos isolado termicamente do ambiente externo for o seu compartimento interno.</label>
-                                    </p>
-                                    <p>
-                                        <input class="with-gap" name="grupo1" type="radio" id="alternativa5"  />
-                                        <label for="alternativa5"><b>e)</b> a energia retirada do interior pode ser devolvida à geladeira abrindo-se a sua porta, o que reduz seu consumo de energia.</label>
-                                    </p>
+<%
+                                        idAlternativa++;
+                                    }
+%>
                                 </form>
                             </div>
                         </div>
                         <div class="card-action">
-                            <button onclick="teste()" class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important;" id="responder1">Responder</button>
-                            <a id="forum1" href="#"><b>Forum</b></a>
+                            <button onclick="teste()" class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important;" id='<%="responder"+i%>'>Responder</button>
+                            <a id='<%="forum"+i%>' href="#"><b>Forum</b></a>
                         </div>
                     </div>
                 </div>
             </div>
-
+<%
+            } else {
+%>
             <div class="row">
                 <div class="col s12 m4">
                     <div class="card">
                         <div class="card-panel #f4511e deep-orange darken-1 white-text">
                             <div style="">
-                                <b style="padding-top: 0px">Disciplina: </b><span id="disciplina2">História</span>
-                                <b style="padding-left:50%;padding-top: 0px">Dificuldade: </b><span id="dificuldade2">Difícil</span>
+                                <b style="padding-top: 0px">Disciplina: </b><span id='<%="disciplina"+i%>'><%= questao.getDisciplina().getNom_Disciplina() %></span>
+                                <b style="padding-left:50%;padding-top: 0px">Dificuldade: </b><span id='<%="dificuldade"+i%>'><%= questao.getDificuldade().getDes_Dificuldade() %></span>
                             </div>
                             <div>
-                                <span id="modulo2" style=""><b>Módulo: </b>Segunda Guerra Mundial</span>
+                                <span id='<%="modulo"+i%>' style=""><b>Módulo: </b><%= questao.getModulo().getNom_Modulo() %></span>
                             </div>
                         </div>
                         <!--
@@ -205,15 +235,15 @@
                         </div>
                         -->
                         <div class="card-content">
-                            <div id="enunciado2">
-                                <b>Baseado nos conhecimentos previamente adquiridos relativos a disciplina, discurse sobre o Nazismo.</b>
+                            <div id='<%="enunciado"+i%>'>
+                                <p><b><%= questao.getTxt_Enunciado() %></b></p>
                             </div>
-                            <div id="resposta2">
-                                <form action="#" id="form2">
+                            <div id='<%="respostaAberta"+i%>'>
+                                <form action="post" id='<%="form"+i%>'>
                                     <div class="row">
                                         <div class="input-field col s12">
-                                            <textarea id="textarea2" class="materialize-textarea"></textarea>
-                                            <label for="textarea2">Resposta:</label>
+                                            <textarea id='<%="textArea"+i%>' class="materialize-textarea"></textarea>
+                                            <label for='<%="textArea"+i%>'>Resposta:</label>
                                         </div>
                                     </div>
                                 </form>
@@ -221,15 +251,26 @@
                         </div>
 
                         <div class="card-action">
-                            <button class="btn waves-effect waves-orange orange right" form="form2" style="background-color: #f4511e !important;" type="submit" id="responder2">Responder</button>
-                            <a href="#"><b>Forum</b></a>
+                            <button onclick="teste()" class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important;" id='<%="responder"+i%>'>Responder</button>
+                            <a id='<%="forum"+i%>' href="#"><b>Forum</b></a>
                         </div>
 
                     </div>
                 </div>
             </div>
+<%
+            }
+        } 
+%>
         </div>
-
+        <div>
+        <h6 style="text-align: center;">Página: <%=(numeroPagina+1)%></h6>
+        <form name="formPagina" action='post'>
+            <input type='hidden' name='acao' value=''>
+            <button onclick="proximaPagina(document.formPagina)" class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important; margin-left: 70%; " id='teste75'>Próxima Página</button>
+            <button onclick="paginaAnterior(document.formPagina)" class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important;" id='1'>Página Anterior</button>
+        </form>
+        </div>
         <br>
         <br>
 

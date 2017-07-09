@@ -10,6 +10,8 @@ import model.domain.Questao;
 import model.exception.ExcecaoNegocio;
 import model.exception.ExcecaoPersistencia;
 import java.util.List;
+import model.dao.QuestaoDAO;
+import model.daoimpl.QuestaoDAOImpl;
 import model.domain.Questao;
 
 /**
@@ -17,6 +19,11 @@ import model.domain.Questao;
  * @author Luiz
  */
 public class ManterQuestaoImpl implements ManterQuestao {
+    private final QuestaoDAO questaoDAO;
+    
+    public ManterQuestaoImpl(QuestaoDAO questaoDAO) {
+        this.questaoDAO = questaoDAO;
+    }
 
     @Override
     public void cadastrarQuestao(Questao questao) throws ExcecaoPersistencia, ExcecaoNegocio {
@@ -40,7 +47,8 @@ public class ManterQuestaoImpl implements ManterQuestao {
 
     @Override
     public List<Questao> getAll() throws ExcecaoPersistencia {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Questao> result = questaoDAO.listAll();
+        return result;
     }
 
     @Override

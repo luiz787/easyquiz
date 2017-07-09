@@ -16,7 +16,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.dao.PostDAO;
+import model.dao.QuestaoDAO;
 import model.domain.Post;
+import model.domain.Questao;
 import model.exception.ExcecaoPersistencia;
 
 /**
@@ -50,7 +52,7 @@ public class PostDAOImpl implements PostDAO {
             String sql = "INSERT INTO post (cod_questao, txt_conteudo, dat_criacao) VALUES(?, ?, ?) RETURNING cod_post";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setLong(1, post.getCod_Questao());
+            pstmt.setLong(1, post.getQuestao().getCod_Questao());
             pstmt.setString(2, post.getTxt_Conteudo());
             pstmt.setTimestamp(3, java.sql.Timestamp.from(post.getDat_Criacao()));
             ResultSet rs = pstmt.executeQuery();
@@ -105,10 +107,12 @@ public class PostDAOImpl implements PostDAO {
             ResultSet rs = pstmt.executeQuery();
 
             Post post = null;
+            QuestaoDAO questaoDAOImpl = QuestaoDAOImpl.getInstance();
             if (rs.next()) {
                 post = new Post();
                 post.setCod_Post(rs.getLong("cod_post"));
-                post.setCod_Questao(rs.getLong("cod_questao"));
+                Questao questao = questaoDAOImpl.getQuestaoById(rs.getLong("cod_questao"));
+                post.setQuestao(questao);
                 post.setTxt_Conteudo(rs.getString("txt_conteudo"));
                 post.setDat_Criacao((rs.getTimestamp("dat_criacao")).toInstant());
             }
@@ -135,11 +139,13 @@ public class PostDAOImpl implements PostDAO {
             ResultSet rs = pstmt.executeQuery();
 
             List<Post> listAll = new ArrayList<>();
+            QuestaoDAO questaoDAOImpl = QuestaoDAOImpl.getInstance();
             if (rs.next()) {
                 do {
                     Post post = new Post();
                     post.setCod_Post(rs.getLong("cod_post"));
-                    post.setCod_Questao(rs.getLong("cod_questao"));
+                    Questao questao = questaoDAOImpl.getQuestaoById(rs.getLong("cod_questao"));
+                    post.setQuestao(questao);
                     post.setTxt_Conteudo(rs.getString("txt_conteudo"));
                     post.setDat_Criacao((rs.getTimestamp("dat_criacao")).toInstant());
                     listAll.add(post);

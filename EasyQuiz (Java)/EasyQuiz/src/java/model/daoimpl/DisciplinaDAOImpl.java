@@ -130,7 +130,7 @@ public class DisciplinaDAOImpl implements DisciplinaDAO{
             if (rs.next()) {
                 disciplina = new Disciplina();
                 disciplina.setCod_Disciplina(rs.getLong("cod_disciplina"));
-                disciplina.setNom_Disciplina(rs.getString("des_disciplina"));
+                disciplina.setNom_Disciplina(rs.getString("nom_disciplina"));
             }
 
             rs.close();

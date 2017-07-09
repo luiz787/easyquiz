@@ -4,17 +4,32 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.ArrayList;
 import model.dao.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.domain.Sessao;
+import model.domain.Usuario;
 import model.exception.ExcecaoPersistencia;
 import util.db.JDBCManterConexao;
 
 public class SessaoDAOImpl implements SessaoDAO {
+    private static SessaoDAOImpl sessaoDAO = null;
 
+    private SessaoDAOImpl() {
+    }
+
+    public static SessaoDAOImpl getInstance() {
+
+        if (sessaoDAO == null) {
+            sessaoDAO = new SessaoDAOImpl();
+        }
+
+        return sessaoDAO;
+    }
+    
     @Override
     synchronized public void insert(Sessao sessao) throws ExcecaoPersistencia {
         try {
@@ -27,7 +42,7 @@ public class SessaoDAOImpl implements SessaoDAO {
             String sql = "INSERT INTO sessao (cod_usuario, dat_inicio) VALUES(?, ?)";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setLong(1, sessao.getCod_Usuario());
+            pstmt.setLong(1, sessao.getUsuario().getCod_Usuario());
             pstmt.setTimestamp(2, java.sql.Timestamp.from(sessao.getDat_Inicio()));
             
             pstmt.executeUpdate();
@@ -53,13 +68,46 @@ public class SessaoDAOImpl implements SessaoDAO {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             
             pstmt.setTimestamp(1, java.sql.Timestamp.from(sessao.getDat_Fim()));
-            pstmt.setLong(2, sessao.getCod_Usuario());
+            pstmt.setLong(2, sessao.getUsuario().getCod_Usuario());
             pstmt.setTimestamp(3, java.sql.Timestamp.from(sessao.getDat_Inicio()));
             
             pstmt.executeUpdate();
 
             pstmt.close();
             connection.close();
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ExcecaoPersistencia(ex);
+        }
+    }
+    
+    @Override
+    public Sessao getSessaoByUsuarioData(Long cod_Usuario, Instant dat_Inicio) throws ExcecaoPersistencia {
+        try {
+            Connection connection = JDBCManterConexao.getInstancia().getConexao();
+
+            String sql = "SELECT * FROM sessao WHERE cod_usuario = ? and dat_inicio = ?";
+
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setLong(1, cod_Usuario);
+            pstmt.setTimestamp(2, java.sql.Timestamp.from(dat_Inicio));
+            ResultSet rs = pstmt.executeQuery();
+            
+            Sessao sessao = null;
+            UsuarioDAO usuarioDAOImpl = UsuarioDAOImpl.getInstance();
+            if (rs.next()) {
+                    sessao = new Sessao();
+                    sessao.setDat_Inicio((rs.getTimestamp("dat_inicio")).toInstant());
+                    Usuario usuario = usuarioDAOImpl.getUsuarioById(rs.getLong("cod_usuario"));
+                    sessao.setUsuario(usuario);
+                    sessao.setDat_Fim((rs.getTimestamp("dat_inicio")).toInstant());
+            }
+
+            rs.close();
+            pstmt.close();
+            connection.close();
+
+            return sessao;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);
@@ -74,14 +122,17 @@ public class SessaoDAOImpl implements SessaoDAO {
             String sql = "SELECT * FROM sessao WHERE cod_usuario = ?";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setLong(1, cod_Usuario);
             ResultSet rs = pstmt.executeQuery();
 
             List<Sessao> sessaoByUsuario = new ArrayList<>();
+            UsuarioDAO usuarioDAOImpl = UsuarioDAOImpl.getInstance();
             if (rs.next()) {
                 do {
                     Sessao sessao = new Sessao();
                     sessao.setDat_Inicio((rs.getTimestamp("dat_inicio")).toInstant());
-                    sessao.setCod_Usuario(rs.getLong("cod_usuario"));
+                    Usuario usuario = usuarioDAOImpl.getUsuarioById(rs.getLong("cod_usuario"));
+                    sessao.setUsuario(usuario);
                     sessao.setDat_Fim((rs.getTimestamp("dat_inicio")).toInstant());
                     sessaoByUsuario.add(sessao);
                 } while (rs.next());
@@ -109,11 +160,13 @@ public class SessaoDAOImpl implements SessaoDAO {
             ResultSet rs = pstmt.executeQuery();
 
             List<Sessao> listAll = new ArrayList<>();
+            UsuarioDAO usuarioDAOImpl = UsuarioDAOImpl.getInstance();
             if (rs.next()) {
                 do {
                     Sessao sessao = new Sessao();
                     sessao.setDat_Inicio((rs.getTimestamp("dat_inicio")).toInstant());
-                    sessao.setCod_Usuario(rs.getLong("cod_usuario"));
+                    Usuario usuario = usuarioDAOImpl.getUsuarioById(rs.getLong("cod_usuario"));
+                    sessao.setUsuario(usuario);
                     sessao.setDat_Fim((rs.getTimestamp("dat_inicio")).toInstant());
                     listAll.add(sessao);
                 } while (rs.next());
