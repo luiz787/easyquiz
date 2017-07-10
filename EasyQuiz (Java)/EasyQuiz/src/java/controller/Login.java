@@ -38,11 +38,14 @@ public class Login {
         String jsp = "";
 
         try {
-            String email = request.getParameter("email");
-            String senha = request.getParameter("senha");
+            //String email = request.getParameter("email");
+            //String senha = request.getParameter("senha");
+            String email = "andromenus@gmail.com";
+            String senha = "123";
 
             ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
             Usuario usuario = manterUsuario.getUsuarioByEmailSenha(email, senha);
+            System.out.println("Usuario: "+usuario.getNom_Usuario());
 
             if (usuario == null) {
                 String erro = "Usuario nao encontrado!";
@@ -51,6 +54,12 @@ public class Login {
             } else {
                 request.getSession().setAttribute("cod_Usuario", usuario.getCod_Usuario());
                 request.getSession().setAttribute("dat_Inicio", Instant.now());
+                ManterSessao manterSessao = 
+                        new ManterSessaoImpl(SessaoDAOImpl.getInstance());
+                Sessao sessao = new Sessao();
+                sessao.setUsuario(usuario);
+                sessao.setDat_Inicio((Instant)request.getSession().getAttribute("dat_Inicio"));
+                manterSessao.cadastrarSessao(sessao);
                 jsp = "/TelaQuestoes.jsp";
             }
 
@@ -68,23 +77,6 @@ public class Login {
             return 0;
         } else {
             return 1;
-        }
-    }
-    
-    public static void iniciarSessao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ExcecaoPersistencia, ExcecaoNegocio {
-        Long cod_Usuario = (Long) request.getSession().getAttribute("cod_Usuario");
-        String jsp = "";
-        if (cod_Usuario != null) {
-            Instant dat_Inicio = Instant.now();
-            Sessao sessao = new Sessao();
-            ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
-            Usuario usuario =  manterUsuario.getUsuarioById(cod_Usuario);
-            sessao.setUsuario(usuario);
-            ManterSessao manterSessao = new ManterSessaoImpl(SessaoDAOImpl.getInstance());
-            sessao.setDat_Inicio(dat_Inicio);
-            manterSessao.cadastrarSessao(sessao);
-            
-            request.getSession().setAttribute("dat_Inicio", sessao.getDat_Inicio());
         }
     }
 }

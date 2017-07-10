@@ -1,3 +1,12 @@
+<%@page import="model.domain.Perfil"%>
+<%@page import="model.domain.Usuario"%>
+<%@page import="model.service.ManterPerfil"%>
+<%@page import="model.serviceimpl.ManterPerfilImpl"%>
+<%@page import="model.daoimpl.PerfilDAOImpl"%>
+<%@page import="model.serviceimpl.ManterUsuarioImpl"%>
+<%@page import="model.service.ManterUsuario"%>
+<%@page import="model.service.ManterUsuario"%>
+<%@page import="model.daoimpl.UsuarioDAOImpl"%>
 <%@page import="java.time.ZoneId"%>
 <%@page import="java.sql.Timestamp"%>
 <%@page import="java.time.Instant"%>
@@ -11,26 +20,34 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%
+    /*
+    ManterPerfil manterPerfil = new ManterPerfilImpl(PerfilDAOImpl.getInstance());
+    Perfil perfil = manterPerfil.getPerfilById(new Long(2));
+    ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
+    Usuario usuario = new Usuario();
+    usuario.setDat_Nascimento(java.sql.Date.valueOf("2017-07-09"));
+    usuario.setNom_Usuario("Victor Gabriel");
+    usuario.setPerfil(perfil);
+    usuario.setTxt_Email("andromenus@gmail.com");
+    usuario.setTxt_Senha("123");
+    manterUsuario.cadastrarUsuario(usuario);
+    */
+    /*
+    if(request.getSession().getAttribute("cod_Usuario")==null) {
+        Login.execute(request);
+    }
+    */
     int logado = Login.validarSessao(request, response);
+    int contadorRespostaQuestao = (Integer) request.getSession().getAttribute("contadorRespostaQuestao");
 %>
 
 
 <%
     if(request.getSession().getAttribute("numeroPagina")==null) {
-        ListarQuestao.execute(request);
+        request.getSession().setAttribute("numeroPagina", 0);
     }
-    
-    List<Questao> listQuestao = (List<Questao>) request.getAttribute("listQuestao");
-    List<QuestaoFechada> listQuestaoFechada = (List<QuestaoFechada>) request.getAttribute("listQuestaoFechada");
-    
     int numeroPagina = (Integer) request.getSession().getAttribute("numeroPagina");
-    System.out.println("NumeroPagina: "+numeroPagina);
-    int maxQuestao;
-    if((listQuestao.size()-(numeroPagina*5))<5) {
-        maxQuestao=listQuestao.size();
-    } else {
-        maxQuestao=((numeroPagina*5)+5);
-    }
+    int maxQuestao = 0;
 %>
 
 <!DOCTYPE html>
@@ -169,6 +186,15 @@
 
         <div class="container" >
 <%
+    if(request.getAttribute("listQuestao")!=null) {
+        List<Questao> listQuestao = (List<Questao>) request.getAttribute("listQuestao");
+        List<QuestaoFechada> listQuestaoFechada = (List<QuestaoFechada>) request.getAttribute("listQuestaoFechada");
+        
+        if((listQuestao.size()-(numeroPagina*5))<5) {
+            maxQuestao=listQuestao.size();
+        } else {
+            maxQuestao=((numeroPagina*5)+5);
+        }
         for(int i=(5*numeroPagina); i<maxQuestao; i++) {
             Questao questao = listQuestao.get(i);
             if(questao.getCod_Tipo()=='F') {
@@ -204,6 +230,7 @@
                                     <input type='hidden' name='table' value='QuestaoFechadaResposta'>
                                     <input type='hidden' name='acao' value='gravar'>
                                     <input type='hidden' name='logado' value='<%= logado %>'>
+                                    <input type='hidden' name='contadorRespostaQuestao' value='<%= contadorRespostaQuestao %>'>
                                     <input type='hidden' name='questao' value='<%= questao.getCod_Questao() %>'>
                                     <input type='hidden' name='tipoQuestao' value='<%= questao.getCod_Tipo() %>'>
                                     <input type='hidden' name='respostaCorreta' value='<%= questao.getSeq_Questao_Correta() %>'>
@@ -257,12 +284,13 @@
                                 <p><b><%= questao.getTxt_Enunciado() %></b></p>
                             </div>
                             <div id='<%="respostaAberta"+i%>'>
-                                <form action="post" id='<%="formInserirResposta"+i%>'>
+                                <form method="post" name='<%="formInserirResposta"+i%>'>
                                     <input type='hidden' name='table' value='QuestaoAbertaResposta'>
                                     <input type='hidden' name='logado' value='<%= logado %>'>
+                                    <input type='hidden' name='contadorRespostaQuestao' value='<%= contadorRespostaQuestao %>'>
                                     <input type='hidden' name='questao' value='<%= questao.getCod_Questao() %>'>
                                     <input type='hidden' name='tipoQuestao' value='<%= questao.getCod_Tipo() %>'>
-                                    <input type='hidden' name='respostaCorreta' value='<%= questao.getTxt_Resposta_Aberta() %>'>
+                                    <input type='hidden' name='respostaBase' value='<%= questao.getTxt_Resposta_Aberta() %>'>
                                     <input type='hidden' name='resposta' value=''>
                                     <div class="row">
                                         <div class="input-field col s12">
@@ -270,6 +298,10 @@
                                             <label for='<%="textArea"+i%>'>Resposta:</label>
                                         </div>
                                     </div>
+                                    <div id='<%="respostaBase"+i%>' class="row">
+                                        
+                                    </div>
+                                    
                                 </form>
                             </div>
                         </div>
@@ -284,8 +316,18 @@
             </div>
 <%
             }
-        } 
+        }
+    } else {
 %>
+<h2 style="text-align: center;"><b> Não há questões cadastradas!</b></h2>
+<%
+        for(int i=0; i<20; i++) {
+%>
+<br>
+<%
+        }
+    }
+%>  
         </div>
         <div>
         <h6 style="text-align: center;">Página: <%=(numeroPagina+1)%></h6>
@@ -299,6 +341,8 @@
         </div>
         <br>
         <br>
+        
+
 
         <footer class="page-footer orange">
             <div class="container">
@@ -327,7 +371,8 @@
         </footer>
 
 
-          <!--  Scripts-->
+        
+        <!--Scripts-->
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script type="text/javascript" language="JavaScript" src="js/materialize.js"></script>

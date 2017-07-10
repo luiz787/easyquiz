@@ -12,15 +12,17 @@ public class ServletWeb extends HttpServlet {
     
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         request.setCharacterEncoding("UTF-8");
         String acao = request.getParameter("acao");
+        
         if(acao.equals("ProximaPagina"))
-            jsp = ListarQuestao.execute(request);
+            jsp = ProximaPagina.execute(request);
         else if (acao.equals("PaginaAnterior"))
-            jsp = ListarQuestao.execute(request);
+            jsp = PaginaAnterior.execute(request);
         else if (acao.equals("GravarQuestaoFechadaResposta"))
             jsp = GravarQuestaoFechadaResposta.execute(request);
+        else if (acao.equals("ContadorRespostaQuestao"))
+            jsp = ContadorRespostaQuestao.execute(request);
         
         
         RequestDispatcher rd = request.getRequestDispatcher(jsp);

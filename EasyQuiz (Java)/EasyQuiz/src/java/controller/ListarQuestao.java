@@ -22,34 +22,17 @@ public class ListarQuestao {
             List<QuestaoFechada> listQuestaoFechada = manterQuestaoFechada.getAll();
             
             if (listQuestao != null) {
-                
                 request.setAttribute("listQuestao", listQuestao);
-                request.setAttribute("listQuestaoFechada", listQuestaoFechada);
-                
-                if(request.getSession().getAttribute("numeroPagina")==null) {
-                    request.getSession().setAttribute("numeroPagina", 0);
-                    System.out.println("Criou numeroPagina");
+                if(listQuestaoFechada != null) {
+                    request.setAttribute("listQuestaoFechada", listQuestaoFechada);
                 } else {
-                    String acao = request.getParameter("acao");
-                    System.out.println("ACAO: "+acao);
-                    if(acao!=null) {
-                        if(acao.equals("ProximaPagina")) {
-                            int numeroPagina = (Integer) request.getSession().getAttribute("numeroPagina");
-                            System.out.println("ProximaPagina: "+numeroPagina);
-                            request.getSession().setAttribute("numeroPagina", ++numeroPagina);
-                        } else if(acao.equals("PaginaAnterior")) {
-                            int numeroPagina = (Integer) request.getSession().getAttribute("numeroPagina");
-                            System.out.println("PaginaAnterior"+numeroPagina);
-                            request.getSession().setAttribute("numeroPagina", --numeroPagina);
-                        }
-                    }
+                    request.setAttribute("erroQuestoesFechada", 1);
                 }
-                System.out.println("KKKKKKKKKKKKKK");
                 jsp = "/TelaQuestoes.jsp";
             } else {
-                String erro = "Não existe Questoes!";
-                request.setAttribute("erro", erro);
-                jsp = "/erro.jsp";
+                request.setAttribute("erroQuestoes", 1);
+                //jsp = "/erro.jsp";
+                jsp = "/TelaQuestoes.jsp";
             }
 
         } catch (Exception e) {

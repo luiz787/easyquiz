@@ -50,7 +50,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                     + "dat_nascimento, "
                     + "txt_email, "
                     + "txt_senha"
-                    + ") VALUES(?, ?, ?, ?, md5(?)) RETURNING cod_usuario";
+                    + ") VALUES(?, ?, ?, ?, md5(?))";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setLong(1, usuario.getPerfil().getCod_Perfil());
@@ -58,15 +58,15 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             pstmt.setDate(3, usuario.getDat_Nascimento());
             pstmt.setString(4, usuario.getTxt_Email());
             pstmt.setString(5, usuario.getTxt_Senha());
-            
-            ResultSet rs = pstmt.executeQuery();
-
+            pstmt.executeUpdate();
+            //ResultSet rs = pstmt.executeQuery();
+            /*
             if (rs.next()) {
                 Long cod_usuario = rs.getLong("cod_usuario");
                 usuario.setCod_Usuario(cod_usuario);
             }
-
-            rs.close();
+            */
+            //rs.close();
             pstmt.close();
             connection.close();
         } catch (ClassNotFoundException | SQLException ex) {
