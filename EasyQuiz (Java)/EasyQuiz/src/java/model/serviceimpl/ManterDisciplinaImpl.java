@@ -24,29 +24,54 @@ public class ManterDisciplinaImpl implements ManterDisciplina {
     }
     @Override
     public void cadastrarDisciplina(Disciplina disciplina) throws ExcecaoPersistencia, ExcecaoNegocio {
+        String errMsg = null;
+        if (disciplina == null) {
+            throw new ExcecaoNegocio("Disciplina não pode ser nula.");
+        } else {
+            if (disciplina.getNome()==null){
+                errMsg+="A disciplina deve possuir um nome.";
+            }
+        }
+        if (errMsg!=null){
+            throw new ExcecaoNegocio(errMsg);
+        }
         disciplinaDAO.insert(disciplina);
     }
 
     @Override
     public void alterarDisciplina(Disciplina disciplina) throws ExcecaoPersistencia, ExcecaoNegocio {
+        String errMsg = null;
+        if (disciplina == null){
+            throw new ExcecaoNegocio("Disciplina não pode ser nula.");
+        } else {
+            if (disciplina.getNome()==null){
+                errMsg+="A disciplina deve possuir um nome.";
+            }
+        }
+        if (errMsg!=null){
+            throw new ExcecaoNegocio(errMsg);
+        }
         disciplinaDAO.update(disciplina);
     }
 
     @Override
-    public Disciplina deletarDisciplina(Long cod_Disciplina) throws ExcecaoPersistencia {
-        Disciplina result = disciplinaDAO.delete(cod_Disciplina);
-        return result;
+    public Disciplina deletarDisciplina(Long codDisciplina) throws ExcecaoPersistencia, ExcecaoNegocio {
+        if (codDisciplina == null){
+            throw new ExcecaoNegocio("Código não pode ser nulo.");
+        }
+        return disciplinaDAO.delete(codDisciplina);
     }
 
     @Override
-    public Disciplina getDisciplinaById(Long cod_Disciplina) throws ExcecaoPersistencia {
-        Disciplina result = disciplinaDAO.getDisciplinaById(cod_Disciplina);
-        return result;
+    public Disciplina getDisciplinaById(Long codDisciplina) throws ExcecaoPersistencia, ExcecaoNegocio {
+        if (codDisciplina == null){
+            throw new ExcecaoNegocio("Código não pode ser nulo.");
+        }
+        return disciplinaDAO.getDisciplinaById(codDisciplina);
     }
 
     @Override
     public List<Disciplina> getAll() throws ExcecaoPersistencia {
-        List<Disciplina> result = disciplinaDAO.listAll();
-        return result;
+        return disciplinaDAO.listAll();
     }
 }

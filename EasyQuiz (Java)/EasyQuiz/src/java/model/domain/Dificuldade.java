@@ -10,25 +10,23 @@ package model.domain;
  * @author Aluno
  */
 public class Dificuldade {
-    private Long cod_Dificuldade;
-    private String des_Dificuldade;
+    private Long id;
+    private String descricao;
 
-    public Long getCod_Dificuldade() {
-        return cod_Dificuldade;
+    public Long getId() {
+        return id;
     }
 
-    public void setCod_Dificuldade(Long cod_Dificuldade) {
-        this.cod_Dificuldade = cod_Dificuldade;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    
-
-    public String getDes_Dificuldade() {
-        return des_Dificuldade;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setDes_Dificuldade(String des_Dificuldade) {
-        this.des_Dificuldade = des_Dificuldade;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
     
 }

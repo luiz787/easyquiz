@@ -50,10 +50,10 @@ public class QuestaoFechadaRespostaDAOImpl implements QuestaoFechadaRespostaDAO 
             String sql = "INSERT INTO questaoFechadaResposta (dat_inicio, cod_usuario, cod_questao, seq_questao_resposta) VALUES(?, ?, ?, ?)";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setTimestamp(1, java.sql.Timestamp.from(questaoFechadaResposta.getSessao().getDat_Inicio()));
-            pstmt.setLong(2, questaoFechadaResposta.getSessao().getUsuario().getCod_Usuario());
-            pstmt.setLong(3, questaoFechadaResposta.getQuestao().getCod_Questao());
-            pstmt.setLong(4, questaoFechadaResposta.getSeq_Questao_Resposta());
+            pstmt.setTimestamp(1, java.sql.Timestamp.from(questaoFechadaResposta.getSessao().getDataInicio()));
+            pstmt.setLong(2, questaoFechadaResposta.getSessao().getUsuario().getId());
+            pstmt.setLong(3, questaoFechadaResposta.getQuestao().getId());
+            pstmt.setLong(4, questaoFechadaResposta.getSeqQuestaoResposta());
             
             pstmt.executeUpdate();
             
@@ -87,7 +87,7 @@ public class QuestaoFechadaRespostaDAOImpl implements QuestaoFechadaRespostaDAO 
                     questaoFechadaResposta.setSessao(sessao);
                     Questao questao = questaoDAOImpl.getQuestaoById(rs.getLong("cod_questao"));
                     questaoFechadaResposta.setQuestao(questao);
-                    questaoFechadaResposta.setSeq_Questao_Resposta(rs.getLong("seq_questao_resposta"));
+                    questaoFechadaResposta.setSeqQuestaoResposta(rs.getLong("seq_questao_resposta"));
                     listAll.add(questaoFechadaResposta);
                 } while (rs.next());
             }

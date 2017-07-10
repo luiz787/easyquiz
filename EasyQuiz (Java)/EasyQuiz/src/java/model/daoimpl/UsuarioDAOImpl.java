@@ -53,11 +53,11 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                     + ") VALUES(?, ?, ?, ?, md5(?))";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setLong(1, usuario.getPerfil().getCod_Perfil());
-            pstmt.setString(2, usuario.getNom_Usuario());
-            pstmt.setDate(3, usuario.getDat_Nascimento());
-            pstmt.setString(4, usuario.getTxt_Email());
-            pstmt.setString(5, usuario.getTxt_Senha());
+            pstmt.setLong(1, usuario.getPerfil().getId());
+            pstmt.setString(2, usuario.getNome());
+            pstmt.setDate(3, usuario.getDataNascimento());
+            pstmt.setString(4, usuario.getEmail());
+            pstmt.setString(5, usuario.getSenha());
             pstmt.executeUpdate();
             //ResultSet rs = pstmt.executeQuery();
             /*
@@ -92,11 +92,11 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             
             
-            pstmt.setString(1, usuario.getNom_Usuario());
-            pstmt.setDate(2, usuario.getDat_Nascimento());
-            pstmt.setString(3, usuario.getTxt_Email());
-            pstmt.setString(4, usuario.getTxt_Senha());
-            pstmt.setLong(5, usuario.getCod_Usuario());
+            pstmt.setString(1, usuario.getNome());
+            pstmt.setDate(2, usuario.getDataNascimento());
+            pstmt.setString(3, usuario.getEmail());
+            pstmt.setString(4, usuario.getSenha());
+            pstmt.setLong(5, usuario.getId());
             pstmt.executeUpdate();
 
             pstmt.close();
@@ -146,13 +146,13 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             PerfilDAO perfilDAOImpl = PerfilDAOImpl.getInstance();
             if (rs.next()) {
                 usuario = new Usuario();
-                usuario.setCod_Usuario(rs.getLong("cod_usuario"));
+                usuario.setId(rs.getLong("cod_usuario"));
                 Perfil perfil = perfilDAOImpl.getPerfilById(rs.getLong("cod_perfil"));
                 usuario.setPerfil(perfil);
-                usuario.setNom_Usuario(rs.getString("nom_usuario"));
-                usuario.setDat_Nascimento(rs.getDate("dat_nascimento"));
-                usuario.setTxt_Email(rs.getString("txt_email"));
-                usuario.setTxt_Senha(rs.getString("txt_senha"));
+                usuario.setNome(rs.getString("nom_usuario"));
+                usuario.setDataNascimento(rs.getDate("dat_nascimento"));
+                usuario.setEmail(rs.getString("txt_email"));
+                usuario.setSenha(rs.getString("txt_senha"));
             }
 
             rs.close();
@@ -181,13 +181,13 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             if (rs.next()) {
                 do {
                     Usuario usuario = new Usuario();
-                    usuario.setCod_Usuario(rs.getLong("cod_usuario"));
+                    usuario.setId(rs.getLong("cod_usuario"));
                     Perfil perfil = perfilDAOImpl.getPerfilById(rs.getLong("cod_perfil"));
                     usuario.setPerfil(perfil);
-                    usuario.setNom_Usuario(rs.getString("nom_usuario"));
-                    usuario.setDat_Nascimento(rs.getDate("dat_nascimento"));
-                    usuario.setTxt_Email(rs.getString("txt_email"));
-                    usuario.setTxt_Senha(rs.getString("txt_senha"));
+                    usuario.setNome(rs.getString("nom_usuario"));
+                    usuario.setDataNascimento(rs.getDate("dat_nascimento"));
+                    usuario.setEmail(rs.getString("txt_email"));
+                    usuario.setSenha(rs.getString("txt_senha"));
                     listAll.add(usuario);
                 } while (rs.next());
             }
@@ -219,13 +219,13 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             PerfilDAO perfilDAOImpl = PerfilDAOImpl.getInstance();
             if (rs.next()) {
                 usuario = new Usuario();
-                usuario.setCod_Usuario(rs.getLong("cod_usuario"));
+                usuario.setId(rs.getLong("cod_usuario"));
                 Perfil perfil = perfilDAOImpl.getPerfilById(rs.getLong("cod_perfil"));
                 usuario.setPerfil(perfil);
-                usuario.setNom_Usuario(rs.getString("nom_usuario"));
-                usuario.setDat_Nascimento(rs.getDate("dat_nascimento"));
-                usuario.setTxt_Email(rs.getString("txt_email"));
-                usuario.setTxt_Senha(rs.getString("txt_senha"));
+                usuario.setNome(rs.getString("nom_usuario"));
+                usuario.setDataNascimento(rs.getDate("dat_nascimento"));
+                usuario.setEmail(rs.getString("txt_email"));
+                usuario.setSenha(rs.getString("txt_senha"));
             }
 
             rs.close();

@@ -14,7 +14,7 @@ import java.time.Instant;
 public class QuestaoFechadaResposta {
     private Sessao sessao;
     private Questao questao;
-    private Long seq_Questao_Resposta;
+    private Long seqQuestaoResposta;
 
     public Sessao getSessao() {
         return sessao;
@@ -34,11 +34,11 @@ public class QuestaoFechadaResposta {
 
     
 
-    public Long getSeq_Questao_Resposta() {
-        return seq_Questao_Resposta;
+    public Long getSeqQuestaoResposta() {
+        return seqQuestaoResposta;
     }
 
-    public void setSeq_Questao_Resposta(Long seq_Questao_Resposta) {
-        this.seq_Questao_Resposta = seq_Questao_Resposta;
+    public void setSeqQuestaoResposta(Long seqQuestaoResposta) {
+        this.seqQuestaoResposta = seqQuestaoResposta;
     }
 }

@@ -52,8 +52,8 @@ public class PerfilDAOImpl implements PerfilDAO{
             Perfil perfil = null;
             if (rs.next()) {
                 perfil = new Perfil();
-                perfil.setCod_Perfil(rs.getLong("cod_perfil"));
-                perfil.setNom_Perfil(rs.getString("nom_perfil"));
+                perfil.setId(rs.getLong("cod_perfil"));
+                perfil.setNome(rs.getString("nom_perfil"));
             }
 
             rs.close();
@@ -81,8 +81,8 @@ public class PerfilDAOImpl implements PerfilDAO{
             if (rs.next()) {
                 do {
                     Perfil perfil = new Perfil();
-                    perfil.setCod_Perfil(rs.getLong("cod_perfil"));
-                    perfil.setNom_Perfil(rs.getString("nom_perfil"));
+                    perfil.setId(rs.getLong("cod_perfil"));
+                    perfil.setNome(rs.getString("nom_perfil"));
                     listAll.add(perfil);
                 } while (rs.next());
             }

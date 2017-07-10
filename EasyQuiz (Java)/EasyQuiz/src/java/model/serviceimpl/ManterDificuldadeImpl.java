@@ -9,6 +9,7 @@ import model.service.*;
 import java.util.List;
 import model.dao.DificuldadeDAO;
 import model.domain.Dificuldade;
+import model.exception.ExcecaoNegocio;
 import model.exception.ExcecaoPersistencia;
 
 /**
@@ -22,14 +23,15 @@ public class ManterDificuldadeImpl implements ManterDificuldade {
         this.dificuldadeDAO = dificuldadeDAO;
     }
     @Override
-    public Dificuldade getDificuldadeById(Long cod_Dificuldade) throws ExcecaoPersistencia {
-        Dificuldade result = dificuldadeDAO.getDificuldadeById(cod_Dificuldade);
-        return result;
+    public Dificuldade getDificuldadeById(Long codDificuldade) throws ExcecaoPersistencia, ExcecaoNegocio {
+        if (codDificuldade == null){
+            throw new ExcecaoNegocio("Código da dificuldade não pode ser nulo.");
+        }
+        return dificuldadeDAO.getDificuldadeById(codDificuldade);
     }
 
     @Override
     public List<Dificuldade> listAll() throws ExcecaoPersistencia {
-        List<Dificuldade> result = dificuldadeDAO.listAll();
-        return result;
+        return dificuldadeDAO.listAll();
     }
 }

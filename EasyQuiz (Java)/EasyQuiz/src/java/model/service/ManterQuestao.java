@@ -16,7 +16,7 @@ import model.domain.Questao;
  * @author Luiz
  */
 public interface ManterQuestao {
-    public void cadastrarQuestao(Questao questao) throws ExcecaoPersistencia, ExcecaoNegocio;
+    public Long cadastrarQuestao(Questao questao) throws ExcecaoPersistencia, ExcecaoNegocio;
     public void alterarQuestao(Questao questao) throws ExcecaoPersistencia, ExcecaoNegocio;
     public Questao deletarQuestao(Long cod_Questao) throws ExcecaoPersistencia;
     public Questao getQuestaoById(Long cod_Questao) throws ExcecaoPersistencia;

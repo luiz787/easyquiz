@@ -15,7 +15,7 @@ import model.exception.ExcecaoPersistencia;
  * @author Luiz
  */
 public interface ManterPost {
-    public void cadastrarPost(Post post) throws ExcecaoPersistencia, ExcecaoNegocio;
+    public Long cadastrarPost(Post post) throws ExcecaoPersistencia, ExcecaoNegocio;
     public Post deletarPost(Long cod_Post) throws ExcecaoPersistencia;
     public Post getPostById(Long cod_Post) throws ExcecaoPersistencia;
     public List<Post> getAll() throws ExcecaoPersistencia;

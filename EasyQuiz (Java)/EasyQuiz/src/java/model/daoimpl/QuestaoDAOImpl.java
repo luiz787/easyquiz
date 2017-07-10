@@ -59,23 +59,23 @@ public class QuestaoDAOImpl implements QuestaoDAO {
                     + ") VALUES(?, ?, ?, ?, ?, ?, ?, ?) RETURNING cod_questao";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setLong(1, questao.getDificuldade().getCod_Dificuldade());
-            pstmt.setLong(2, questao.getDisciplina().getCod_Disciplina());
-            pstmt.setLong(3, questao.getModulo().getCod_Modulo());
-            pstmt.setString(4, String.valueOf(questao.getCod_Tipo()));
-            pstmt.setString(5, questao.getTxt_Enunciado());
-            if(questao.getImg_Enunciado()!=null) {
-                pstmt.setBlob(6, (Blob) questao.getImg_Enunciado());
+            pstmt.setLong(1, questao.getDificuldade().getId());
+            pstmt.setLong(2, questao.getDisciplina().getId());
+            pstmt.setLong(3, questao.getModulo().getId());
+            pstmt.setString(4, String.valueOf(questao.getIdTipo()));
+            pstmt.setString(5, questao.getTxtEnunciado());
+            if(questao.getImgEnunciado()!=null) {
+                pstmt.setBlob(6, (Blob) questao.getImgEnunciado());
             } else {
                 pstmt.setNull(6, java.sql.Types.NULL);
             }
-            if(questao.getSeq_Questao_Correta()!=null) {
-                pstmt.setLong(7, questao.getSeq_Questao_Correta());
+            if(questao.getSeqQuestaoCorreta()!=null) {
+                pstmt.setLong(7, questao.getSeqQuestaoCorreta());
             } else {
                 pstmt.setNull(7, java.sql.Types.NULL);
             }
-            if(questao.getTxt_Resposta_Aberta()!=null) {
-                pstmt.setString(8, questao.getTxt_Resposta_Aberta());
+            if(questao.getTxtResposta()!=null) {
+                pstmt.setString(8, questao.getTxtResposta());
             } else {
                 pstmt.setNull(8, java.sql.Types.NULL);
             }
@@ -85,7 +85,7 @@ public class QuestaoDAOImpl implements QuestaoDAO {
 
             if (rs.next()) {
                 Long cod_questao = rs.getLong("cod_questao");
-                questao.setCod_Questao(cod_questao);
+                questao.setId(cod_questao);
             }
 
             rs.close();
@@ -116,27 +116,27 @@ public class QuestaoDAOImpl implements QuestaoDAO {
                     + " WHERE cod_questao = ?;";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setLong(1, questao.getDificuldade().getCod_Dificuldade());
-            pstmt.setLong(2, questao.getDisciplina().getCod_Disciplina());
-            pstmt.setLong(3, questao.getModulo().getCod_Modulo());
-            pstmt.setString(4, String.valueOf(questao.getCod_Tipo()));
-            pstmt.setString(5, questao.getTxt_Enunciado());
-            if(questao.getImg_Enunciado()!=null) {
-                pstmt.setBlob(6, (Blob) questao.getImg_Enunciado());
+            pstmt.setLong(1, questao.getDificuldade().getId());
+            pstmt.setLong(2, questao.getDisciplina().getId());
+            pstmt.setLong(3, questao.getModulo().getId());
+            pstmt.setString(4, String.valueOf(questao.getIdTipo()));
+            pstmt.setString(5, questao.getTxtEnunciado());
+            if(questao.getImgEnunciado()!=null) {
+                pstmt.setBlob(6, (Blob) questao.getImgEnunciado());
             } else {
                 pstmt.setNull(6, java.sql.Types.NULL);
             }
-            if(questao.getSeq_Questao_Correta()!=null) {
-                pstmt.setLong(7, questao.getSeq_Questao_Correta());
+            if(questao.getSeqQuestaoCorreta()!=null) {
+                pstmt.setLong(7, questao.getSeqQuestaoCorreta());
             } else {
                 pstmt.setNull(7, java.sql.Types.NULL);
             }
-            if(questao.getTxt_Resposta_Aberta()!=null) {
-                pstmt.setString(8, questao.getTxt_Resposta_Aberta());
+            if(questao.getTxtResposta()!=null) {
+                pstmt.setString(8, questao.getTxtResposta());
             } else {
                 pstmt.setNull(8, java.sql.Types.NULL);
             }
-            pstmt.setLong(9, questao.getCod_Questao());
+            pstmt.setLong(9, questao.getId());
             pstmt.executeUpdate();
 
             pstmt.close();
@@ -188,18 +188,18 @@ public class QuestaoDAOImpl implements QuestaoDAO {
             ModuloDAO moduloDAOImpl = ModuloDAOImpl.getInstance();
             if (rs.next()) {
                 questao = new Questao();
-                questao.setCod_Questao(rs.getLong("cod_questao"));
+                questao.setId(rs.getLong("cod_questao"));
                 Dificuldade dificuldade = dificuldadeDAOImpl.getDificuldadeById(rs.getLong("cod_dificuldade"));
                 questao.setDificuldade(dificuldade);
                 Disciplina disciplina = disciplinaDAOImpl.getDisciplinaById(rs.getLong("cod_disciplina"));
                 questao.setDisciplina(disciplina);
                 Modulo modulo = moduloDAOImpl.getModuloById(rs.getLong("cod_modulo"));
                 questao.setModulo(modulo);
-                questao.setCod_Tipo(rs.getString("cod_tipo").charAt(0));
-                questao.setTxt_Enunciado(rs.getString("txt_enunciado"));
-                questao.setImg_Enunciado((BufferedImage) rs.getBlob("img_enunciado"));
-                questao.setSeq_Questao_Correta(rs.getLong("seq_questao_correta"));
-                questao.setTxt_Resposta_Aberta(rs.getString("txt_resposta_aberta"));
+                questao.setIdTipo(rs.getString("cod_tipo").charAt(0));
+                questao.setTxtEnunciado(rs.getString("txt_enunciado"));
+                questao.setImgEnunciado((BufferedImage) rs.getBlob("img_enunciado"));
+                questao.setSeqQuestaoCorreta(rs.getLong("seq_questao_correta"));
+                questao.setTxtResposta(rs.getString("txt_resposta_aberta"));
             }
 
             rs.close();
@@ -230,18 +230,18 @@ public class QuestaoDAOImpl implements QuestaoDAO {
             if (rs.next()) {
                 do {
                     Questao questao = new Questao();
-                    questao.setCod_Questao(rs.getLong("cod_questao"));
+                    questao.setId(rs.getLong("cod_questao"));
                     Dificuldade dificuldade = dificuldadeDAOImpl.getDificuldadeById(rs.getLong("cod_dificuldade"));
                     questao.setDificuldade(dificuldade);
                     Disciplina disciplina = disciplinaDAOImpl.getDisciplinaById(rs.getLong("cod_disciplina"));
                     questao.setDisciplina(disciplina);
                     Modulo modulo = moduloDAOImpl.getModuloById(rs.getLong("cod_modulo"));
                     questao.setModulo(modulo);
-                    questao.setCod_Tipo(rs.getString("cod_tipo").charAt(0));
-                    questao.setTxt_Enunciado(rs.getString("txt_enunciado"));
-                    questao.setImg_Enunciado((BufferedImage) rs.getBlob("img_enunciado"));
-                    questao.setSeq_Questao_Correta(rs.getLong("seq_questao_correta"));
-                    questao.setTxt_Resposta_Aberta(rs.getString("txt_resposta_aberta"));
+                    questao.setIdTipo(rs.getString("cod_tipo").charAt(0));
+                    questao.setTxtEnunciado(rs.getString("txt_enunciado"));
+                    questao.setImgEnunciado((BufferedImage) rs.getBlob("img_enunciado"));
+                    questao.setSeqQuestaoCorreta(rs.getLong("seq_questao_correta"));
+                    questao.setTxtResposta(rs.getString("txt_resposta_aberta"));
                     listAll.add(questao);
                 } while (rs.next());
             }
@@ -274,18 +274,18 @@ public class QuestaoDAOImpl implements QuestaoDAO {
             if (rs.next()) {
                 do {
                     Questao questao = new Questao();
-                    questao.setCod_Questao(rs.getLong("cod_questao"));
+                    questao.setId(rs.getLong("cod_questao"));
                     Dificuldade dificuldade = dificuldadeDAOImpl.getDificuldadeById(rs.getLong("cod_dificuldade"));
                     questao.setDificuldade(dificuldade);
                     Disciplina disciplina = disciplinaDAOImpl.getDisciplinaById(rs.getLong("cod_disciplina"));
                     questao.setDisciplina(disciplina);
                     Modulo modulo = moduloDAOImpl.getModuloById(rs.getLong("cod_modulo"));
                     questao.setModulo(modulo);
-                    questao.setCod_Tipo(rs.getString("cod_tipo").charAt(0));
-                    questao.setTxt_Enunciado(rs.getString("txt_enunciado"));
-                    questao.setImg_Enunciado((BufferedImage) rs.getBlob("img_enunciado"));
-                    questao.setSeq_Questao_Correta(rs.getLong("seq_questao_correta"));
-                    questao.setTxt_Resposta_Aberta(rs.getString("txt_resposta_aberta"));
+                    questao.setIdTipo(rs.getString("cod_tipo").charAt(0));
+                    questao.setTxtEnunciado(rs.getString("txt_enunciado"));
+                    questao.setImgEnunciado((BufferedImage) rs.getBlob("img_enunciado"));
+                    questao.setSeqQuestaoCorreta(rs.getLong("seq_questao_correta"));
+                    questao.setTxtResposta(rs.getString("txt_resposta_aberta"));
                     listAll.add(questao);
                 } while (rs.next());
             }

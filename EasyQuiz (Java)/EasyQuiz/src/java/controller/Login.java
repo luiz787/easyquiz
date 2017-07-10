@@ -45,20 +45,20 @@ public class Login {
 
             ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
             Usuario usuario = manterUsuario.getUsuarioByEmailSenha(email, senha);
-            System.out.println("Usuario: "+usuario.getNom_Usuario());
+            System.out.println("Usuario: "+usuario.getNome());
 
             if (usuario == null) {
                 String erro = "Usuario nao encontrado!";
                 request.setAttribute("erro", erro);
                 jsp = "/erro.jsp";
             } else {
-                request.getSession().setAttribute("cod_Usuario", usuario.getCod_Usuario());
+                request.getSession().setAttribute("cod_Usuario", usuario.getId());
                 request.getSession().setAttribute("dat_Inicio", Instant.now());
                 ManterSessao manterSessao = 
                         new ManterSessaoImpl(SessaoDAOImpl.getInstance());
                 Sessao sessao = new Sessao();
                 sessao.setUsuario(usuario);
-                sessao.setDat_Inicio((Instant)request.getSession().getAttribute("dat_Inicio"));
+                sessao.setDataInicio((Instant)request.getSession().getAttribute("dat_Inicio"));
                 manterSessao.cadastrarSessao(sessao);
                 jsp = "/TelaQuestoes.jsp";
             }

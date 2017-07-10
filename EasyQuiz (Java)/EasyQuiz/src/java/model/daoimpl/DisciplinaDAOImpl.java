@@ -49,13 +49,13 @@ public class DisciplinaDAOImpl implements DisciplinaDAO{
             String sql = "INSERT INTO disciplina (nom_disciplina) VALUES(?) RETURNING cod_disciplina";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setString(1, disciplina.getNom_Disciplina());
+            pstmt.setString(1, disciplina.getNome());
 
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
                 Long cod_disciplina = rs.getLong("cod_disciplina");
-                disciplina.setCod_Disciplina(cod_disciplina);
+                disciplina.setId(cod_disciplina);
             }
 
             rs.close();
@@ -79,8 +79,8 @@ public class DisciplinaDAOImpl implements DisciplinaDAO{
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             
-            pstmt.setString(1, disciplina.getNom_Disciplina());
-            pstmt.setLong(2, disciplina.getCod_Disciplina());
+            pstmt.setString(1, disciplina.getNome());
+            pstmt.setLong(2, disciplina.getId());
             pstmt.executeUpdate();
 
             pstmt.close();
@@ -129,8 +129,8 @@ public class DisciplinaDAOImpl implements DisciplinaDAO{
             Disciplina disciplina = null;
             if (rs.next()) {
                 disciplina = new Disciplina();
-                disciplina.setCod_Disciplina(rs.getLong("cod_disciplina"));
-                disciplina.setNom_Disciplina(rs.getString("nom_disciplina"));
+                disciplina.setId(rs.getLong("cod_disciplina"));
+                disciplina.setNome(rs.getString("nom_disciplina"));
             }
 
             rs.close();
@@ -158,8 +158,8 @@ public class DisciplinaDAOImpl implements DisciplinaDAO{
             if (rs.next()) {
                 do {
                     Disciplina disciplina = new Disciplina();
-                    disciplina.setCod_Disciplina(rs.getLong("cod_disciplina"));
-                    disciplina.setNom_Disciplina(rs.getString("nom_disciplina"));
+                    disciplina.setId(rs.getLong("cod_disciplina"));
+                    disciplina.setNome(rs.getString("nom_disciplina"));
                     listAll.add(disciplina);
                 } while (rs.next());
             }

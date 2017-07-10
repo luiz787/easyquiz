@@ -52,14 +52,14 @@ public class ModuloDAOImpl implements ModuloDAO {
             String sql = "INSERT INTO modulo (cod_disciplina, nom_modulo) VALUES(?, ?) RETURNING cod_modulo";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setLong(1, modulo.getDisciplina().getCod_Disciplina());
-            pstmt.setString(2, modulo.getNom_Modulo());
+            pstmt.setLong(1, modulo.getDisciplina().getId());
+            pstmt.setString(2, modulo.getNome());
             
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
                 Long cod_modulo = rs.getLong("cod_modulo");
-                modulo.setCod_Modulo(cod_modulo);
+                modulo.setId(cod_modulo);
             }
 
             rs.close();
@@ -83,8 +83,8 @@ public class ModuloDAOImpl implements ModuloDAO {
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             
-            pstmt.setString(1, modulo.getNom_Modulo());
-            pstmt.setLong(2, modulo.getCod_Modulo());
+            pstmt.setString(1, modulo.getNome());
+            pstmt.setLong(2, modulo.getId());
             pstmt.executeUpdate();
 
             pstmt.close();
@@ -136,8 +136,8 @@ public class ModuloDAOImpl implements ModuloDAO {
                 modulo = new Modulo();
                 Disciplina disciplina = disciplinaDAOImpl.getDisciplinaById(rs.getLong("cod_disciplina"));
                 modulo.setDisciplina(disciplina);
-                modulo.setCod_Modulo(rs.getLong("cod_modulo"));
-                modulo.setNom_Modulo(rs.getString("nom_modulo"));
+                modulo.setId(rs.getLong("cod_modulo"));
+                modulo.setNome(rs.getString("nom_modulo"));
             }
 
             rs.close();
@@ -168,8 +168,8 @@ public class ModuloDAOImpl implements ModuloDAO {
                     Modulo modulo = new Modulo();
                     Disciplina disciplina = disciplinaDAOImpl.getDisciplinaById(rs.getLong("cod_disciplina"));
                     modulo.setDisciplina(disciplina);
-                    modulo.setCod_Modulo(rs.getLong("cod_modulo"));
-                    modulo.setNom_Modulo(rs.getString("nom_modulo"));
+                    modulo.setId(rs.getLong("cod_modulo"));
+                    modulo.setNome(rs.getString("nom_modulo"));
                     listAll.add(modulo);
                 } while (rs.next());
             }

@@ -11,8 +11,8 @@ package model.domain;
  */
 public class QuestaoFechada {
     private Questao questao;
-    private Long seq_Alternativa;
-    private String txt_Alternativa;
+    private Long seqAlternativa;
+    private String txtAlternativa;
 
     public Questao getQuestao() {
         return questao;
@@ -22,19 +22,19 @@ public class QuestaoFechada {
         this.questao = questao;
     }
 
-    public Long getSeq_Alternativa() {
-        return seq_Alternativa;
+    public Long getSeqAlternativa() {
+        return seqAlternativa;
     }
 
-    public void setSeq_Alternativa(Long seq_Alternativa) {
-        this.seq_Alternativa = seq_Alternativa;
+    public void setSeqAlternativa(Long seqAlternativa) {
+        this.seqAlternativa = seqAlternativa;
     }
 
-    public String getTxt_Alternativa() {
-        return txt_Alternativa;
+    public String getTxtAlternativa() {
+        return txtAlternativa;
     }
 
-    public void setTxt_Alternativa(String txt_Alternativa) {
-        this.txt_Alternativa = txt_Alternativa;
+    public void setTxtAlternativa(String txtAlternativa) {
+        this.txtAlternativa = txtAlternativa;
     }
 }

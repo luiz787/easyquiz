@@ -12,17 +12,26 @@ import java.time.Instant;
  * @author Luiz
  */
 public class Post {
-    private Long cod_Post;
+    private Long codigo;
     private Questao questao;
-    private String txt_Conteudo;
-    private Instant dat_Criacao;
+    private String txtConteudo;
+    private Instant datCriacao;
+    private Usuario autor;
 
-    public Long getCod_Post() {
-        return cod_Post;
+    public Usuario getAutor() {
+        return autor;
     }
 
-    public void setCod_Post(Long cod_Post) {
-        this.cod_Post = cod_Post;
+    public void setAutor(Usuario autor) {
+        this.autor = autor;
+    }
+
+    public Long getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Long codigo) {
+        this.codigo = codigo;
     }
 
     public Questao getQuestao() {
@@ -33,20 +42,20 @@ public class Post {
         this.questao = questao;
     }
 
-    public String getTxt_Conteudo() {
-        return txt_Conteudo;
+    public String getTxtConteudo() {
+        return txtConteudo;
     }
 
-    public void setTxt_Conteudo(String txt_Conteudo) {
-        this.txt_Conteudo = txt_Conteudo;
+    public void setTxtConteudo(String txtConteudo) {
+        this.txtConteudo = txtConteudo;
     }
 
-    public Instant getDat_Criacao() {
-        return dat_Criacao;
+    public Instant getDatCriacao() {
+        return datCriacao;
     }
 
-    public void setDat_Criacao(Instant dat_Criacao) {
-        this.dat_Criacao = dat_Criacao;
+    public void setDatCriacao(Instant datCriacao) {
+        this.datCriacao = datCriacao;
     }
     
 }

@@ -43,9 +43,9 @@ public class GravarQuestaoFechadaResposta {
             ManterQuestao manterQuestao = new ManterQuestaoImpl(QuestaoDAOImpl.getInstance());
             Questao questao = manterQuestao.getQuestaoById(cod_Questao);
             
-            if(questao.getCod_Tipo()=='A') {
+            if(questao.getIdTipo()=='A') {
                 
-            } else if(questao.getCod_Tipo()=='F') {
+            } else if(questao.getIdTipo()=='F') {
                 String alternativaStr = request.getParameter("resposta");
                 Long seq_Alternativa = Long.parseLong(alternativaStr);
                 
@@ -58,7 +58,7 @@ public class GravarQuestaoFechadaResposta {
                 QuestaoFechadaResposta questaoFechadaResposta = new QuestaoFechadaResposta();
                 questaoFechadaResposta.setSessao(sessao);
                 questaoFechadaResposta.setQuestao(questao);
-                questaoFechadaResposta.setSeq_Questao_Resposta(seq_Alternativa);
+                questaoFechadaResposta.setSeqQuestaoResposta(seq_Alternativa);
                 
                 ManterQuestaoFechadaResposta manterQuestaoFechadaResposta = 
                         new ManterQuestaoFechadaRespostaImpl(QuestaoFechadaRespostaDAOImpl.getInstance());

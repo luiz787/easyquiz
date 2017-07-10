@@ -42,8 +42,8 @@ public class SessaoDAOImpl implements SessaoDAO {
             String sql = "INSERT INTO sessao (cod_usuario, dat_inicio) VALUES(?, ?)";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setLong(1, sessao.getUsuario().getCod_Usuario());
-            pstmt.setTimestamp(2, java.sql.Timestamp.from(sessao.getDat_Inicio()));
+            pstmt.setLong(1, sessao.getUsuario().getId());
+            pstmt.setTimestamp(2, java.sql.Timestamp.from(sessao.getDataInicio()));
             
             pstmt.executeUpdate();
             
@@ -67,9 +67,9 @@ public class SessaoDAOImpl implements SessaoDAO {
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             
-            pstmt.setTimestamp(1, java.sql.Timestamp.from(sessao.getDat_Fim()));
-            pstmt.setLong(2, sessao.getUsuario().getCod_Usuario());
-            pstmt.setTimestamp(3, java.sql.Timestamp.from(sessao.getDat_Inicio()));
+            pstmt.setTimestamp(1, java.sql.Timestamp.from(sessao.getDataFim()));
+            pstmt.setLong(2, sessao.getUsuario().getId());
+            pstmt.setTimestamp(3, java.sql.Timestamp.from(sessao.getDataInicio()));
             
             pstmt.executeUpdate();
 
@@ -97,10 +97,10 @@ public class SessaoDAOImpl implements SessaoDAO {
             UsuarioDAO usuarioDAOImpl = UsuarioDAOImpl.getInstance();
             if (rs.next()) {
                     sessao = new Sessao();
-                    sessao.setDat_Inicio((rs.getTimestamp("dat_inicio")).toInstant());
+                    sessao.setDataInicio((rs.getTimestamp("dat_inicio")).toInstant());
                     Usuario usuario = usuarioDAOImpl.getUsuarioById(rs.getLong("cod_usuario"));
                     sessao.setUsuario(usuario);
-                    sessao.setDat_Fim((rs.getTimestamp("dat_inicio")).toInstant());
+                    sessao.setDataFim((rs.getTimestamp("dat_inicio")).toInstant());
             }
 
             rs.close();
@@ -130,10 +130,10 @@ public class SessaoDAOImpl implements SessaoDAO {
             if (rs.next()) {
                 do {
                     Sessao sessao = new Sessao();
-                    sessao.setDat_Inicio((rs.getTimestamp("dat_inicio")).toInstant());
+                    sessao.setDataInicio((rs.getTimestamp("dat_inicio")).toInstant());
                     Usuario usuario = usuarioDAOImpl.getUsuarioById(rs.getLong("cod_usuario"));
                     sessao.setUsuario(usuario);
-                    sessao.setDat_Fim((rs.getTimestamp("dat_inicio")).toInstant());
+                    sessao.setDataFim((rs.getTimestamp("dat_inicio")).toInstant());
                     sessaoByUsuario.add(sessao);
                 } while (rs.next());
             }
@@ -164,10 +164,10 @@ public class SessaoDAOImpl implements SessaoDAO {
             if (rs.next()) {
                 do {
                     Sessao sessao = new Sessao();
-                    sessao.setDat_Inicio((rs.getTimestamp("dat_inicio")).toInstant());
+                    sessao.setDataInicio((rs.getTimestamp("dat_inicio")).toInstant());
                     Usuario usuario = usuarioDAOImpl.getUsuarioById(rs.getLong("cod_usuario"));
                     sessao.setUsuario(usuario);
-                    sessao.setDat_Fim((rs.getTimestamp("dat_inicio")).toInstant());
+                    sessao.setDataFim((rs.getTimestamp("dat_inicio")).toInstant());
                     listAll.add(sessao);
                 } while (rs.next());
             }

@@ -13,8 +13,8 @@ import java.time.Instant;
  */
 public class Sessao {
     private Usuario usuario;
-    private Instant dat_Inicio;
-    private Instant dat_Fim;
+    private Instant dataInicio;
+    private Instant dataFim;
 
     public Usuario getUsuario() {
         return usuario;
@@ -26,20 +26,20 @@ public class Sessao {
 
     
 
-    public Instant getDat_Inicio() {
-        return dat_Inicio;
+    public Instant getDataInicio() {
+        return dataInicio;
     }
 
-    public void setDat_Inicio(Instant dat_Inicio) {
-        this.dat_Inicio = dat_Inicio;
+    public void setDataInicio(Instant dataInicio) {
+        this.dataInicio = dataInicio;
     }
 
-    public Instant getDat_Fim() {
-        return dat_Fim;
+    public Instant getDataFim() {
+        return dataFim;
     }
 
-    public void setDat_Fim(Instant dat_Fim) {
-        this.dat_Fim = dat_Fim;
+    public void setDataFim(Instant dataFim) {
+        this.dataFim = dataFim;
     }
 
     

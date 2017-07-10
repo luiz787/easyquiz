@@ -9,6 +9,7 @@ import model.service.*;
 import java.util.List;
 import model.dao.PerfilDAO;
 import model.domain.Perfil;
+import model.exception.ExcecaoNegocio;
 import model.exception.ExcecaoPersistencia;
 
 /**
@@ -22,14 +23,15 @@ public class ManterPerfilImpl implements ManterPerfil {
         this.perfilDAO = perfilDAO;
     }
     @Override
-    public Perfil getPerfilById(Long cod_Perfil) throws ExcecaoPersistencia {
-        Perfil result = perfilDAO.getPerfilById(cod_Perfil);
-        return result;
+    public Perfil getPerfilById(Long codPerfil) throws ExcecaoPersistencia, ExcecaoNegocio{
+        if (codPerfil==null){
+            throw new ExcecaoNegocio("Código não pode ser nulo.");
+        }
+        return perfilDAO.getPerfilById(codPerfil);
     }
 
     @Override
     public List<Perfil> getAll() throws ExcecaoPersistencia {
-        List<Perfil> result = perfilDAO.listAll();
-        return result;
+        return perfilDAO.listAll();
     }
 }

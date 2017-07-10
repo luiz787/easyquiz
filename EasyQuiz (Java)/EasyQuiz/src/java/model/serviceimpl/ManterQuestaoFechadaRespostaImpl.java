@@ -25,12 +25,28 @@ public class ManterQuestaoFechadaRespostaImpl implements ManterQuestaoFechadaRes
     
     @Override
     public void cadastrarQuestaoFechadaResposta(QuestaoFechadaResposta questaoFechadaResposta) throws ExcecaoPersistencia, ExcecaoNegocio {
+        String errMsg = null;
+        if (questaoFechadaResposta == null){
+            throw new ExcecaoNegocio("A objeto resposta não pode ser nulo.");
+        } else {
+            if (questaoFechadaResposta.getSeqQuestaoResposta()==null){
+                errMsg+="A resposta não pode ser nula. ";
+            }
+            if (questaoFechadaResposta.getSessao()==null){
+                errMsg+="A resposta deve pertencer a uma sessão. ";
+            }
+            if (questaoFechadaResposta.getQuestao()==null){
+                errMsg+="A resposta deve pertencer a uma questão. ";
+            }
+        }
+        if (errMsg!=null){
+            throw new ExcecaoNegocio(errMsg);
+        }
         questaoFechadaRespostaDAO.insert(questaoFechadaResposta);
     }
 
     @Override
     public List<QuestaoFechadaResposta> getAll() throws ExcecaoPersistencia {
-        List<QuestaoFechadaResposta> result = questaoFechadaRespostaDAO.listAll();
-        return result;
+        return questaoFechadaRespostaDAO.listAll();
     }
 }

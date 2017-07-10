@@ -5,6 +5,7 @@
  */
 package model.serviceimpl;
 
+import java.util.ArrayList;
 import model.service.*;
 import model.domain.Usuario;
 import model.exception.ExcecaoNegocio;
@@ -24,25 +25,104 @@ public class ManterUsuarioImpl implements ManterUsuario {
         this.usuarioDAO = usuarioDAO;
     }
     @Override
-    public void cadastrarUsuario(Usuario usuario) throws ExcecaoPersistencia, ExcecaoNegocio {
+    public Long cadastrarUsuario(Usuario usuario) throws ExcecaoPersistencia, ExcecaoNegocio {
+        List<String> errMsgList = new ArrayList<>();
+        if (usuario == null) {
+            throw new ExcecaoNegocio("Nenhum usuario informado.");
+        }
+
+        if ((usuario.getNome() == null) || (usuario.getNome().isEmpty())) {
+            errMsgList.add("O nome nao pode ser nulo.");
+        }
+
+        if ((usuario.getSenha() == null) || (usuario.getSenha().isEmpty())) {
+            errMsgList.add("A senha nao pode ser nula.");
+        } else if ((usuario.getSenha()).length() < 8) {
+            errMsgList.add("A senha é muito curta.");
+        }
+
+        if ((usuario.getEmail() == null) || (usuario.getEmail().isEmpty())) {
+            errMsgList.add("O e-mail nao pode ser nulo.");
+        }
+ 
+        if ((usuario.getDataNascimento() == null)) {
+            errMsgList.add("A data de nascimento nao pode ser nula.");
+            //data de nascimento posterior a data atual.
+        }
+
+        if (usuario.getId() != null) {
+            errMsgList.add("Na criaçao de um novo usuario o ID deve ser nulo.");
+        }
+
+        if (!errMsgList.isEmpty()) {
+            String errMsg = "";
+            for (String msg : errMsgList) {
+                errMsg += (msg + "\n");
+            }
+            throw new ExcecaoNegocio(errMsg);
+        }
+        
+
         usuarioDAO.insert(usuario);
+
+        return usuario.getId();
     }
 
     @Override
     public void alterarUsuario(Usuario usuario) throws ExcecaoPersistencia, ExcecaoNegocio {
+        List<String> errMsgList = new ArrayList<>();
+        if (usuario == null) {
+            
+            throw new ExcecaoNegocio("Nenhum usuario informado.");
+        }
+
+        if ((usuario.getNome() == null) || (usuario.getNome().isEmpty())) {
+            errMsgList.add("O nome nao pode ser nulo.");
+        }
+        
+        if ((usuario.getSenha() == null) || (usuario.getSenha().isEmpty())) {
+            errMsgList.add("A senha nao pode ser nula!");
+        } else if ((usuario.getSenha()).length() < 8) {
+            errMsgList.add("A senha é muito curta.");
+        }
+
+        if ((usuario.getEmail() == null) || (usuario.getEmail().isEmpty())) {
+            errMsgList.add("O e-mail nao pode ser nulo.");
+        }
+ 
+        if ((usuario.getDataNascimento() == null)) {
+            errMsgList.add("A data de nascimento nao pode ser nula.");
+        }
+
+        if (usuario.getId() == null) {
+            errMsgList.add("Na alteraçao de um novo usuario o ID nao pode ser nulo.");
+        }
+
+        if (!errMsgList.isEmpty()) {
+            String errMsg = "";
+            for (String msg : errMsgList) {
+                errMsg += (msg + "\n");
+            }
+            throw new ExcecaoNegocio(errMsg);
+        }
+
         usuarioDAO.update(usuario);
     }
 
     @Override
-    public Usuario deletarUsuario(Long cod_Usuario) throws ExcecaoPersistencia {
-        Usuario result = usuarioDAO.delete(cod_Usuario);
-        return result;
+    public Usuario deletarUsuario(Long id) throws ExcecaoPersistencia {
+        if (id == null){
+            throw new ExcecaoPersistencia("ID não pode ser nulo.");
+        }
+        return usuarioDAO.delete(id);
     }
 
     @Override
-    public Usuario getUsuarioById(Long cod_Usuario) throws ExcecaoPersistencia {
-        Usuario result = usuarioDAO.getUsuarioById(cod_Usuario);
-        return result;
+    public Usuario getUsuarioById(Long id) throws ExcecaoPersistencia {
+        if (id == null){
+            throw new ExcecaoPersistencia("ID não pode ser nulo.");
+        }
+        return usuarioDAO.getUsuarioById(id);
     }
 
     @Override
@@ -52,8 +132,10 @@ public class ManterUsuarioImpl implements ManterUsuario {
     }
 
     @Override
-    public Usuario getUsuarioByEmailSenha(String email, String senha) throws ExcecaoPersistencia {
-        Usuario result = usuarioDAO.getUsuarioByEmailSenha(email, senha);
-        return result;    
+    public Usuario getUsuarioByEmailSenha(String email, String senha) throws ExcecaoPersistencia, ExcecaoNegocio {
+        if (email==null || senha==null){
+            throw new ExcecaoNegocio("O valor não pode ser nulo");
+        }
+        return usuarioDAO.getUsuarioByEmailSenha(email, senha);
     }
 }

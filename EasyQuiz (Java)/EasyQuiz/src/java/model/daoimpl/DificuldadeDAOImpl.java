@@ -51,8 +51,8 @@ public class DificuldadeDAOImpl implements DificuldadeDAO {
             Dificuldade dificuldade = null;
             if (rs.next()) {
                 dificuldade = new Dificuldade();
-                dificuldade.setCod_Dificuldade(rs.getLong("cod_dificuldade"));
-                dificuldade.setDes_Dificuldade(rs.getString("des_dificuldade"));
+                dificuldade.setId(rs.getLong("cod_dificuldade"));
+                dificuldade.setDescricao(rs.getString("des_dificuldade"));
             }
 
             rs.close();
@@ -80,8 +80,8 @@ public class DificuldadeDAOImpl implements DificuldadeDAO {
             if (rs.next()) {
                 do {
                     Dificuldade dificuldade = new Dificuldade();
-                    dificuldade.setCod_Dificuldade(rs.getLong("cod_dificuldade"));
-                    dificuldade.setDes_Dificuldade(rs.getString("des_dificuldade"));
+                    dificuldade.setId(rs.getLong("cod_dificuldade"));
+                    dificuldade.setDescricao(rs.getString("des_dificuldade"));
                     listAll.add(dificuldade);
                 } while (rs.next());
             }

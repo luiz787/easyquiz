@@ -25,29 +25,66 @@ public class ManterSessaoImpl implements ManterSessao {
     }
     @Override
     public void cadastrarSessao(Sessao sessao) throws ExcecaoPersistencia, ExcecaoNegocio {
+        String errMsg = null;
+        if (sessao==null){
+            throw new ExcecaoNegocio("A sessão não pode ser nula.");
+        } else {
+            if (sessao.getUsuario()==null){
+                errMsg+="A sessão deve pertencer a um usuário. ";
+            }
+            if (sessao.getDataInicio()==null){
+                errMsg+="A sessão deve ter uma data inicial. ";
+            }
+            if (sessao.getDataFim()!=null){
+                errMsg+="A sessão não pode ter data de encerramento ao ser cadastrada. ";
+            }
+        }
+        if (errMsg!=null){
+            throw new ExcecaoNegocio(errMsg);
+        }
         sessaoDAO.insert(sessao);
     }
 
     @Override
     public void alterarSessao(Sessao sessao) throws ExcecaoPersistencia, ExcecaoNegocio {
+        String errMsg = null;
+        if (sessao==null){
+            throw new ExcecaoNegocio("A sessão não pode ser nula.");
+        } else {
+            if (sessao.getUsuario()==null){
+                errMsg+="A sessão deve pertencer a um usuário. ";
+            }
+            if (sessao.getDataInicio()==null){
+                errMsg+="A sessão deve ter uma data inicial. ";
+            }
+        }
+        if (errMsg!=null){
+            throw new ExcecaoNegocio(errMsg);
+        }
         sessaoDAO.update(sessao);
     }
 
     @Override
-    public List<Sessao> getSessaoByUsuario(Long cod_Usuario) throws ExcecaoPersistencia {
-        List<Sessao> result = sessaoDAO.getSessaoByUsuario(cod_Usuario);
-        return result;
+    public List<Sessao> getSessaoByUsuario(Long id) throws ExcecaoPersistencia {
+        if (id==null){
+            throw new ExcecaoPersistencia("O id de usuário não pode ser nulo.");
+        }
+        return sessaoDAO.getSessaoByUsuario(id);
     }
 
     @Override
     public List<Sessao> getAll() throws ExcecaoPersistencia {
-        List<Sessao> result = sessaoDAO.listAll();
-        return result;
+        return sessaoDAO.listAll();
     }
 
     @Override
-    public Sessao getSessaoByUsuarioData(Long cod_Usuario, Instant dat_Inicio) throws ExcecaoPersistencia {
-        Sessao result = sessaoDAO.getSessaoByUsuarioData(cod_Usuario, dat_Inicio);
-        return result;
+    public Sessao getSessaoByUsuarioData(Long id, Instant dataInicio) throws ExcecaoPersistencia {
+        if (id==null){
+            throw new ExcecaoPersistencia("O id de usuário não pode ser nulo.");
+        }
+        if (dataInicio == null) {
+            throw new ExcecaoPersistencia("A data inicial não pode ser nula.");
+        }
+        return sessaoDAO.getSessaoByUsuarioData(id, dataInicio);
     }
 }

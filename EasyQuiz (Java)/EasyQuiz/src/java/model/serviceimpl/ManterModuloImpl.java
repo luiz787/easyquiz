@@ -24,29 +24,60 @@ public class ManterModuloImpl implements ManterModulo {
     }
     @Override
     public void cadastrarModulo(Modulo modulo) throws ExcecaoPersistencia, ExcecaoNegocio {
+        String errMsg = null;
+        if (modulo == null) {
+            throw new ExcecaoNegocio("Módulo não pode ser nulo.");
+        } else {
+            if (modulo.getNome()==null){
+                errMsg+="O módulo deve possuir um nome. ";
+            }
+            if (modulo.getDisciplina()==null){
+                errMsg+="O módulo deve estar associado a uma disciplina. ";
+            }
+        }
+        if (errMsg!=null){
+            throw new ExcecaoNegocio(errMsg);
+        }
         moduloDAO.insert(modulo);
     }
 
     @Override
     public void alterarModulo(Modulo modulo) throws ExcecaoPersistencia, ExcecaoNegocio {
+        String errMsg = null;
+        if (modulo == null) {
+            throw new ExcecaoNegocio("Módulo não pode ser nulo.");
+        } else {
+            if (modulo.getNome()==null){
+                errMsg+="O módulo deve possuir um nome. ";
+            }
+            if (modulo.getDisciplina()==null){
+                errMsg+="O módulo deve estar associado a uma disciplina. ";
+            }
+        }
+        if (errMsg!=null){
+            throw new ExcecaoNegocio(errMsg);
+        }
         moduloDAO.update(modulo);
     }
 
     @Override
-    public Modulo deletarModulo(Long cod_Modulo) throws ExcecaoPersistencia {
-        Modulo result = moduloDAO.delete(cod_Modulo);
-        return result;
+    public Modulo deletarModulo(Long codModulo) throws ExcecaoPersistencia, ExcecaoNegocio {
+        if (codModulo == null){
+            throw new ExcecaoNegocio("Código não pode ser nulo.");
+        }
+        return moduloDAO.delete(codModulo);
     }
 
     @Override
-    public Modulo getModuloById(Long cod_Modulo) throws ExcecaoPersistencia {
-        Modulo result = moduloDAO.getModuloById(cod_Modulo);
-        return result;
+    public Modulo getModuloById(Long codModulo) throws ExcecaoPersistencia, ExcecaoNegocio {
+        if (codModulo == null){
+            throw new ExcecaoNegocio("Código não pode ser nulo.");
+        }
+        return moduloDAO.getModuloById(codModulo);
     }
 
     @Override
     public List<Modulo> getAll() throws ExcecaoPersistencia {
-        List<Modulo> result = moduloDAO.listAll();
-        return result;
+        return moduloDAO.listAll();
     }
 }

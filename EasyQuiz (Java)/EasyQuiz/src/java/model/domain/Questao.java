@@ -13,22 +13,22 @@ import java.awt.image.BufferedImage;
  */
 public class Questao { //serializable?
 
-    private Long cod_Questao;
+    private Long id;
     private Dificuldade dificuldade;
     private Disciplina disciplina;
     private Modulo modulo;
-    private char cod_Tipo;
-    private String txt_Enunciado;
-    private BufferedImage img_Enunciado;
-    private Long seq_Questao_Correta;
-    private String txt_Resposta_Aberta;
+    private char idTipo;
+    private String txtEnunciado;
+    private BufferedImage imgEnunciado;
+    private Long seqQuestaoCorreta;
+    private String txtResposta;
 
-    public Long getCod_Questao() {
-        return cod_Questao;
+    public Long getId() {
+        return id;
     }
 
-    public void setCod_Questao(Long cod_Questao) {
-        this.cod_Questao = cod_Questao;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Dificuldade getDificuldade() {
@@ -56,46 +56,46 @@ public class Questao { //serializable?
     }
     
 
-    public char getCod_Tipo() {
-        return cod_Tipo;
+    public char getIdTipo() {
+        return idTipo;
     }
 
-    public void setCod_Tipo(char cod_Tipo) {
-        this.cod_Tipo = cod_Tipo;
+    public void setIdTipo(char idTipo) {
+        this.idTipo = idTipo;
     }
 
-    public String getTxt_Enunciado() {
-        return txt_Enunciado;
+    public String getTxtEnunciado() {
+        return txtEnunciado;
     }
 
-    public void setTxt_Enunciado(String txt_Enunciado) {
-        this.txt_Enunciado = txt_Enunciado;
+    public void setTxtEnunciado(String txtEnunciado) {
+        this.txtEnunciado = txtEnunciado;
     }
 
-    public BufferedImage getImg_Enunciado() {
-        return img_Enunciado;
+    public BufferedImage getImgEnunciado() {
+        return imgEnunciado;
     }
 
-    public void setImg_Enunciado(BufferedImage img_Enunciado) {
-        this.img_Enunciado = img_Enunciado;
+    public void setImgEnunciado(BufferedImage imgEnunciado) {
+        this.imgEnunciado = imgEnunciado;
     }
 
-    public Long getSeq_Questao_Correta() {
-        return seq_Questao_Correta;
+    public Long getSeqQuestaoCorreta() {
+        return seqQuestaoCorreta;
     }
 
-    public void setSeq_Questao_Correta(Long seq_Questao_Correta) {
-        this.seq_Questao_Correta = seq_Questao_Correta;
+    public void setSeqQuestaoCorreta(Long seqQuestaoCorreta) {
+        this.seqQuestaoCorreta = seqQuestaoCorreta;
     }
 
     
 
-    public String getTxt_Resposta_Aberta() {
-        return txt_Resposta_Aberta;
+    public String getTxtResposta() {
+        return txtResposta;
     }
 
-    public void setTxt_Resposta_Aberta(String txt_Resposta_Aberta) {
-        this.txt_Resposta_Aberta = txt_Resposta_Aberta;
+    public void setTxtResposta(String txtResposta) {
+        this.txtResposta = txtResposta;
     }
     
 }

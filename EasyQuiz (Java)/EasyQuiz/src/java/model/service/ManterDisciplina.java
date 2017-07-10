@@ -17,7 +17,7 @@ import model.exception.ExcecaoPersistencia;
 public interface ManterDisciplina {
     public void cadastrarDisciplina(Disciplina disciplina) throws ExcecaoPersistencia, ExcecaoNegocio;
     public void alterarDisciplina(Disciplina disciplina) throws ExcecaoPersistencia, ExcecaoNegocio;
-    public Disciplina deletarDisciplina(Long cod_Disciplina) throws ExcecaoPersistencia;
-    public Disciplina getDisciplinaById(Long cod_Disciplina) throws ExcecaoPersistencia;
+    public Disciplina deletarDisciplina(Long cod_Disciplina) throws ExcecaoPersistencia, ExcecaoNegocio;
+    public Disciplina getDisciplinaById(Long cod_Disciplina) throws ExcecaoPersistencia, ExcecaoNegocio;
     public List<Disciplina> getAll() throws ExcecaoPersistencia;
 }

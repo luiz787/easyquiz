@@ -7,6 +7,7 @@ package model.service;
 
 import java.util.List;
 import model.domain.Dificuldade;
+import model.exception.ExcecaoNegocio;
 import model.exception.ExcecaoPersistencia;
 
 /**
@@ -14,6 +15,6 @@ import model.exception.ExcecaoPersistencia;
  * @author andro
  */
 public interface ManterDificuldade {
-    public Dificuldade getDificuldadeById(Long cod_Dificuldade) throws ExcecaoPersistencia;
+    public Dificuldade getDificuldadeById(Long cod_Dificuldade) throws ExcecaoPersistencia, ExcecaoNegocio;
     public List<Dificuldade> listAll() throws ExcecaoPersistencia;
 }

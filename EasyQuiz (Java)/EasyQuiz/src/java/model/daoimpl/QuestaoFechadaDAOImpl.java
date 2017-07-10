@@ -51,9 +51,9 @@ public class QuestaoFechadaDAOImpl implements QuestaoFechadaDAO {
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             for(int i=0; i<questaoFechada.size(); i++) {
-                pstmt.setLong(1, questaoFechada.get(i).getQuestao().getCod_Questao());
-                pstmt.setLong(2, questaoFechada.get(i).getSeq_Alternativa());
-                pstmt.setString(3, questaoFechada.get(i).getTxt_Alternativa());
+                pstmt.setLong(1, questaoFechada.get(i).getQuestao().getId());
+                pstmt.setLong(2, questaoFechada.get(i).getSeqAlternativa());
+                pstmt.setString(3, questaoFechada.get(i).getTxtAlternativa());
             }
             pstmt.close();
             connection.close();
@@ -106,8 +106,8 @@ public class QuestaoFechadaDAOImpl implements QuestaoFechadaDAO {
                     QuestaoFechada questaoFechada = new QuestaoFechada();
                     Questao questao = questaoDAOImpl.getQuestaoById(rs.getLong("cod_questao"));
                     questaoFechada.setQuestao(questao);
-                    questaoFechada.setSeq_Alternativa(rs.getLong("seq_alternativa"));
-                    questaoFechada.setTxt_Alternativa(rs.getString("txt_alternativa"));
+                    questaoFechada.setSeqAlternativa(rs.getLong("seq_alternativa"));
+                    questaoFechada.setTxtAlternativa(rs.getString("txt_alternativa"));
                     listAll.add(questaoFechada);
                 } while (rs.next());
             }
@@ -140,8 +140,8 @@ public class QuestaoFechadaDAOImpl implements QuestaoFechadaDAO {
                     QuestaoFechada questaoFechada = new QuestaoFechada();
                     Questao questao = questaoDAOImpl.getQuestaoById(rs.getLong("cod_questao"));
                     questaoFechada.setQuestao(questao);
-                    questaoFechada.setSeq_Alternativa(rs.getLong("seq_alternativa"));
-                    questaoFechada.setTxt_Alternativa(rs.getString("txt_alternativa"));
+                    questaoFechada.setSeqAlternativa(rs.getLong("seq_alternativa"));
+                    questaoFechada.setTxtAlternativa(rs.getString("txt_alternativa"));
                     listAll.add(questaoFechada);
                 } while (rs.next());
             }
