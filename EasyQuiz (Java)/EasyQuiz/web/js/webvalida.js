@@ -1,36 +1,58 @@
 function Responder(form) {
     var id = form.questao.value-1;
-    alert(id);
-    if(form.tipoQuestao.value=='A') {
-        alert("eitaporra");
-    } else if(form.tipoQuestao.value=='F') {
-        if(document.querySelector("input[name='grupo"+id+"']:checked")!=null) {
-            var alternativa = (document.querySelector("input[name='grupo"+id+"']:checked").id);
-            alternativa = alternativa.substr(alternativa.length - 1);
-            alternativa++;
+    var contadorRespostaQuestao = form.contadorRespostaQuestao.value;
+    if(contadorRespostaQuestao<10) {
+        if(form.tipoQuestao.value=='A') {
+            if(document.querySelector("#textArea"+id).value.length!=0) {
+                var respostaBase = form.respostaBase.value;
+                var resposta = document.querySelector("#respostaBase"+id);
+                resposta.style.color='black';
+                resposta.style.backgroundColor='lightgreen';
+                resposta.innerHTML="<b>Resposta Base:</b><p>"+respostaBase+"</p>";
+                if(form.logado.value!=1) {
+                    ContadorRespostaQuestao(form);
+                }
+            } else {
+                var resposta = document.querySelector("#respostaBase"+id);
+                resposta.style.color='orange';
+                resposta.style.backgroundColor='';
+                resposta.innerHTML="Escreva alguma resposta!";
+            }
 
-            var letra = 64;
-            var respostaCorreta = form.respostaCorreta.value;
+        } else if(form.tipoQuestao.value=='F') {
+            if(document.querySelector("input[name='grupo"+id+"']:checked")!=null) {
+                var alternativa = (document.querySelector("input[name='grupo"+id+"']:checked").id);
+                alternativa = alternativa.substr(alternativa.length - 1);
+                alternativa++;
 
-            letra = (letra+parseInt(respostaCorreta));
+                var letra = 64;
+                var respostaCorreta = form.respostaCorreta.value;
 
-            if(alternativa==respostaCorreta) {
-                var resposta = document.querySelector("#resultado"+id);
-                resposta.style.color='green';
-                resposta.innerHTML="Parabéns! Você acertou!";
+                letra = (letra+parseInt(respostaCorreta));
+
+                if(alternativa==respostaCorreta) {
+                    var resposta = document.querySelector("#resultado"+id);
+                    resposta.style.color='green';
+                    resposta.innerHTML="Parabéns! Você acertou!";
+                } else {
+                    var resposta = document.querySelector("#resultado"+id);
+                    resposta.style.color='red';
+                    resposta.innerHTML="Você errou! Resposta: "+String.fromCharCode(letra);
+                }
+                if(form.logado.value==1) {
+                    GravarAlterarTabela(form, alternativa);
+                } else {
+                    ContadorRespostaQuestao(form);
+                }
             } else {
                 var resposta = document.querySelector("#resultado"+id);
-                resposta.style.color='red';
-                resposta.innerHTML="Você errou! Resposta: "+String.fromCharCode(letra);
+                resposta.style.color='orange';
+                resposta.innerHTML="Selecione uma alternativa!";
             }
-            if(form.logado.value==1) {
-                GravarAlterarTabela(form, alternativa);
-            }
-        } else {
-            var resposta = document.querySelector("#resultado"+id);
-            resposta.style.color='orange';
-            resposta.innerHTML="Selecione uma alternativa!";
         }
+    } else {
+        alert("Voce excedeu o limite de questoes a ser respondidas! "
+              + "Efetue o cadastro para responder mais questões.");
     }
 }
 
@@ -44,15 +66,17 @@ function GravarAlterarTabela(form, alternativa) {
     form.submit();
 }
 
+function ContadorRespostaQuestao(form) {
+    caminhourl = "/EasyQuiz/servletweb?acao=ContadorRespostaQuestao";
+    form.action = caminhourl;
+    form.submit();
+}
+
 function proximaPagina(form) {
-    if(parseInt(form.maxQuestao.value)<5) {
-        alert("Essa é a ultima página");
-    } else {
     caminhourl = "/EasyQuiz/servletweb";
     form.acao.value="ProximaPagina";
     form.action = caminhourl;
     form.submit();
-    }
 }
 
 function paginaAnterior(form) {

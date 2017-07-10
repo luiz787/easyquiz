@@ -32,11 +32,12 @@ public class GravarQuestaoFechadaResposta {
     public static String execute(HttpServletRequest request) {
         String jsp = "";
         try {
+            /*
             System.out.println("questao "+request.getParameter("questao"));
             System.out.println("resposta "+request.getParameter("resposta"));
-            System.out.println("usuario "+request.getSession().getAttribute("cod_usuario"));
-            System.out.println("dat_inicio "+request.getSession().getAttribute("dat_inicio"));
-            /*
+            System.out.println("usuario "+request.getSession().getAttribute("cod_Usuario"));
+            System.out.println("dat_inicio "+request.getSession().getAttribute("dat_Inicio"));
+            */
             String questaoStr = request.getParameter("questao");
             Long cod_Questao = Long.parseLong(questaoStr);
             ManterQuestao manterQuestao = new ManterQuestaoImpl(QuestaoDAOImpl.getInstance());
@@ -48,13 +49,12 @@ public class GravarQuestaoFechadaResposta {
                 String alternativaStr = request.getParameter("resposta");
                 Long seq_Alternativa = Long.parseLong(alternativaStr);
                 
-                Long cod_Usuario = (Long) request.getSession().getAttribute("cod_usuario");
+                Long cod_Usuario = (Long) request.getSession().getAttribute("cod_Usuario");
                 
-                Instant dat_Inicio = (Instant) request.getSession().getAttribute("dat_inicio");
+                Instant dat_Inicio = (Instant) request.getSession().getAttribute("dat_Inicio");
                 ManterSessao manterSessao = 
                         new ManterSessaoImpl(SessaoDAOImpl.getInstance());
                 Sessao sessao  = manterSessao.getSessaoByUsuarioData(cod_Usuario, dat_Inicio);
-                
                 QuestaoFechadaResposta questaoFechadaResposta = new QuestaoFechadaResposta();
                 questaoFechadaResposta.setSessao(sessao);
                 questaoFechadaResposta.setQuestao(questao);
@@ -64,23 +64,8 @@ public class GravarQuestaoFechadaResposta {
                         new ManterQuestaoFechadaRespostaImpl(QuestaoFechadaRespostaDAOImpl.getInstance());
                     
                 manterQuestaoFechadaResposta.cadastrarQuestaoFechadaResposta(questaoFechadaResposta);
-            }*/
-            System.out.println("Chegou no gravarResposta");
-            jsp="/TelaQuestoes.jsp";
-            
-            /*System.out.println("Gravando QuestaoFechadaResposta");
-            System.out.println("Questao"+request.getParameter("questao"));
-            System.out.println("Alternativa"+request.getParameter("resposta"));
-            */
-            /*
-            if (clienteId != null) {
-                jsp = ListarCliente.execute(request);
-            } else {
-                String erro = "Nao foi possivel gravar esse registro!";
-                request.setAttribute("erro", erro);
-                jsp = "/erro.jsp";
             }
-            */
+            jsp = ListarQuestao.execute(request);
         } catch (Exception e) {
             e.printStackTrace();
             jsp = "";
