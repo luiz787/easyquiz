@@ -197,11 +197,11 @@
         }
         for(int i=(5*numeroPagina); i<maxQuestao; i++) {
             Questao questao = listQuestao.get(i);
-            if(questao.getCod_Tipo()=='F') {
+            if(questao.getIdTipo()=='F') {
                 ArrayList<QuestaoFechada> alternativas = new ArrayList();
-                Long cod_Questao = questao.getCod_Questao();
+                Long cod_Questao = questao.getId();
                 for (QuestaoFechada object : listQuestaoFechada) {
-                    if (object.getQuestao().getCod_Questao() == cod_Questao) {
+                    if (object.getQuestao().getId() == cod_Questao) {
                         alternativas.add(object);
                     }
                 }
@@ -211,11 +211,11 @@
                     <div class="card" >
                         <div class="card-panel #f4511e deep-orange darken-1 white-text">
                             <div>
-                                <b style="padding-top: 0px">Disciplina: </b><span id='<%="disciplina"+i%>'><%= questao.getDisciplina().getNom_Disciplina() %></span>
-                                <b style="padding-left:50%;padding-top: 0px">Dificuldade: </b><span id='<%="dificuldade"+i%>'><%= questao.getDificuldade().getDes_Dificuldade() %></span>
+                                <b style="padding-top: 0px">Disciplina: </b><span id='<%="disciplina"+i%>'><%= questao.getDisciplina().getNome() %></span>
+                                <b style="padding-left:50%;padding-top: 0px">Dificuldade: </b><span id='<%="dificuldade"+i%>'><%= questao.getDificuldade().getDescricao() %></span>
                             </div>
                             <div>
-                                <span id='<%="modulo"+i%>' style=""><b>Módulo: </b><%= questao.getModulo().getNom_Modulo() %></span>
+                                <span id='<%="modulo"+i%>' style=""><b>Módulo: </b><%= questao.getModulo().getNome() %></span>
                             </div>
                         </div>
                         <div class="card-image">
@@ -223,7 +223,7 @@
                         </div>
                         <div class="card-content">
                             <div id='<%="enunciado"+i%>'>
-                                <p><b><%= questao.getTxt_Enunciado() %></b></p>
+                                <p><b><%= questao.getTxtEnunciado() %></b></p>
                             </div>
                             <div id='<%="alternativas"+i%>'>
                                 <form method="post" name='<%="formInserirResposta"+i%>'>
@@ -231,9 +231,9 @@
                                     <input type='hidden' name='acao' value='gravar'>
                                     <input type='hidden' name='logado' value='<%= logado %>'>
                                     <input type='hidden' name='contadorRespostaQuestao' value='<%= contadorRespostaQuestao %>'>
-                                    <input type='hidden' name='questao' value='<%= questao.getCod_Questao() %>'>
-                                    <input type='hidden' name='tipoQuestao' value='<%= questao.getCod_Tipo() %>'>
-                                    <input type='hidden' name='respostaCorreta' value='<%= questao.getSeq_Questao_Correta() %>'>
+                                    <input type='hidden' name='questao' value='<%= questao.getId() %>'>
+                                    <input type='hidden' name='tipoQuestao' value='<%= questao.getIdTipo() %>'>
+                                    <input type='hidden' name='respostaCorreta' value='<%= questao.getSeqQuestaoCorreta() %>'>
                                     <input type='hidden' name='resposta' value=''>
 <%
                                     char letra='a';
@@ -242,7 +242,7 @@
 %>
                                     <p>
                                         <input class="with-gap" name='<%="grupo"+i%>' type="radio" id='<%="grupo"+i+"alternativa"+j%>'  />
-                                        <label id='<%="grupo"+i+"txtAlternativa"+j%>' for='<%="grupo"+i+"alternativa"+j%>'><b><%=((char)(letra+j))+")"%></b> <%= alternativas.get(j).getTxt_Alternativa() %> </label>
+                                        <label id='<%="grupo"+i+"txtAlternativa"+j%>' for='<%="grupo"+i+"alternativa"+j%>'><b><%=((char)(letra+j))+")"%></b> <%= alternativas.get(j).getTxtAlternativa() %> </label>
                                     </p>
 <%
                                     }
@@ -267,11 +267,11 @@
                     <div class="card">
                         <div class="card-panel #f4511e deep-orange darken-1 white-text">
                             <div style="">
-                                <b style="padding-top: 0px">Disciplina: </b><span id='<%="disciplina"+i%>'><%= questao.getDisciplina().getNom_Disciplina() %></span>
-                                <b style="padding-left:50%;padding-top: 0px">Dificuldade: </b><span id='<%="dificuldade"+i%>'><%= questao.getDificuldade().getDes_Dificuldade() %></span>
+                                <b style="padding-top: 0px">Disciplina: </b><span id='<%="disciplina"+i%>'><%= questao.getDisciplina().getNome() %></span>
+                                <b style="padding-left:50%;padding-top: 0px">Dificuldade: </b><span id='<%="dificuldade"+i%>'><%= questao.getDificuldade().getDescricao() %></span>
                             </div>
                             <div>
-                                <span id='<%="modulo"+i%>' style=""><b>Módulo: </b><%= questao.getModulo().getNom_Modulo() %></span>
+                                <span id='<%="modulo"+i%>' style=""><b>Módulo: </b><%= questao.getModulo().getNome() %></span>
                             </div>
                         </div>
                         <!--
@@ -281,16 +281,16 @@
                         -->
                         <div class="card-content">
                             <div id='<%="enunciado"+i%>'>
-                                <p><b><%= questao.getTxt_Enunciado() %></b></p>
+                                <p><b><%= questao.getTxtEnunciado() %></b></p>
                             </div>
                             <div id='<%="respostaAberta"+i%>'>
                                 <form method="post" name='<%="formInserirResposta"+i%>'>
                                     <input type='hidden' name='table' value='QuestaoAbertaResposta'>
                                     <input type='hidden' name='logado' value='<%= logado %>'>
                                     <input type='hidden' name='contadorRespostaQuestao' value='<%= contadorRespostaQuestao %>'>
-                                    <input type='hidden' name='questao' value='<%= questao.getCod_Questao() %>'>
-                                    <input type='hidden' name='tipoQuestao' value='<%= questao.getCod_Tipo() %>'>
-                                    <input type='hidden' name='respostaBase' value='<%= questao.getTxt_Resposta_Aberta() %>'>
+                                    <input type='hidden' name='questao' value='<%= questao.getId() %>'>
+                                    <input type='hidden' name='tipoQuestao' value='<%= questao.getIdTipo() %>'>
+                                    <input type='hidden' name='respostaBase' value='<%= questao.getTxtResposta() %>'>
                                     <input type='hidden' name='resposta' value=''>
                                     <div class="row">
                                         <div class="input-field col s12">
