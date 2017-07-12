@@ -1,5 +1,19 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
+<!--- Javascrip -->
+<script type="text/javascript">
+
+  $(document).ready(function() {
+      $('select').material_select();
+  });
+
+
+	function mostrarform() {
+		var element = document.getElementById("pesquisa");
+		if (element.style.display =="none") {element.style.display = "block";} else {element.style.display = "none";}
+	}
+</script>
+
 <nav class="nav-extended" style="background-color:#FFFFFF;">
             <div class="container" style="display: inline; margin-left: 50px;">
                 <a id="logo-container" href="#" style="color:#47525E; font-size: 32px;">EasyQuiz</a>
@@ -26,7 +40,7 @@
                 </div>
             </div>
             <div class="row " id="pesquisa" style="display: none; position: absolute;   width: 47%; background: rgba(255, 255, 255, 0.7);">
-                <div class="col s12 offset-s12" id="pesquisa" style="border: 4px solid; border-color:#D3D3D3; background: rgba(255, 255, 255, 1.0); ; text-align:center;border-radius: 10px; z-index: 2;" >
+                <div class="col s12 offset-s12" id="pesquisa" style="border: 4px solid; border-color:#D3D3D3; background: rgba(255, 255, 255, 1.0); ; text-align:center;border-radius: 10px;" >
                     <form>
                         <input id="search" type="search" placeholder="Busque por palavras chave" style="color: #696969;">
                         <div class="row">
