@@ -47,7 +47,7 @@ public class Cadastra extends HttpServlet {
             usuario.setPerfil(perfil);
             usuario.setEmail(email);
             usuario.setDataNascimento(data);
-            usuario.setEscolaridade(escolaridade);
+            //usuario.setEscolaridade(escolaridade);
             usuario.setSenha(senha);
         } catch (ParseException ex) {
             Logger.getLogger(Cadastra.class.getName()).log(Level.SEVERE, null, ex);
