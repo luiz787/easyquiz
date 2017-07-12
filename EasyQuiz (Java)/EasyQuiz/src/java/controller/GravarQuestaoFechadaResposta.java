@@ -42,10 +42,7 @@ public class GravarQuestaoFechadaResposta {
             Long cod_Questao = Long.parseLong(questaoStr);
             ManterQuestao manterQuestao = new ManterQuestaoImpl(QuestaoDAOImpl.getInstance());
             Questao questao = manterQuestao.getQuestaoById(cod_Questao);
-            
-            if(questao.getIdTipo()=='A') {
-                
-            } else if(questao.getIdTipo()=='F') {
+            if(questao.getIdTipo()=='F') {
                 String alternativaStr = request.getParameter("resposta");
                 Long seq_Alternativa = Long.parseLong(alternativaStr);
                 

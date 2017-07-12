@@ -261,7 +261,7 @@ public class QuestaoDAOImpl implements QuestaoDAO {
         try {
             Connection conexao = JDBCManterConexao.getInstancia().getConexao();
 
-            String sql = "SELECT * FROM questao WHERE Tipo = ? ORDER BY cod_questao;";
+            String sql = "SELECT * FROM questao WHERE cod_tipo = ? ORDER BY cod_questao;";
 
             PreparedStatement pstmt = conexao.prepareStatement(sql);
             pstmt.setString(1, String.valueOf(tipo));

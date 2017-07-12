@@ -26,12 +26,11 @@ public class ListarQuestao {
                 if(listQuestaoFechada != null) {
                     request.setAttribute("listQuestaoFechada", listQuestaoFechada);
                 } else {
-                    request.setAttribute("erroQuestoesFechada", 1);
+                    request.setAttribute("nullQuestoesFechada", 1);
                 }
                 jsp = "/TelaQuestoes.jsp";
             } else {
-                request.setAttribute("erroQuestoes", 1);
-                //jsp = "/erro.jsp";
+                request.setAttribute("nullQuestoes", 1);
                 jsp = "/TelaQuestoes.jsp";
             }
 

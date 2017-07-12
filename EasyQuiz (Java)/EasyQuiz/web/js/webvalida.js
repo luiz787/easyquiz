@@ -1,5 +1,5 @@
 function Responder(form) {
-    var id = form.questao.value-1;
+    var id = (form.name).substr((form.name).length - 1);
     var contadorRespostaQuestao = form.contadorRespostaQuestao.value;
     if(contadorRespostaQuestao<10) {
         if(form.tipoQuestao.value=='A') {
