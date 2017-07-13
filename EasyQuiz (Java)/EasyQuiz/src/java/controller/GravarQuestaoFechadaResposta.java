@@ -62,6 +62,7 @@ public class GravarQuestaoFechadaResposta {
                     
                 manterQuestaoFechadaResposta.cadastrarQuestaoFechadaResposta(questaoFechadaResposta);
             }
+            request.getSession().setAttribute("", jsp);
             jsp = ListarQuestao.execute(request);
         } catch (Exception e) {
             e.printStackTrace();

@@ -32,11 +32,11 @@
     usuario.setTxt_Senha("123");
     manterUsuario.cadastrarUsuario(usuario);
     */
-    
+    /*
     if(request.getSession().getAttribute("cod_Usuario")==null) {
         Login.execute(request);
     }
-    
+    */
     int logado = Login.validarSessao(request, response);
     int contadorRespostaQuestao = (Integer) request.getSession().getAttribute("contadorRespostaQuestao");
 %>

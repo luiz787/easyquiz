@@ -21,9 +21,18 @@ public class Usuario {
     private Perfil perfil;
     private String nome;
     private Date dataNascimento;
+    private String escolaridade;
     private String email;
     private String senha;
 
+    public String getEscolaridade() {
+        return escolaridade;
+    }
+
+    public void setEscolaridade(String escolaridade) {
+        this.escolaridade = escolaridade;
+    }
+    
     public Long getId() {
         return id;
     }
