@@ -1,140 +1,303 @@
-CREATE TABLE Usuario
-(
-  cod_usuario Bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  cod_perfil Bigint NOT NULL,
-  nom_usuario Char(40) NOT NULL,
-  dat_nascimento Date NOT NULL,
-  txt_email Char(40) NOT NULL,
-  txt_senha Char(100) NOT NULL,
-  PRIMARY KEY (cod_usuario)
-)
-;
+-- phpMyAdmin SQL Dump
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: 12-Jul-2017 às 07:13
+-- Versão do servidor: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
 
-CREATE INDEX IX_Relationship1 ON Usuario (cod_perfil)
-;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
-ALTER TABLE Usuario ADD UNIQUE txt_email (txt_email)
-;
-CREATE TABLE Perfil
-(
-  cod_perfil Bigint NOT NULL,
-  nom_perfil Char(25) NOT NULL
-)
-;
 
-ALTER TABLE Perfil ADD  PRIMARY KEY (cod_perfil)
-;
-CREATE TABLE Questao
-(
-  cod_questao Bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  cod_dificuldade Bigint NOT NULL,
-  cod_disciplina Bigint UNSIGNED NOT NULL,
-  cod_modulo Bigint UNSIGNED NOT NULL,
-  cod_tipo Char(1) NOT NULL,
-  txt_enunciado Text NOT NULL,
-  img_enunciado Blob,
-  seq_questao_correta Bigint,
-  txt_resposta_aberta Text,
-  PRIMARY KEY (cod_questao)
-)
-;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
-CREATE INDEX IX_Relationship6 ON Questao (cod_dificuldade)
-;
+--
+-- Database: `easyquiz`
+--
 
-CREATE INDEX IX_Relationship7 ON Questao (cod_modulo,cod_disciplina)
-;
-CREATE TABLE Questao_Fechada
-(
-  cod_questao Bigint UNSIGNED NOT NULL,
-  seq_alternativa Bigint UNSIGNED NOT NULL,
-  txt_alternativa Text NOT NULL
-)
-;
+-- --------------------------------------------------------
 
-ALTER TABLE Questao_Fechada ADD  PRIMARY KEY (cod_questao,seq_alternativa)
-;
-CREATE TABLE Disciplina
-(
-  cod_disciplina Bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  nom_disciplina Char(40) NOT NULL,
-  PRIMARY KEY (cod_disciplina)
-)
-;
-CREATE TABLE Modulo
-(
-  cod_disciplina Bigint UNSIGNED NOT NULL,
-  cod_modulo Bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  nom_modulo Char(50) NOT NULL,
-  PRIMARY KEY (cod_modulo,cod_disciplina)
-)
-;
-CREATE TABLE Dificuldade
-(
-  cod_dificuldade Bigint NOT NULL,
-  des_dificuldade Char(20) NOT NULL
-)
-;
+--
+-- Estrutura da tabela `dificuldade`
+--
 
-ALTER TABLE Dificuldade ADD  PRIMARY KEY (cod_dificuldade)
-;
-CREATE TABLE Post
-(
-  cod_post Bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  cod_questao Bigint UNSIGNED NOT NULL,
-  txt_conteudo Text NOT NULL,
-  dat_criacao Datetime NOT NULL,
-  PRIMARY KEY (cod_post)
-)
-;
+CREATE TABLE `dificuldade` (
+  `cod_dificuldade` bigint(20) NOT NULL,
+  `des_dificuldade` char(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE INDEX IX_Relationship8 ON Post (cod_questao)
-;
-CREATE TABLE Sessao
-(
-  cod_usuario Bigint UNSIGNED NOT NULL,
-  dat_inicio Datetime NOT NULL,
-  dat_fim Datetime
-)
-;
+-- --------------------------------------------------------
 
-ALTER TABLE Sessao ADD  PRIMARY KEY (dat_inicio,cod_usuario)
-;
-CREATE TABLE QuestaoFechadaResposta
-(
-  dat_inicio Datetime NOT NULL,
-  cod_usuario Bigint UNSIGNED NOT NULL,
-  cod_questao Bigint UNSIGNED NOT NULL,
-  seq_questao_resposta Bigint NOT NULL
-)
-;
+--
+-- Estrutura da tabela `disciplina`
+--
 
-ALTER TABLE QuestaoFechadaResposta ADD  PRIMARY KEY (dat_inicio,cod_usuario,cod_questao)
-;
-ALTER TABLE Usuario ADD CONSTRAINT Relationship1 FOREIGN KEY (cod_perfil) REFERENCES Perfil (cod_perfil) ON DELETE RESTRICT ON UPDATE RESTRICT
-;
+CREATE TABLE `disciplina` (
+  `cod_disciplina` bigint(20) UNSIGNED NOT NULL,
+  `nom_disciplina` char(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-ALTER TABLE Questao_Fechada ADD CONSTRAINT Relationship2 FOREIGN KEY (cod_questao) REFERENCES Questao (cod_questao) ON DELETE RESTRICT ON UPDATE RESTRICT
-;
+-- --------------------------------------------------------
 
-ALTER TABLE Modulo ADD CONSTRAINT Relationship4 FOREIGN KEY (cod_disciplina) REFERENCES Disciplina (cod_disciplina) ON DELETE RESTRICT ON UPDATE RESTRICT
-;
+--
+-- Estrutura da tabela `modulo`
+--
 
-ALTER TABLE Questao ADD CONSTRAINT Relationship6 FOREIGN KEY (cod_dificuldade) REFERENCES Dificuldade (cod_dificuldade) ON DELETE RESTRICT ON UPDATE RESTRICT
-;
+CREATE TABLE `modulo` (
+  `cod_disciplina` bigint(20) UNSIGNED NOT NULL,
+  `cod_modulo` bigint(20) UNSIGNED NOT NULL,
+  `nom_modulo` char(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-ALTER TABLE Questao ADD CONSTRAINT Relationship7 FOREIGN KEY (cod_modulo, cod_disciplina) REFERENCES Modulo (cod_modulo, cod_disciplina) ON DELETE RESTRICT ON UPDATE RESTRICT
-;
+-- --------------------------------------------------------
 
-ALTER TABLE Post ADD CONSTRAINT Relationship8 FOREIGN KEY (cod_questao) REFERENCES Questao (cod_questao) ON DELETE RESTRICT ON UPDATE RESTRICT
-;
+--
+-- Estrutura da tabela `perfil`
+--
 
-ALTER TABLE Sessao ADD CONSTRAINT Relationship14 FOREIGN KEY (cod_usuario) REFERENCES Usuario (cod_usuario) ON DELETE RESTRICT ON UPDATE RESTRICT
-;
+CREATE TABLE `perfil` (
+  `cod_perfil` bigint(20) NOT NULL,
+  `nom_perfil` char(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-ALTER TABLE QuestaoFechadaResposta ADD CONSTRAINT Relationship15 FOREIGN KEY (dat_inicio, cod_usuario) REFERENCES Sessao (dat_inicio, cod_usuario) ON DELETE RESTRICT ON UPDATE RESTRICT
-;
+-- --------------------------------------------------------
 
-ALTER TABLE QuestaoFechadaResposta ADD CONSTRAINT Relationship16 FOREIGN KEY (cod_questao) REFERENCES Questao (cod_questao) ON DELETE RESTRICT ON UPDATE RESTRICT
-;
+--
+-- Estrutura da tabela `post`
+--
 
+CREATE TABLE `post` (
+  `cod_post` bigint(20) UNSIGNED NOT NULL,
+  `cod_questao` bigint(20) UNSIGNED NOT NULL,
+  `txt_conteudo` text NOT NULL,
+  `dat_criacao` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `questao`
+--
+
+CREATE TABLE `questao` (
+  `cod_questao` bigint(20) UNSIGNED NOT NULL,
+  `cod_dificuldade` bigint(20) NOT NULL,
+  `cod_disciplina` bigint(20) UNSIGNED NOT NULL,
+  `cod_modulo` bigint(20) UNSIGNED NOT NULL,
+  `cod_tipo` char(1) NOT NULL,
+  `txt_enunciado` text NOT NULL,
+  `img_enunciado` blob,
+  `seq_questao_correta` bigint(20) DEFAULT NULL,
+  `txt_resposta_aberta` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `questaofechadaresposta`
+--
+
+CREATE TABLE `questaofechadaresposta` (
+  `dat_inicio` datetime NOT NULL,
+  `cod_usuario` bigint(20) UNSIGNED NOT NULL,
+  `cod_questao` bigint(20) UNSIGNED NOT NULL,
+  `seq_questao_resposta` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `questao_fechada`
+--
+
+CREATE TABLE `questao_fechada` (
+  `cod_questao` bigint(20) UNSIGNED NOT NULL,
+  `seq_alternativa` bigint(20) UNSIGNED NOT NULL,
+  `txt_alternativa` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `sessao`
+--
+
+CREATE TABLE `sessao` (
+  `cod_usuario` bigint(20) UNSIGNED NOT NULL,
+  `dat_inicio` datetime NOT NULL,
+  `dat_fim` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `usuario`
+--
+
+CREATE TABLE `usuario` (
+  `cod_usuario` bigint(20) UNSIGNED NOT NULL,
+  `cod_perfil` bigint(20) NOT NULL,
+  `nom_usuario` char(40) NOT NULL,
+  `dat_nascimento` date NOT NULL,
+  `txt_email` char(40) NOT NULL,
+  `txt_senha` char(100) NOT NULL,
+  `txt_escolaridade` char(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `dificuldade`
+--
+ALTER TABLE `dificuldade`
+  ADD PRIMARY KEY (`cod_dificuldade`);
+
+--
+-- Indexes for table `disciplina`
+--
+ALTER TABLE `disciplina`
+  ADD PRIMARY KEY (`cod_disciplina`);
+
+--
+-- Indexes for table `modulo`
+--
+ALTER TABLE `modulo`
+  ADD PRIMARY KEY (`cod_modulo`,`cod_disciplina`),
+  ADD KEY `Relationship4` (`cod_disciplina`);
+
+--
+-- Indexes for table `perfil`
+--
+ALTER TABLE `perfil`
+  ADD PRIMARY KEY (`cod_perfil`);
+
+--
+-- Indexes for table `post`
+--
+ALTER TABLE `post`
+  ADD PRIMARY KEY (`cod_post`),
+  ADD KEY `IX_Relationship8` (`cod_questao`);
+
+--
+-- Indexes for table `questao`
+--
+ALTER TABLE `questao`
+  ADD PRIMARY KEY (`cod_questao`),
+  ADD KEY `IX_Relationship6` (`cod_dificuldade`),
+  ADD KEY `IX_Relationship7` (`cod_modulo`,`cod_disciplina`);
+
+--
+-- Indexes for table `questaofechadaresposta`
+--
+ALTER TABLE `questaofechadaresposta`
+  ADD PRIMARY KEY (`dat_inicio`,`cod_usuario`,`cod_questao`),
+  ADD KEY `Relationship16` (`cod_questao`);
+
+--
+-- Indexes for table `questao_fechada`
+--
+ALTER TABLE `questao_fechada`
+  ADD PRIMARY KEY (`cod_questao`,`seq_alternativa`);
+
+--
+-- Indexes for table `sessao`
+--
+ALTER TABLE `sessao`
+  ADD PRIMARY KEY (`dat_inicio`,`cod_usuario`),
+  ADD KEY `Relationship14` (`cod_usuario`);
+
+--
+-- Indexes for table `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`cod_usuario`),
+  ADD UNIQUE KEY `txt_email` (`txt_email`),
+  ADD KEY `IX_Relationship1` (`cod_perfil`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `disciplina`
+--
+ALTER TABLE `disciplina`
+  MODIFY `cod_disciplina` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `modulo`
+--
+ALTER TABLE `modulo`
+  MODIFY `cod_modulo` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `post`
+--
+ALTER TABLE `post`
+  MODIFY `cod_post` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `questao`
+--
+ALTER TABLE `questao`
+  MODIFY `cod_questao` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `cod_usuario` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Limitadores para a tabela `modulo`
+--
+ALTER TABLE `modulo`
+  ADD CONSTRAINT `Relationship4` FOREIGN KEY (`cod_disciplina`) REFERENCES `disciplina` (`cod_disciplina`);
+
+--
+-- Limitadores para a tabela `post`
+--
+ALTER TABLE `post`
+  ADD CONSTRAINT `Relationship8` FOREIGN KEY (`cod_questao`) REFERENCES `questao` (`cod_questao`);
+
+--
+-- Limitadores para a tabela `questao`
+--
+ALTER TABLE `questao`
+  ADD CONSTRAINT `Relationship6` FOREIGN KEY (`cod_dificuldade`) REFERENCES `dificuldade` (`cod_dificuldade`),
+  ADD CONSTRAINT `Relationship7` FOREIGN KEY (`cod_modulo`,`cod_disciplina`) REFERENCES `modulo` (`cod_modulo`, `cod_disciplina`);
+
+--
+-- Limitadores para a tabela `questaofechadaresposta`
+--
+ALTER TABLE `questaofechadaresposta`
+  ADD CONSTRAINT `Relationship15` FOREIGN KEY (`dat_inicio`,`cod_usuario`) REFERENCES `sessao` (`dat_inicio`, `cod_usuario`),
+  ADD CONSTRAINT `Relationship16` FOREIGN KEY (`cod_questao`) REFERENCES `questao` (`cod_questao`);
+
+--
+-- Limitadores para a tabela `questao_fechada`
+--
+ALTER TABLE `questao_fechada`
+  ADD CONSTRAINT `Relationship2` FOREIGN KEY (`cod_questao`) REFERENCES `questao` (`cod_questao`);
+
+--
+-- Limitadores para a tabela `sessao`
+--
+ALTER TABLE `sessao`
+  ADD CONSTRAINT `Relationship14` FOREIGN KEY (`cod_usuario`) REFERENCES `usuario` (`cod_usuario`);
+
+--
+-- Limitadores para a tabela `usuario`
+--
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `Relationship1` FOREIGN KEY (`cod_perfil`) REFERENCES `perfil` (`cod_perfil`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
