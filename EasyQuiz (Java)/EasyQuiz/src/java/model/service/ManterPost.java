@@ -18,5 +18,5 @@ public interface ManterPost {
     public Long cadastrarPost(Post post) throws ExcecaoPersistencia, ExcecaoNegocio;
     public Post deletarPost(Long cod_Post) throws ExcecaoPersistencia;
     public Post getPostById(Long cod_Post) throws ExcecaoPersistencia;
-    public List<Post> getAll() throws ExcecaoPersistencia;
+    public List<Post> getAllByQuestao(Long cod_Questao) throws ExcecaoPersistencia;
 }

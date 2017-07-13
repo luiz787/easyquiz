@@ -79,11 +79,11 @@ public class ManterPostImpl implements ManterPost {
     }
 
     @Override
-    public List<Post> getAll() throws ExcecaoPersistencia { //getAll deve receber idQuestao como parâmetro
-        /*List<String> errMsgList = new ArrayList<>();
+    public List<Post> getAllByQuestao(Long idQuestao) throws ExcecaoPersistencia {
+        List<String> errMsgList = new ArrayList<>();
         if(idQuestao == null) {
             throw new ExcecaoPersistencia("Nenhum id informado!");
-        }*/
-        return postDAO.listAll();
+        }
+        return postDAO.listAllByQuestao(idQuestao);
     }
 }
