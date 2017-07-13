@@ -129,11 +129,11 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public List<Post> listAll() throws ExcecaoPersistencia {
+    public List<Post> listAllByQuestao(Long cod_Questao) throws ExcecaoPersistencia {
         try {
             Connection connection = JDBCManterConexao.getInstancia().getConexao();
 
-            String sql = "SELECT * FROM post ORDER BY cod_post;";
+            String sql = "SELECT * FROM post WHERE cod_questao = ? ORDER BY cod_post;";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
