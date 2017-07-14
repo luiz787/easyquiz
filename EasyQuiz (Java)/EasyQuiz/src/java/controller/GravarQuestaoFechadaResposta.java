@@ -43,8 +43,8 @@ public class GravarQuestaoFechadaResposta {
             ManterQuestao manterQuestao = new ManterQuestaoImpl(QuestaoDAOImpl.getInstance());
             Questao questao = manterQuestao.getQuestaoById(cod_Questao);
             if(questao.getIdTipo()=='F') {
-                String alternativaStr = request.getParameter("resposta");
-                Long seq_Alternativa = Long.parseLong(alternativaStr);
+                String resposta = request.getParameter("resposta");
+                Long seq_Alternativa = Long.parseLong(resposta);
                 
                 Long cod_Usuario = (Long) request.getSession().getAttribute("cod_Usuario");
                 
@@ -62,7 +62,7 @@ public class GravarQuestaoFechadaResposta {
                     
                 manterQuestaoFechadaResposta.cadastrarQuestaoFechadaResposta(questaoFechadaResposta);
             }
-            request.getSession().setAttribute("", jsp);
+            
             jsp = ListarQuestao.execute(request);
         } catch (Exception e) {
             e.printStackTrace();

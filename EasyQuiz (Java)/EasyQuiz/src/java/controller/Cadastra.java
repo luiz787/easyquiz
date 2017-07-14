@@ -51,6 +51,5 @@ public class Cadastra extends HttpServlet {
             usuario.setSenha(senha);
             
             manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
-        
     }
 }

@@ -42,7 +42,7 @@ function Responder(form) {
                 if(form.logado.value==1) {
                     GravarAlterarTabela(form, alternativa);
                 } else {
-                    ContadorRespostaQuestao(form);
+                    ContadorRespostaQuestao(form, alternativa);
                 }
             } else {
                 var resposta = document.querySelector("#resultado"+id);
@@ -66,8 +66,8 @@ function GravarAlterarTabela(form, alternativa) {
     form.submit();
 }
 
-function ContadorRespostaQuestao(form) {
-    caminhourl = "/EasyQuiz/servletweb?acao=ContadorRespostaQuestao";
+function ContadorRespostaQuestao(form, alternativa) {
+    caminhourl = "/EasyQuiz/servletweb?acao=ContadorRespostaQuestao&resposta="+alternativa;
     form.action = caminhourl;
     form.submit();
 }
