@@ -3,17 +3,27 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/daoimpl/PerfilDAOImpl.java</file>
-            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/serviceimpl/ManterUsuarioImpl.java</file>
+            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/dao/UsuarioDAO.java</file>
             <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/web/TelaQuestoes.jsp</file>
+            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/daoimpl/QuestaoFechadaDAOImpl.java</file>
             <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/controller/ContadorRespostaQuestao.java</file>
             <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/web/index.jsp</file>
-            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/web/js/webvalida.js</file>
             <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/controller/ServletWeb.java</file>
+            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/domain/Sessao.java</file>
+            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/controller/ListarQuestaoFechadaResposta.java</file>
+            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/dao/SessaoDAO.java</file>
             <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/controller/ListarQuestao.java</file>
-            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/daoimpl/DificuldadeDAOImpl.java</file>
-            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/daoimpl/UsuarioDAOImpl.java</file>
+            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/daoimpl/QuestaoFechadaRespostaDAOImpl.java</file>
             <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/controller/Login.java</file>
+            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/domain/QuestaoFechadaResposta.java</file>
+            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/service/ManterQuestaoFechadaResposta.java</file>
+            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/dao/QuestaoFechadaRespostaDAO.java</file>
+            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/controller/GravarQuestaoFechadaResposta.java</file>
+            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/daoimpl/SessaoDAOImpl.java</file>
+            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/web/js/webvalida.js</file>
+            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/serviceimpl/ManterQuestaoFechadaRespostaImpl.java</file>
+            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/web/Footer.jsp</file>
+            <file>file:/C:/Users/andro/Desktop/easyquiz/EasyQuiz%20(Java)/EasyQuiz/web/Menu.jsp</file>
         </group>
     </open-files>
 </project-private>

@@ -5,6 +5,7 @@
  */
 package controller;
 
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -15,6 +16,12 @@ public class ContadorRespostaQuestao {
     public static String execute(HttpServletRequest request) {
         String jsp = "";
         try {
+            String questao = request.getParameter("questao");
+            ArrayList questoes = (ArrayList) request.getAttribute("questoes");
+            questoes.add(Long.parseLong(questao));
+            request.setAttribute("questoes", questoes);
+            String resposta = request.getParameter("resposta");
+            request.setAttribute("resposta", Long.parseLong(resposta));
             int contadorRespostaQuestao = (Integer) request.getSession().getAttribute("contadorRespostaQuestao");
             contadorRespostaQuestao++;
             if(contadorRespostaQuestao<=10) {

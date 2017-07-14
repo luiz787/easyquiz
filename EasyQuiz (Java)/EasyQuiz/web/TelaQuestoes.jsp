@@ -1,3 +1,4 @@
+<%@page import="model.domain.QuestaoFechadaResposta"%>
 <%@page import="model.domain.Perfil"%>
 <%@page import="model.domain.Usuario"%>
 <%@page import="model.service.ManterPerfil"%>
@@ -37,6 +38,7 @@
         Login.execute(request);
     }
     */
+    System.out.println("CHEGOU TELAQUESTAO");
     int logado = Login.validarSessao(request, response);
     int contadorRespostaQuestao = (Integer) request.getSession().getAttribute("contadorRespostaQuestao");
 %>
@@ -71,6 +73,11 @@
         List<Questao> listQuestao = (List<Questao>) request.getAttribute("listQuestao");
         List<QuestaoFechada> listQuestaoFechada = (List<QuestaoFechada>) request.getAttribute("listQuestaoFechada");
         
+        List<QuestaoFechadaResposta> listQuestaoFechadaResposta=null;
+        if(request.getAttribute("listQuestaoFechadaResposta")!=null) {
+            listQuestaoFechadaResposta = 
+                (List<QuestaoFechadaResposta>) request.getAttribute("listQuestaoFechadaResposta");
+        }
         if((listQuestao.size()-(numeroPagina*5))<5) {
             maxQuestao=listQuestao.size();
         } else {
@@ -87,6 +94,26 @@
                         alternativas.add(object);
                     }
                 }
+                Long resposta=null;
+                if(logado==1) {
+                    QuestaoFechadaResposta questaoFechadaResposta = new QuestaoFechadaResposta();
+                    if(listQuestaoFechadaResposta!=null) {
+                        for (QuestaoFechadaResposta object : listQuestaoFechadaResposta) {
+                            if (object.getQuestao().getId() == cod_Questao) {
+                                questaoFechadaResposta = object;
+                            }
+                        }
+                    }
+                    resposta = questaoFechadaResposta.getSeqQuestaoResposta();
+                } else {
+                    ArrayList questoes = (ArrayList) request.getAttribute("questoes");
+                    Long questaoRespondida =    (Long) questoes.get(questoes.size()-1);
+                    if(questaoRespondida==cod_Questao) {
+                        resposta = (Long) request.getAttribute("resposta");
+                    }
+                }
+                
+                
 %>
             <div class="row" >
                 <div class="col s12 m4" > 
@@ -116,7 +143,8 @@
                                     <input type='hidden' name='questao' value='<%= questao.getId() %>'>
                                     <input type='hidden' name='tipoQuestao' value='<%= questao.getIdTipo() %>'>
                                     <input type='hidden' name='respostaCorreta' value='<%= questao.getSeqQuestaoCorreta() %>'>
-                                    <input type='hidden' name='resposta' value=''>
+                                    <input type='hidden' name='resposta' id='<%="resposta"+i%>' value='<%= resposta %>'>
+                                    
 <%
                                     char letra='a';
                                     for(int j=0; j<alternativas.size(); j++) {
@@ -132,6 +160,34 @@
                                 </form>
                                 <br>
                                 <h6 id='<%="resultado"+i%>' ></h6>
+                                <script type="text/javascript">
+                                        
+                                        var index = <%=i%>;
+                                        alert(index);
+                                        var form = document.forms[(index+1)];
+                                        alert(form.name);
+                                        var resposta = document.getElementById("resposta"+index).value;
+                                        alert("RESPOSTA: "+resposta);
+                                        if(resposta!='null') {
+                                            alert("hyhy:"+resposta);
+                                        var alternativa = "grupo<%=i%>alternativa"+(resposta-1);
+                                        var radioAlternativa = document.getElementById(alternativa);
+                                        radioAlternativa.checked = true;
+                                        
+                                        var respostaCorreta = form.respostaCorreta.value;
+                                        var letra = 64;
+                                        var letra = (letra+parseInt(respostaCorreta));
+                                        if(resposta==respostaCorreta) {
+                                            var resultado = document.querySelector("#resultado"+index);
+                                            resultado.style.color='green';
+                                            resultado.innerHTML="Parabéns! Você acertou!";
+                                        } else {
+                                            var resultado = document.querySelector("#resultado"+index);
+                                            resultado.style.color='red';
+                                            resultado.innerHTML="Você errou! Resposta: "+String.fromCharCode(letra);
+                                        }
+                                        }
+                                </script>
                             </div>
                         </div>
                         <div class="card-action">
@@ -255,6 +311,11 @@
             function mostrarform() {
                 var element = document.getElementById("pesquisa");
                 if (element.style.display =="none") {element.style.display = "block";} else {element.style.display = "none";}
+            }
+            function carregaRespostas() {
+                if(document.querySelector("#textArea"+id).value!=null) {
+                    
+                }
             }
         </script>
     </body>

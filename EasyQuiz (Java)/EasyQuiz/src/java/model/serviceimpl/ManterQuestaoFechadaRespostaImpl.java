@@ -5,6 +5,7 @@
  */
 package model.serviceimpl;
 
+import java.time.Instant;
 import model.service.*;
 import java.util.List;
 import model.dao.QuestaoFechadaRespostaDAO;
@@ -48,5 +49,10 @@ public class ManterQuestaoFechadaRespostaImpl implements ManterQuestaoFechadaRes
     @Override
     public List<QuestaoFechadaResposta> getAll() throws ExcecaoPersistencia {
         return questaoFechadaRespostaDAO.listAll();
+    }
+
+    @Override
+    public List<QuestaoFechadaResposta> getAllByUsuarioSessao(Long cod_Usuario, Instant dat_Inicio) throws ExcecaoPersistencia {
+        return questaoFechadaRespostaDAO.listAllByUsuarioSessao(cod_Usuario, dat_Inicio);
     }
 }

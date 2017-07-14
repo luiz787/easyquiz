@@ -5,6 +5,7 @@
  */
 package model.dao;
 
+import java.time.Instant;
 import java.util.List;
 import model.domain.QuestaoFechadaResposta;
 import model.exception.ExcecaoPersistencia;
@@ -15,5 +16,6 @@ import model.exception.ExcecaoPersistencia;
  */
 public interface QuestaoFechadaRespostaDAO {
     public void insert(QuestaoFechadaResposta questaoFechadaResposta) throws ExcecaoPersistencia;
+    public List<QuestaoFechadaResposta> listAllByUsuarioSessao(Long cod_Usuario, Instant dat_Inicio) throws ExcecaoPersistencia;
     public List<QuestaoFechadaResposta> listAll() throws ExcecaoPersistencia;
 }
