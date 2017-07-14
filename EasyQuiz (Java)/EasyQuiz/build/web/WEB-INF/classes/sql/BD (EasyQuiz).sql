@@ -128,7 +128,7 @@ CREATE TABLE QuestaoFechadaResposta
 )
 ;
 
-ALTER TABLE QuestaoFechadaResposta ADD  PRIMARY KEY (dat_inicio,cod_usuario,cod_questao)
+ALTER TABLE QuestaoFechadaResposta ADD  PRIMARY KEY (dat_inicio,cod_usuario,cod_questao,seq_questao_resposta)
 ;
 
 
