@@ -10,7 +10,7 @@ function Responder(form) {
                 resposta.style.backgroundColor='lightgreen';
                 resposta.innerHTML="<b>Resposta Base:</b><p>"+respostaBase+"</p>";
                 if(form.logado.value!=1) {
-                    ContadorRespostaQuestao(form);
+                    ContadorRespostaQuestao(form, txtResposta);
                 }
             } else {
                 var resposta = document.querySelector("#respostaBase"+id);
@@ -66,8 +66,8 @@ function GravarAlterarTabela(form, alternativa) {
     form.submit();
 }
 
-function ContadorRespostaQuestao(form, alternativa) {
-    caminhourl = "/EasyQuiz/servletweb?acao=ContadorRespostaQuestao&resposta="+alternativa;
+function ContadorRespostaQuestao(form, resposta) {
+    caminhourl = "/EasyQuiz/servletweb?acao=ContadorRespostaQuestao&resposta="+resposta;
     form.action = caminhourl;
     form.submit();
 }

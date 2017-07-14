@@ -14,7 +14,7 @@ public class ServletWeb extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String acao = request.getParameter("acao");
-        System.out.println("CHEGOU NO SERVLET!"+acao);
+        
         if(acao.equals("ProximaPagina"))
             jsp = ProximaPagina.execute(request);
         else if (acao.equals("PaginaAnterior"))

@@ -6,6 +6,7 @@
 package controller;
 
 import java.time.Instant;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import model.daoimpl.QuestaoDAOImpl;
 import model.daoimpl.QuestaoFechadaRespostaDAOImpl;
@@ -59,8 +60,19 @@ public class GravarQuestaoFechadaResposta {
                 
                 ManterQuestaoFechadaResposta manterQuestaoFechadaResposta = 
                         new ManterQuestaoFechadaRespostaImpl(QuestaoFechadaRespostaDAOImpl.getInstance());
-                    
-                manterQuestaoFechadaResposta.cadastrarQuestaoFechadaResposta(questaoFechadaResposta);
+                
+                QuestaoFechadaResposta questaoFechadaRespostaGravada = 
+                        manterQuestaoFechadaResposta.getByUsuarioSessaoQuestao(cod_Usuario, dat_Inicio, cod_Questao);
+                
+                if(questaoFechadaRespostaGravada!=null) {
+                    if(questaoFechadaRespostaGravada.getQuestao().getId()==cod_Questao) {
+                        System.out.println("IGUAL!"+questaoFechadaRespostaGravada.getQuestao().getId());
+                        manterQuestaoFechadaResposta.alterarQuestaoFechadaResposta(questaoFechadaResposta);
+                    }
+                } else {
+                
+                    manterQuestaoFechadaResposta.cadastrarQuestaoFechadaResposta(questaoFechadaResposta);
+                }
             }
             
             jsp = ListarQuestao.execute(request);

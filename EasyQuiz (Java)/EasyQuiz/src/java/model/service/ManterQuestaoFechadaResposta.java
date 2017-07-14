@@ -17,6 +17,8 @@ import model.exception.ExcecaoPersistencia;
  */
 public interface ManterQuestaoFechadaResposta {
     public void cadastrarQuestaoFechadaResposta(QuestaoFechadaResposta questaoFechadaResposta) throws ExcecaoPersistencia, ExcecaoNegocio;
+    public void alterarQuestaoFechadaResposta(QuestaoFechadaResposta questaoFechadaResposta) throws ExcecaoPersistencia, ExcecaoNegocio;
+    public QuestaoFechadaResposta getByUsuarioSessaoQuestao(Long cod_Usuario, Instant dat_Inicio, Long cod_Questao) throws ExcecaoPersistencia;
     public List<QuestaoFechadaResposta> getAllByUsuarioSessao(Long cod_Usuario, Instant dat_Inicio) throws ExcecaoPersistencia;
     public List<QuestaoFechadaResposta> getAll() throws ExcecaoPersistencia;
 }

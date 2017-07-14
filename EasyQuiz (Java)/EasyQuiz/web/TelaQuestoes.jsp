@@ -38,7 +38,6 @@
         Login.execute(request);
     }
     */
-    System.out.println("CHEGOU TELAQUESTAO");
     int logado = Login.validarSessao(request, response);
     int contadorRespostaQuestao = (Integer) request.getSession().getAttribute("contadorRespostaQuestao");
 %>
@@ -77,13 +76,18 @@
         if(request.getAttribute("listQuestaoFechadaResposta")!=null) {
             listQuestaoFechadaResposta = 
                 (List<QuestaoFechadaResposta>) request.getAttribute("listQuestaoFechadaResposta");
+        } else {
+            listQuestaoFechadaResposta = 
+                (List<QuestaoFechadaResposta>) request.getAttribute("listRespostaNaoLogado");
         }
+        
         if((listQuestao.size()-(numeroPagina*5))<5) {
             maxQuestao=listQuestao.size();
         } else {
             maxQuestao=((numeroPagina*5)+5);
             showBotaoProximaPagina=true;
         }
+        
         for(int i=(5*numeroPagina); i<maxQuestao; i++) {
             Questao questao = listQuestao.get(i);
             if(questao.getIdTipo()=='F' && listQuestaoFechada!=null) {
@@ -95,8 +99,9 @@
                     }
                 }
                 Long resposta=null;
+                QuestaoFechadaResposta questaoFechadaResposta;
                 if(logado==1) {
-                    QuestaoFechadaResposta questaoFechadaResposta = new QuestaoFechadaResposta();
+                    questaoFechadaResposta = new QuestaoFechadaResposta();
                     if(listQuestaoFechadaResposta!=null) {
                         for (QuestaoFechadaResposta object : listQuestaoFechadaResposta) {
                             if (object.getQuestao().getId() == cod_Questao) {
@@ -106,11 +111,16 @@
                     }
                     resposta = questaoFechadaResposta.getSeqQuestaoResposta();
                 } else {
-                    ArrayList questoes = (ArrayList) request.getAttribute("questoes");
-                    Long questaoRespondida =    (Long) questoes.get(questoes.size()-1);
-                    if(questaoRespondida==cod_Questao) {
-                        resposta = (Long) request.getAttribute("resposta");
+                    questaoFechadaResposta = new QuestaoFechadaResposta();
+                    if(listQuestaoFechadaResposta!=null) {
+                        for (QuestaoFechadaResposta object : listQuestaoFechadaResposta) {
+                            if (object.getQuestao().getId() == cod_Questao) {
+                                questaoFechadaResposta = object;
+                            }
+                        }
                     }
+                    resposta = questaoFechadaResposta.getSeqQuestaoResposta();
+                    System.out.println("NAO LOGADO RESPOSTA: "+resposta);
                 }
                 
                 
@@ -163,29 +173,25 @@
                                 <script type="text/javascript">
                                         
                                         var index = <%=i%>;
-                                        alert(index);
-                                        var form = document.forms[(index+1)];
-                                        alert(form.name);
+                                        var form = document.getElementsByName('<%="formInserirResposta"+i%>')[0];
                                         var resposta = document.getElementById("resposta"+index).value;
-                                        alert("RESPOSTA: "+resposta);
                                         if(resposta!='null') {
-                                            alert("hyhy:"+resposta);
-                                        var alternativa = "grupo<%=i%>alternativa"+(resposta-1);
-                                        var radioAlternativa = document.getElementById(alternativa);
-                                        radioAlternativa.checked = true;
-                                        
-                                        var respostaCorreta = form.respostaCorreta.value;
-                                        var letra = 64;
-                                        var letra = (letra+parseInt(respostaCorreta));
-                                        if(resposta==respostaCorreta) {
-                                            var resultado = document.querySelector("#resultado"+index);
-                                            resultado.style.color='green';
-                                            resultado.innerHTML="Parabéns! Você acertou!";
-                                        } else {
-                                            var resultado = document.querySelector("#resultado"+index);
-                                            resultado.style.color='red';
-                                            resultado.innerHTML="Você errou! Resposta: "+String.fromCharCode(letra);
-                                        }
+                                            var alternativa = "grupo<%=i%>alternativa"+(resposta-1);
+                                            var radioAlternativa = document.getElementById(alternativa);
+                                            radioAlternativa.checked = true;
+
+                                            var respostaCorreta = form.respostaCorreta.value;
+                                            var letra = 64;
+                                            var letra = (letra+parseInt(respostaCorreta));
+                                            if(resposta==respostaCorreta) {
+                                                var resultado = document.querySelector("#resultado"+index);
+                                                resultado.style.color='green';
+                                                resultado.innerHTML="Parabéns! Você acertou!";
+                                            } else {
+                                                var resultado = document.querySelector("#resultado"+index);
+                                                resultado.style.color='red';
+                                                resultado.innerHTML="Você errou! Resposta: "+String.fromCharCode(letra);
+                                            }
                                         }
                                 </script>
                             </div>
