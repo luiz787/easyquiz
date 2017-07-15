@@ -1,18 +1,78 @@
+<%@page import="model.domain.QuestaoFechadaResposta"%>
+<%@page import="model.domain.Perfil"%>
+<%@page import="model.domain.Usuario"%>
+<%@page import="model.service.ManterPerfil"%>
+<%@page import="model.serviceimpl.ManterPerfilImpl"%>
+<%@page import="model.daoimpl.PerfilDAOImpl"%>
+<%@page import="model.serviceimpl.ManterUsuarioImpl"%>
+<%@page import="model.service.ManterUsuario"%>
+<%@page import="model.service.ManterUsuario"%>
+<%@page import="model.daoimpl.UsuarioDAOImpl"%>
+<%@page import="java.time.ZoneId"%>
+<%@page import="java.sql.Timestamp"%>
+<%@page import="java.time.Instant"%>
+<%@page import="controller.Login"%>
+<%@page import="model.domain.QuestaoFechada"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Enumeration"%>
+<%@page import="model.domain.Questao"%>
+<%@page import="java.util.List"%>
+<%@page import="controller.ListarQuestao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%
+    int logado = Login.validarSessao(request, response);
+    Usuario user = null;
+    if(logado==1) {
+        Long cod_Usuario = (Long) request.getSession().getAttribute("cod_Usuario");
+        ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
+        user = manterUsuario.getUsuarioById(cod_Usuario);
+    }
+    
+    
+%>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+        <title>EasyQuiz</title>
+        <!-- CSS  -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/materialize.css"/>
+        <link rel="stylesheet" type="text/css" href="css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="css/styleTelaQuestoes.css"/>
+    </head>
+    
 <nav class="nav-extended" style="background-color:#FFFFFF;">
             <div class="container" style="display: inline; margin-left: 50px;">
                 <a id="logo-container" href="#" style="color:#47525E; font-size: 32px;">EasyQuiz</a>
                 <ul id="side-nav" class="right hide-on-med-and-down">
+                    <% if(logado ==0) {          %>
+                    <form name="frmLogin" method='post'>
                     <li> 
-                        <input id="email" placeholder="email" type="email" class="form-control" style="color: #696969;border-color:#D3D3D3;">
+                        <input id="email" placeholder="email" name="email" type="email" class="form-control" style="color: #696969;border-color:#D3D3D3;">
                     </li>
                     <li>&ensp;</li>
                     <li>
-                        <input id="password" placeholder="senha" type="password" class="validate" style="color: #696969;border-color:#D3D3D3;">
+                        <input id="password" placeholder="senha" name="senha" type="password" class="validate" style="color: #696969;border-color:#D3D3D3;">
                     </li>
-                    <a class="btn-small waves-effect waves-light grey darken-2 btn" href="#">Login</a>
-                    <a class="btn-small waves-effect waves-light grey darken-2 btn" href="#">Cadastrar</a>
+                    <a class="btn-small waves-effect waves-light grey darken-2 btn" onclick="validarCamposLogin()">Login</a>
+                    <a class="btn-small waves-effect waves-light grey darken-2 btn" href="./Cadastro.jsp">Cadastrar</a>
+                     </form>
+                    <% }else{ %>
+                     <li> 
+        <h5 style="color:#47525E; font-size: 32px;"> Bem vindo </h5>
+
+      </li>
+      <li>
+        <h5 style="color:#EE6363; font-size: 32px;">&ensp; <% user.getNome(); %> </h5> 
+      </li>
+
+      <li><a class="waves-effect waves-light grey darken-2 btn" href="#">&ensp;Perfil&ensp;</a></li>
+        <% if(user.getPerfil().getId() == 2) { %>
+      <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Questões</a></li>
+       <% } %>
+      <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Sair</a></li>
+                    <% } %>
                 </ul>
             </div>
             <div class="row" style="background-color: #EE6363; margin-top: 15px;" >
@@ -77,3 +137,13 @@
                 </div>
             </div>
         </nav>
+    <div class="container" ></div>
+
+        
+        <!--Scripts-->
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript" language="JavaScript" src="js/webvalida.js"></script>
+        <script type="text/javascript" language="JavaScript" src="js/materialize.js"></script>
+        <script type="text/javascript" language="JavaScript" src="js/init.js"></script>
+       

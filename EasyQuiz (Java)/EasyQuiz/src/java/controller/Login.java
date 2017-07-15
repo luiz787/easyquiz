@@ -47,7 +47,6 @@ public class Login {
 
             ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
             Usuario usuario = manterUsuario.getUsuarioByEmailSenha(email, senha);
-            System.out.println("Usuario: "+usuario.getNome());
 
             if (usuario == null) {
                 String erro = "Usuario nao encontrado!";
@@ -62,7 +61,10 @@ public class Login {
                 sessao.setUsuario(usuario);
                 sessao.setDataInicio((Instant)request.getSession().getAttribute("dat_Inicio"));
                 manterSessao.cadastrarSessao(sessao);
-                jsp = "/TelaQuestoes.jsp";
+                
+                request.getSession().setAttribute("contadorRespostaQuestao", 0);
+                
+                jsp = ListarQuestao.execute(request);
             }
 
         } catch (Exception e) {

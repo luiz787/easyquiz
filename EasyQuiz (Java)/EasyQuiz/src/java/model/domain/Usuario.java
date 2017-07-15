@@ -24,15 +24,6 @@ public class Usuario {
     private String escolaridade;
     private String email;
     private String senha;
-    private int tipo;
-
-    public int getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(int tipo) {
-        this.tipo = tipo;
-    }
 
     public String getEscolaridade() {
         return escolaridade;
