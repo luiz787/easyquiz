@@ -24,3 +24,19 @@
                 </div>
             </div>
 </footer>
+
+    <!--Scripts-->
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript" language="JavaScript" src="js/webvalida.js"></script>
+        <script type="text/javascript" language="JavaScript" src="js/materialize.js"></script>
+        <script type="text/javascript" language="JavaScript" src="js/init.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('select').material_select();
+            });
+            function mostrarform() {
+                var element = document.getElementById("pesquisa");
+                if (element.style.display =="none") {element.style.display = "block";} else {element.style.display = "none";}
+            }
+        </script>

@@ -37,14 +37,27 @@ public class ContadorRespostaQuestao {
                 Questao questao = manterQuestao.getQuestaoById(cod_Questao);
                 
                 if(questao.getIdTipo()=='A') {
+                    if(request.getSession().getAttribute("listTxtRespostaNaoLogado")==null) {
+                        List<Questao> listTxtRespostaNaoLogado = new ArrayList<Questao>();
+                        request.getSession().setAttribute("listTxtRespostaNaoLogado", listTxtRespostaNaoLogado);
+                    }
+                    List<Questao> listTxtRespostaNaoLogado = 
+                            (List<Questao>) request.getSession().getAttribute("listTxtRespostaNaoLogado");
+                    String txtResposta = request.getParameter("resposta");
+                    
+                    Questao questaoFechada = questao;
+                    questaoFechada.setTxtResposta(txtResposta);
+                    
+                    listTxtRespostaNaoLogado.add(questao);
+                    request.getSession().setAttribute("listTxtRespostaNaoLogado", listTxtRespostaNaoLogado);
                     
                 } else if(questao.getIdTipo()=='F') {
-                    if(request.getAttribute("listRespostaNaoLogado")==null) {
+                    if(request.getSession().getAttribute("listRespostaNaoLogado")==null) {
                         List<QuestaoFechadaResposta> listRespostaNaoLogado = new ArrayList<QuestaoFechadaResposta>();
-                        request.setAttribute("listRespostaNaoLogado", listRespostaNaoLogado);
+                        request.getSession().setAttribute("listRespostaNaoLogado", listRespostaNaoLogado);
                     }
                     List<QuestaoFechadaResposta> listRespostaNaoLogado = 
-                            (List<QuestaoFechadaResposta>) request.getAttribute("listRespostaNaoLogado");
+                            (List<QuestaoFechadaResposta>) request.getSession().getAttribute("listRespostaNaoLogado");
 
 
 
@@ -56,7 +69,7 @@ public class ContadorRespostaQuestao {
                     questaoFechadaResposta.setSeqQuestaoResposta(seqQuestaoResposta);
 
                     listRespostaNaoLogado.add(questaoFechadaResposta);
-                    request.setAttribute("listRespostaNaoLogado", listRespostaNaoLogado);
+                    request.getSession().setAttribute("listRespostaNaoLogado", listRespostaNaoLogado);
                 }
             }
             

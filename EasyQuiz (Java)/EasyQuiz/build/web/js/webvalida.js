@@ -1,22 +1,25 @@
-function Responder(form) {
-    var id = (form.name).substr((form.name).length - 1);
+function ResponderQuestao(form) {
+    var id = form.index.value;
     var contadorRespostaQuestao = form.contadorRespostaQuestao.value;
-    if(contadorRespostaQuestao<10) {
+    var logado = form.logado.value;
+    if(contadorRespostaQuestao<10 || logado==1) {
         if(form.tipoQuestao.value=='A') {
             if(document.querySelector("#textArea"+id).value.length!=0) {
+                var txtResposta = document.querySelector("#textArea"+id).value;
+                
                 var respostaBase = form.respostaBase.value;
-                var resposta = document.querySelector("#respostaBase"+id);
-                resposta.style.color='black';
-                resposta.style.backgroundColor='lightgreen';
-                resposta.innerHTML="<b>Resposta Base:</b><p>"+respostaBase+"</p>";
-                if(form.logado.value!=1) {
-                    ContadorRespostaQuestao(form, txtResposta);
-                }
+                var resultado = document.querySelector("#resultado"+id);
+                resultado.style.color='black';
+                resultado.style.backgroundColor='lightgreen';
+                resultado.innerHTML="<b>Resposta Base:</b><p>"+respostaBase+"</p>";
+                
+                ContadorRespostaQuestao(form, txtResposta);
+                
             } else {
-                var resposta = document.querySelector("#respostaBase"+id);
-                resposta.style.color='orange';
-                resposta.style.backgroundColor='';
-                resposta.innerHTML="Escreva alguma resposta!";
+                var resultado = document.querySelector("#resultado"+id);
+                resultado.style.color='orange';
+                resultado.style.backgroundColor='';
+                resultado.innerHTML="Escreva alguma resposta!";
             }
 
         } else if(form.tipoQuestao.value=='F') {
@@ -31,13 +34,13 @@ function Responder(form) {
                 letra = (letra+parseInt(respostaCorreta));
 
                 if(alternativa==respostaCorreta) {
-                    var resposta = document.querySelector("#resultado"+id);
-                    resposta.style.color='green';
-                    resposta.innerHTML="Parabéns! Você acertou!";
+                    var resultado = document.querySelector("#resultado"+id);
+                    resultado.style.color='green';
+                    resultado.innerHTML="Parabéns! Você acertou!";
                 } else {
-                    var resposta = document.querySelector("#resultado"+id);
-                    resposta.style.color='red';
-                    resposta.innerHTML="Você errou! Resposta: "+String.fromCharCode(letra);
+                    var resultado = document.querySelector("#resultado"+id);
+                    resultado.style.color='red';
+                    resultado.innerHTML="Você errou! Resposta: "+String.fromCharCode(letra);
                 }
                 if(form.logado.value==1) {
                     GravarAlterarTabela(form, alternativa);
@@ -45,9 +48,9 @@ function Responder(form) {
                     ContadorRespostaQuestao(form, alternativa);
                 }
             } else {
-                var resposta = document.querySelector("#resultado"+id);
-                resposta.style.color='orange';
-                resposta.innerHTML="Selecione uma alternativa!";
+                var resultado = document.querySelector("#resultado"+id);
+                resultado.style.color='orange';
+                resultado.innerHTML="Selecione uma alternativa!";
             }
         }
     } else {

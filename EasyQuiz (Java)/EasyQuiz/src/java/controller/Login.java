@@ -63,7 +63,8 @@ public class Login {
                 manterSessao.cadastrarSessao(sessao);
                 
                 request.getSession().setAttribute("contadorRespostaQuestao", 0);
-                
+                request.getSession().setAttribute("listRespostaNaoLogado", null);
+                request.getSession().setAttribute("listTxtRespostaNaoLogado", null);
                 jsp = ListarQuestao.execute(request);
             }
 

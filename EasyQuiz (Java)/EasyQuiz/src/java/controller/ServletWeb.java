@@ -14,7 +14,7 @@ public class ServletWeb extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String acao = request.getParameter("acao");
-        
+        System.out.println("ACAO: "+acao+" Questao: "+request.getParameter("questao"));
         if(acao.equals("ProximaPagina"))
             jsp = ProximaPagina.execute(request);
         else if (acao.equals("PaginaAnterior"))
@@ -23,6 +23,8 @@ public class ServletWeb extends HttpServlet {
             jsp = GravarQuestaoFechadaResposta.execute(request);
         else if (acao.equals("ContadorRespostaQuestao"))
             jsp = ContadorRespostaQuestao.execute(request);
+        else if (acao.equals("ListarForum"))
+            jsp = ListarForum.execute(request);
         else if (acao.equals("Logar"))
             jsp = Login.execute(request);
         
