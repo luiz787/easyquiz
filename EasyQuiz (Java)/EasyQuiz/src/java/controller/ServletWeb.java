@@ -23,6 +23,8 @@ public class ServletWeb extends HttpServlet {
             jsp = GravarQuestaoFechadaResposta.execute(request);
         else if (acao.equals("ContadorRespostaQuestao"))
             jsp = ContadorRespostaQuestao.execute(request);
+        else if (acao.equals("Logar"))
+            jsp = Login.execute(request);
         
         
         RequestDispatcher rd = request.getRequestDispatcher(jsp);

@@ -16,6 +16,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 import model.daoimpl.SessaoDAOImpl;
 import model.daoimpl.UsuarioDAOImpl;
 import model.domain.Sessao;
@@ -38,10 +39,11 @@ public class Login {
         String jsp = "";
 
         try {
-            //String email = request.getParameter("email");
-            //String senha = request.getParameter("senha");
-            String email = "andromenus@gmail.com";
-            String senha = "123";
+            
+            String email = request.getParameter("email");
+            String senha = request.getParameter("senha");
+            //String email = "rafaelneves.99@hotmail.com";
+            //String senha = "123456";
 
             ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
             Usuario usuario = manterUsuario.getUsuarioByEmailSenha(email, senha);
