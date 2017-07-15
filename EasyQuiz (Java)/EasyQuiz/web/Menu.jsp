@@ -21,7 +21,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     int logado = Login.validarSessao(request, response);
-    Usuario user = (Usuario) request.getAttribute("Usuario");
+    Usuario user = null;
+    if(logado==1) {
+        Long cod_Usuario = (Long) request.getSession().getAttribute("cod_Usuario");
+        ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
+        user = manterUsuario.getUsuarioById(cod_Usuario);
+    }
+    
     
 %>
 <html lang="en">
@@ -62,7 +68,7 @@
       </li>
 
       <li><a class="waves-effect waves-light grey darken-2 btn" href="#">&ensp;Perfil&ensp;</a></li>
-        <% if(user.getTipo() == 2) { %>
+        <% if(user.getPerfil().getId() == 2) { %>
       <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Questões</a></li>
        <% } %>
       <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Sair</a></li>
