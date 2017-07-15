@@ -17,8 +17,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.dao.PostDAO;
 import model.dao.QuestaoDAO;
+import model.dao.UsuarioDAO;
 import model.domain.Post;
 import model.domain.Questao;
+import model.domain.Usuario;
 import model.exception.ExcecaoPersistencia;
 
 /**
@@ -49,12 +51,13 @@ public class PostDAOImpl implements PostDAO {
 
             Connection connection = JDBCManterConexao.getInstancia().getConexao();
 
-            String sql = "INSERT INTO post (cod_questao, txt_conteudo, dat_criacao) VALUES(?, ?, ?) RETURNING cod_post";
+            String sql = "INSERT INTO post (cod_questao, txt_conteudo, dat_criacao, cod_usuario) VALUES(?, ?, ?) RETURNING cod_post";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setLong(1, post.getQuestao().getId());
             pstmt.setString(2, post.getTxtConteudo());
             pstmt.setTimestamp(3, java.sql.Timestamp.from(post.getDatCriacao()));
+            pstmt.setLong(4, post.getAutor().getId());
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
@@ -108,6 +111,7 @@ public class PostDAOImpl implements PostDAO {
 
             Post post = null;
             QuestaoDAO questaoDAOImpl = QuestaoDAOImpl.getInstance();
+            UsuarioDAO usuarioDAOImpl = UsuarioDAOImpl.getInstance();
             if (rs.next()) {
                 post = new Post();
                 post.setCodigo(rs.getLong("cod_post"));
@@ -115,6 +119,8 @@ public class PostDAOImpl implements PostDAO {
                 post.setQuestao(questao);
                 post.setTxtConteudo(rs.getString("txt_conteudo"));
                 post.setDatCriacao((rs.getTimestamp("dat_criacao")).toInstant());
+                Usuario usuario = usuarioDAOImpl.getUsuarioById(rs.getLong("cod_usuario"));
+                post.setAutor(usuario);
             }
 
             rs.close();
@@ -140,6 +146,7 @@ public class PostDAOImpl implements PostDAO {
 
             List<Post> listAll = new ArrayList<>();
             QuestaoDAO questaoDAOImpl = QuestaoDAOImpl.getInstance();
+            UsuarioDAO usuarioDAOImpl = UsuarioDAOImpl.getInstance();
             if (rs.next()) {
                 do {
                     Post post = new Post();
@@ -148,6 +155,8 @@ public class PostDAOImpl implements PostDAO {
                     post.setQuestao(questao);
                     post.setTxtConteudo(rs.getString("txt_conteudo"));
                     post.setDatCriacao((rs.getTimestamp("dat_criacao")).toInstant());
+                    Usuario usuario = usuarioDAOImpl.getUsuarioById(rs.getLong("cod_usuario"));
+                    post.setAutor(usuario);
                     listAll.add(post);
                 } while (rs.next());
             }
