@@ -73,7 +73,13 @@
                 (List<QuestaoFechadaResposta>) request.getAttribute("listQuestaoFechadaResposta");
         } else {
             listQuestaoFechadaResposta = 
-                (List<QuestaoFechadaResposta>) request.getAttribute("listRespostaNaoLogado");
+                (List<QuestaoFechadaResposta>) request.getSession().getAttribute("listRespostaNaoLogado");
+        }
+        
+        List<Questao> listQuestaoAbertaResposta=null;
+        if(request.getSession().getAttribute("listTxtRespostaNaoLogado")!=null) {
+            listQuestaoAbertaResposta = 
+                    (List<Questao>) request.getSession().getAttribute("listTxtRespostaNaoLogado");
         }
         
         if((listQuestao.size()-(numeroPagina*5))<5) {
@@ -85,9 +91,9 @@
         
         for(int i=(5*numeroPagina); i<maxQuestao; i++) {
             Questao questao = listQuestao.get(i);
+            Long cod_Questao = questao.getId();
             if(questao.getIdTipo()=='F' && listQuestaoFechada!=null) {
                 ArrayList<QuestaoFechada> alternativas = new ArrayList();
-                Long cod_Questao = questao.getId();
                 for (QuestaoFechada object : listQuestaoFechada) {
                     if (object.getQuestao().getId() == cod_Questao) {
                         alternativas.add(object);
@@ -115,7 +121,6 @@
                         }
                     }
                     resposta = questaoFechadaResposta.getSeqQuestaoResposta();
-                    System.out.println("NAO LOGADO RESPOSTA: "+resposta);
                 }
                 
                 
@@ -141,6 +146,7 @@
                             </div>
                             <div id='<%="alternativas"+i%>'>
                                 <form method="post" name='<%="formInserirResposta"+i%>'>
+                                    <input type='hidden' name='index' value='<%= i %>'>
                                     <input type='hidden' name='table' value='QuestaoFechadaResposta'>
                                     <input type='hidden' name='acao' value='gravar'>
                                     <input type='hidden' name='logado' value='<%= logado %>'>
@@ -166,9 +172,8 @@
                                 <br>
                                 <h6 id='<%="resultado"+i%>' ></h6>
                                 <script type="text/javascript">
-                                        
-                                        var index = <%=i%>;
                                         var form = document.getElementsByName('<%="formInserirResposta"+i%>')[0];
+                                        var index = form.index.value;
                                         var resposta = document.getElementById("resposta"+index).value;
                                         if(resposta!='null') {
                                             var alternativa = "grupo<%=i%>alternativa"+(resposta-1);
@@ -192,14 +197,24 @@
                             </div>
                         </div>
                         <div class="card-action">
-                            <button onclick="Responder(document.<%="formInserirResposta"+i%>)" class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important;" id='<%="responder"+i%>'>Responder</button>
-                            <a id='<%="forum"+i%>' href="#"><b>Forum</b></a>
+                            <button onclick="ResponderQuestao(document.<%="formInserirResposta"+i%>)" class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important;" id='<%="responder"+i%>'>Responder</button>
+                            <a id='<%="forum"+i%>' href="/EasyQuiz/servletweb?acao=ListarForum&questao=<%= questao.getId()%>"><b>Forum</b></a>
                         </div>
                     </div>
                 </div>
             </div>
 <%
             } else if(questao.getIdTipo()=='A') {
+                String resposta=null;
+                Questao questaoAbertaResposta = new Questao();
+                    if(listQuestaoAbertaResposta!=null) {
+                        for (Questao object : listQuestaoAbertaResposta) {
+                            if (object.getId() == cod_Questao) {
+                                questaoAbertaResposta = object;
+                            }
+                        }
+                    }
+                    resposta = questaoAbertaResposta.getTxtResposta();
 %>
             <div class="row">
                 <div class="col s12 m4">
@@ -224,30 +239,47 @@
                             </div>
                             <div id='<%="respostaAberta"+i%>'>
                                 <form method="post" name='<%="formInserirResposta"+i%>'>
+                                    <input type='hidden' name='index' value='<%= i %>'>
                                     <input type='hidden' name='table' value='QuestaoAbertaResposta'>
                                     <input type='hidden' name='logado' value='<%= logado %>'>
                                     <input type='hidden' name='contadorRespostaQuestao' value='<%= contadorRespostaQuestao %>'>
                                     <input type='hidden' name='questao' value='<%= questao.getId() %>'>
                                     <input type='hidden' name='tipoQuestao' value='<%= questao.getIdTipo() %>'>
                                     <input type='hidden' name='respostaBase' value='<%= questao.getTxtResposta() %>'>
-                                    <input type='hidden' name='resposta' value=''>
+                                    <input type='hidden' name='resposta' id='<%="resposta"+i%>' value='<%= resposta %>'>
                                     <div class="row">
                                         <div class="input-field col s12">
                                             <textarea id='<%="textArea"+i%>' class="materialize-textarea"></textarea>
                                             <label for='<%="textArea"+i%>'>Resposta:</label>
                                         </div>
                                     </div>
-                                    <div id='<%="respostaBase"+i%>' class="row">
-                                        
-                                    </div>
-                                    
                                 </form>
+                                <br>
+                                <div id='<%="resultado"+i%>' class="row">
+                                </div>
+                                <script type="text/javascript">
+                                        var form = document.getElementsByName('<%="formInserirResposta"+i%>')[0];
+                                        var index = form.index.value;
+                                        var resposta = document.getElementById("resposta"+index).value;
+                                        if(resposta!='null') {
+                                            var txtResposta = "<%="textArea"+i%>";
+                                            var textAreaResposta = document.getElementById(txtResposta);
+                                            textAreaResposta.innerHTML = resposta;
+
+                                            var respostaBase = form.respostaBase.value;
+                                            var resultado = document.querySelector("#resultado"+index);
+                                            resultado.style.color='black';
+                                            resultado.style.backgroundColor='lightgreen';
+                                            resultado.innerHTML="<b>Resposta Base:</b><p>"+respostaBase+"</p>";
+                                        }
+                                </script>
+                                    
                             </div>
                         </div>
 
                         <div class="card-action">
-                            <button onclick="Responder(document.<%="formInserirResposta"+i%>)" class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important;" id='<%="responder"+i%>'>Responder</button>
-                            <a id='<%="forum"+i%>' href="#"><b>Forum</b></a>
+                            <button onclick="ResponderQuestao(document.<%="formInserirResposta"+i%>)" class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important;" id='<%="responder"+i%>'>Responder</button>
+                            <a id='<%="forum"+i%>' href="/EasyQuiz/servletweb?acao=ListarForum&questao=<%= questao.getId()%>"><b>Forum</b></a>
                         </div>
 
                     </div>
@@ -298,27 +330,6 @@
         
         
         <jsp:include page ="Footer.jsp"/>
-        
-        <!--Scripts-->
-        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script type="text/javascript" language="JavaScript" src="js/webvalida.js"></script>
-        <script type="text/javascript" language="JavaScript" src="js/materialize.js"></script>
-        <script type="text/javascript" language="JavaScript" src="js/init.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $('select').material_select();
-            });
-            function mostrarform() {
-                var element = document.getElementById("pesquisa");
-                if (element.style.display =="none") {element.style.display = "block";} else {element.style.display = "none";}
-            }
-            function carregaRespostas() {
-                if(document.querySelector("#textArea"+id).value!=null) {
-                    
-                }
-            }
-        </script>
     </body>
 </html>
 
