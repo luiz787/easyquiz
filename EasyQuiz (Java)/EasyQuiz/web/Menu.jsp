@@ -62,7 +62,7 @@
       </li>
 
       <li><a class="waves-effect waves-light grey darken-2 btn" href="#">&ensp;Perfil&ensp;</a></li>
-        <% if(user.getTipo() == 2) { %>
+        <% if(user.getPerfil().getId() == new Long(2)) { %>
       <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Questões</a></li>
        <% } %>
       <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Sair</a></li>

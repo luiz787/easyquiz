@@ -138,7 +138,6 @@ public final class TelaQuestoes_jsp extends org.apache.jasper.runtime.HttpJspBas
             maxQuestao=((numeroPagina*5)+5);
             showBotaoProximaPagina=true;
         }
-        
         for(int i=(5*numeroPagina); i<maxQuestao; i++) {
             Questao questao = listQuestao.get(i);
             Long cod_Questao = questao.getId();
