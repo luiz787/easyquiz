@@ -32,7 +32,7 @@
         <!-- nav cor #EE6363 -->
         <jsp:include page ="Menu.jsp"/>
 
-        <div class="container" style=" z-index: 1">
+        <div class="container">
             <div class="container">
                 <h4>Questões cadastradas:</h4>
             </div>
@@ -74,7 +74,7 @@
                             <%
                                 }
                             %>
-                            <form action="#" id='<%="form"+i%>'>
+                            <form action="#" id='<%="form" + i%>'>
                                 <div>
                                     <div id='<%="enunciado" + i%>'>
                                         <p class="enun"><%=questao.getTxtEnunciado()%></p>
@@ -121,53 +121,62 @@
                                             <input class="with-gap" name='<%="grupo" + i%>' type="radio" id='<%="grupo" + i + "alternativa" + j%>'  />
                                             <label for='<%="grupo" + i + "alternativa" + j%>'><b><%=((char) (letra + j)) + ")"%></b><%=alternativas.get(j).getTxtAlternativa()%> </label>
                                         </p>
-                                    </div>
                                         <%
                                             }
-                                        } else if (questao.getIdTipo()=='A'){
                                         %>
-                                    <div id='<%="resposta-aberta"+i%>'>
+                                    </div>
+                                    <%
+                                    } else if (questao.getIdTipo() == 'A') {
+                                    %>
+                                    <div id='<%="resposta-aberta" + i%>'>
                                         <p><%=questao.getTxtResposta()%></p>
                                     </div>
-                                        <%
+                                    <%
                                         }
-                                        %>
+                                    %>
                                     <br>
                                     <div class="row">
                                         <div class="col s6" name="divEditar">
-                                            <a class="waves-effect waves-light btn deep-orange darken-1" onclick="editarquestao('<%="questao"+i%>', this)"><i class="material-icons left">edit</i>Editar questão</a>
+                                            <a class="waves-effect waves-light btn deep-orange darken-1" onclick="editarquestao('<%="questao" + i%>', this)"><i class="material-icons left">edit</i>Editar questão</a>
                                         </div>
                                         <div class="col s6" name="divExcluir">
-                                            <a class="waves-effect waves-light btn deep-orange darken-1"><i class="material-icons left">delete</i>Excluir questão</a>
+                                            <a class="waves-effect waves-light btn deep-orange darken-1" href="/EasyQuiz/servletweb?acao=ExcluirQuestao&questao=<%= questao.getId()%>"><i class="material-icons left">delete</i>Excluir questão</a>
                                         </div>
                                     </div>
                                 </div>
+
                             </form>
+
                         </div>
                     </div>
-                                            <%
-                                                }
-                                            } else {
-                                                %>
+                    <%
+                        }
+                    %>
+
+                    <%
+                    } else {
+                    %>
                     <h2 style="text-align: center;"><b> Não há questões cadastradas!</b></h2>
-<%
-    for(int i=0; i<20; i++) {
-%>
-<br>
-<%
-        }
-    }
-%>  
-                       
-                    </div>
+                    <%
+                        for (int i = 0; i < 20; i++) {
+                    %>
+                    <br>
+                    <%
+                            }
+                        }
+                    %>  
+
+
                 </div>
                 <div class="col s4 m3 l3">
                     <a class="waves-effect waves-light btn deep-orange darken-1" href="#"><i class="material-icons left">add</i>Adicionar questão</a><!-- mudar cor -->
                 </div>	
             </div>
+        </div>
         <br><br>
-        <jsp:include page ="Footer.jsp"/>
+
         <!--  Scripts-->
         <script src="js/gq.js"></script>
+        <jsp:include page ="Footer.jsp"/>
     </body>
 </html>

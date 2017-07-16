@@ -29,7 +29,7 @@ public class GerenciarQuestoes {
             
             request.setAttribute("listQuestao", listQuestao);
             request.setAttribute("listQuestaoFechada", listQuestaoFechada);
-            jsp = "/gerenciamentoquestoes.jsp";
+            jsp = "/GerenciamentoQuestoes.jsp";
         } catch (Exception e){
             e.printStackTrace();
             jsp = "";
