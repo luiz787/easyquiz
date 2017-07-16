@@ -1,3 +1,14 @@
+<%@page import="java.sql.Timestamp"%>
+<%@page import="java.time.ZoneId"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="java.time.LocalDate"%>
+<%@page import="java.time.Instant"%>
+<%@page import="model.domain.QuestaoFechadaResposta"%>
+<%@page import="model.serviceimpl.ManterQuestaoFechadaRespostaImpl"%>
+<%@page import="model.daoimpl.QuestaoFechadaRespostaDAOImpl"%>
+<%@page import="model.daoimpl.QuestaoFechadaRespostaDAOImpl"%>
+<%@page import="model.service.ManterQuestaoFechadaResposta"%>
 <%@page import="model.domain.Escolaridade"%>
 <%@page import="java.util.List"%>
 <%@page import="model.serviceimpl.ManterEscolaridadeImpl"%>
@@ -16,6 +27,7 @@
     int logado = Login.validarSessao(request, response);
     Usuario usuario = null;
     List<Escolaridade> listEscolaridade = null;
+    String primeiroNome = null;
     if(logado==1) {
         Long cod_Usuario = (Long) request.getSession().getAttribute("cod_Usuario");
         ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
@@ -23,6 +35,29 @@
         
         ManterEscolaridade manterEscolaridade = new ManterEscolaridadeImpl(EscolaridadeDAOImpl.getInstance());
         listEscolaridade = manterEscolaridade.getAll();
+        
+        primeiroNome = usuario.getNome().split(" ")[0];
+        
+        
+        SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse("15-07-2017");
+        Instant dat_Inicio = date1.toInstant();
+        java.util.Date date2 = new SimpleDateFormat("dd-MM-yyyy").parse("17-07-2017");
+        Instant dat_Fim = date2.toInstant();
+        
+        System.out.println("INSTANTE: "+java.sql.Timestamp.from(dat_Inicio));
+        System.out.println("INSTANTE: "+java.sql.Timestamp.from(dat_Fim));
+        
+        ManterQuestaoFechadaResposta manterQuestaoFechadaResposta 
+                = new ManterQuestaoFechadaRespostaImpl(QuestaoFechadaRespostaDAOImpl.getInstance());
+        List<QuestaoFechadaResposta> listQuestaoFechadaResposta =
+                manterQuestaoFechadaResposta.getAllByUsuarioPeriodo(cod_Usuario, dat_Inicio, dat_Fim);
+        if(listQuestaoFechadaResposta == null) {
+            System.out.println("NULL");
+        } else {
+            System.out.println("SIZE: "+listQuestaoFechadaResposta.size());
+            System.out.println(listQuestaoFechadaResposta.get(0).getQuestao().getTxtEnunciado());
+        }
     }
 %>
 <!DOCTYPE html>
@@ -33,22 +68,35 @@
     </head>
     <body>
         <jsp:include page ="Menu.jsp"/>
-        <H4 style="color: #47525E; padding-left: 80px;">Aproveitamento:</H4>
+        <H4 style="color: #47525E; padding-left: 35px;">Aproveitamento:</H4>
         <div class="container">
-          <H5 style="color: #47525E; display: inline;">Perguntas respondidas:</H5> <H5 style="color: #C55353; display: inline;">250</H5>
-          <H5 style="color: #47525E; display: inline; padding-left: 50px;">Perguntas acertadas:</H5> <H5 style="color: #C55353; display: inline;">175</H5>
-          <br>
-          <br>
-          <H5 style="color: #47525E; display: inline;">Coeficiente de acerto:</H5> <H5 style="color: #C55353; display: inline;">70%</H5>
-          <div class="progress" style="z-index: -1;">
-            <div class="determinate" style="width: 70%; z-index: -11;"></div>
-          </div>
+            <label for="dataInicio">De:</label>
+            <label for="dataFim">Até:</label>
+            <div class="row">
+                <div class="input-field col s6">
+                  <input name="dataInicio" type="date" value="<%= usuario.getDataNascimento() %>">
+                </div>
+                <div class="input-field col s6">
+                  <input name="dataFim" type="date" value="<%= usuario.getDataNascimento() %>">
+                </div>
+            </div>
+            
+            
+            <H5 style="color: #47525E; display: inline;">Perguntas respondidas:</H5> <H5 style="color: #C55353; display: inline;">250</H5>
+            <H5 style="color: #47525E; display: inline; padding-left: 50px;">Perguntas acertadas:</H5> <H5 style="color: #C55353; display: inline;">175</H5>
+            <br>
+            <br>
+            <H5 style="color: #47525E; display: inline;">Coeficiente de acerto:</H5> <H5 style="color: #C55353; display: inline;">70%</H5>
+            <div class="progress" style="z-index: -1;">
+              <div class="determinate" style="width: 70%; z-index: -11;"></div>
+            </div>
         </div>
 
         <br>
         <br>
 
-        <H4 style="color: #47525E; padding-left: 80px; display: inline;">O que deseja alterar </H4> <H4 style="color: #C55353; display: inline;">Usuário?</H4>
+        <H4 style="color: #47525E; padding-left: 80px; display: inline;">O que deseja alterar </H4> <H4 style="color: #C55353; display: inline;"><%= primeiroNome %></H4> 
+        <H4 style="color: #47525E; display: inline;">?</h4>
         <div class="container">
             <form class="col s12" method="post" name="formPerfil">
                 <input type='hidden' name='table' value='Usuario'>
