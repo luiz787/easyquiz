@@ -24,7 +24,7 @@ public class ManterSessaoImpl implements ManterSessao {
         this.sessaoDAO = sessaoDAO;
     }
     @Override
-    public void cadastrarSessao(Sessao sessao) throws ExcecaoPersistencia, ExcecaoNegocio {
+    public boolean cadastrarSessao(Sessao sessao) throws ExcecaoPersistencia, ExcecaoNegocio {
         String errMsg = null;
         if (sessao==null){
             throw new ExcecaoNegocio("A sessão não pode ser nula.");
@@ -42,11 +42,12 @@ public class ManterSessaoImpl implements ManterSessao {
         if (errMsg!=null){
             throw new ExcecaoNegocio(errMsg);
         }
-        sessaoDAO.insert(sessao);
+        boolean result = sessaoDAO.insert(sessao);
+        return result;
     }
 
     @Override
-    public void alterarSessao(Sessao sessao) throws ExcecaoPersistencia, ExcecaoNegocio {
+    public boolean alterarSessao(Sessao sessao) throws ExcecaoPersistencia, ExcecaoNegocio {
         String errMsg = null;
         if (sessao==null){
             throw new ExcecaoNegocio("A sessão não pode ser nula.");
@@ -61,7 +62,8 @@ public class ManterSessaoImpl implements ManterSessao {
         if (errMsg!=null){
             throw new ExcecaoNegocio(errMsg);
         }
-        sessaoDAO.update(sessao);
+        boolean result = sessaoDAO.update(sessao);
+        return result;
     }
 
     @Override
@@ -69,12 +71,14 @@ public class ManterSessaoImpl implements ManterSessao {
         if (id==null){
             throw new ExcecaoPersistencia("O id de usuário não pode ser nulo.");
         }
-        return sessaoDAO.getSessaoByUsuario(id);
+        List<Sessao> result = sessaoDAO.getSessaoByUsuario(id);
+        return result;
     }
 
     @Override
     public List<Sessao> getAll() throws ExcecaoPersistencia {
-        return sessaoDAO.listAll();
+        List<Sessao> result = sessaoDAO.listAll();
+        return result;
     }
 
     @Override
@@ -85,6 +89,7 @@ public class ManterSessaoImpl implements ManterSessao {
         if (dataInicio == null) {
             throw new ExcecaoPersistencia("A data inicial não pode ser nula.");
         }
-        return sessaoDAO.getSessaoByUsuarioData(id, dataInicio);
+        Sessao result = sessaoDAO.getSessaoByUsuarioData(id, dataInicio);
+        return result;
     }
 }

@@ -44,7 +44,7 @@
     
 <nav class="nav-extended" style="background-color:#FFFFFF;">
             <div class="container" style="display: inline; margin-left: 50px;">
-                <a id="logo-container" href="#" style="color:#47525E; font-size: 32px;">EasyQuiz</a>
+                <a id="logo-container" href="/EasyQuiz/servletweb?acao=PaginaInicial" style="color:#47525E; font-size: 32px;">EasyQuiz</a>
                 <ul id="side-nav" class="right hide-on-med-and-down">
                     <% if(logado ==0) {          %>
                     <form name="frmLogin" method='post'>
@@ -67,7 +67,7 @@
         <h5 style="color:#EE6363; font-size: 32px;">&ensp; <% user.getNome(); %> </h5> 
       </li>
 
-      <li><a class="waves-effect waves-light grey darken-2 btn" href="#">&ensp;Perfil&ensp;</a></li>
+      <li><a class="waves-effect waves-light grey darken-2 btn" href="/EasyQuiz/servletweb?acao=ListarPerfil">&ensp;Perfil&ensp;</a></li>
         <% if(user.getPerfil().getId() == 2) { %>
       <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Questões</a></li>
        <% } %>

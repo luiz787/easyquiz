@@ -20,21 +20,20 @@ public class ListarQuestao {
     public static String execute(HttpServletRequest request) {
         String jsp = "";
         try {
+            
             ManterQuestao manterQuestao = new ManterQuestaoImpl(QuestaoDAOImpl.getInstance());
             List<Questao> listQuestao = manterQuestao.getAll();
-            
+
             ManterQuestaoFechada manterQuestaoFechada = 
-                    new ManterQuestaoFechadaImpl(QuestaoFechadaDAOImpl.getInstance());
+                     new ManterQuestaoFechadaImpl(QuestaoFechadaDAOImpl.getInstance());
             List<QuestaoFechada> listQuestaoFechada = manterQuestaoFechada.getAll();
-            
             
             if(request.getSession().getAttribute("cod_Usuario")!=null) {
                 ListarQuestaoFechadaResposta.execute(request);
             }
             
-            
             request.setAttribute("listQuestao", listQuestao);
-            
+
             request.setAttribute("listQuestaoFechada", listQuestaoFechada);
             
             jsp = "/TelaQuestoes.jsp";

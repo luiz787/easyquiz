@@ -23,7 +23,7 @@ public class ManterModuloImpl implements ManterModulo {
         this.moduloDAO = moduloDAO;
     }
     @Override
-    public void cadastrarModulo(Modulo modulo) throws ExcecaoPersistencia, ExcecaoNegocio {
+    public Long cadastrarModulo(Modulo modulo) throws ExcecaoPersistencia, ExcecaoNegocio {
         String errMsg = null;
         if (modulo == null) {
             throw new ExcecaoNegocio("Módulo não pode ser nulo.");
@@ -38,11 +38,13 @@ public class ManterModuloImpl implements ManterModulo {
         if (errMsg!=null){
             throw new ExcecaoNegocio(errMsg);
         }
-        moduloDAO.insert(modulo);
+        
+        Long result = moduloDAO.insert(modulo);
+        return result;
     }
 
     @Override
-    public void alterarModulo(Modulo modulo) throws ExcecaoPersistencia, ExcecaoNegocio {
+    public boolean alterarModulo(Modulo modulo) throws ExcecaoPersistencia, ExcecaoNegocio {
         String errMsg = null;
         if (modulo == null) {
             throw new ExcecaoNegocio("Módulo não pode ser nulo.");
@@ -57,7 +59,8 @@ public class ManterModuloImpl implements ManterModulo {
         if (errMsg!=null){
             throw new ExcecaoNegocio(errMsg);
         }
-        moduloDAO.update(modulo);
+        boolean result = moduloDAO.update(modulo);
+        return result;
     }
 
     @Override
@@ -65,7 +68,8 @@ public class ManterModuloImpl implements ManterModulo {
         if (codModulo == null){
             throw new ExcecaoNegocio("Código não pode ser nulo.");
         }
-        return moduloDAO.delete(codModulo);
+        Modulo result = moduloDAO.delete(codModulo);
+        return result;
     }
 
     @Override
@@ -73,11 +77,13 @@ public class ManterModuloImpl implements ManterModulo {
         if (codModulo == null){
             throw new ExcecaoNegocio("Código não pode ser nulo.");
         }
-        return moduloDAO.getModuloById(codModulo);
+        Modulo result = moduloDAO.getModuloById(codModulo);
+        return result;
     }
 
     @Override
     public List<Modulo> getAll() throws ExcecaoPersistencia {
-        return moduloDAO.listAll();
+        List<Modulo> result = moduloDAO.listAll();
+        return result;
     }
 }

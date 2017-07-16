@@ -39,10 +39,6 @@ public class ManterPostImpl implements ManterPost {
              errMsgList.add("Nenhuma data informada!\n\n");
          }
          
-         if(post.getCodigo() == null) {
-             errMsgList.add("Nenhum ID informado!\n\n");
-         }
-         
          if(post.getAutor().getId() == null){
              errMsgList.add("O ID do autor não foi informado!\n\n");
          }
@@ -58,8 +54,8 @@ public class ManterPostImpl implements ManterPost {
              throw new ExcecaoNegocio(errMsg);
          }
          
-         postDAO.insert(post);
-         return post.getCodigo();
+         Long result = postDAO.insert(post);
+         return result;
     }
 
     @Override
@@ -67,7 +63,8 @@ public class ManterPostImpl implements ManterPost {
         if (id==null){
             throw new ExcecaoPersistencia("O id não pode ser nulo.");
         }
-        return postDAO.delete(id);
+        Post result = postDAO.delete(id);
+        return result;
     }
 
     @Override
@@ -75,7 +72,8 @@ public class ManterPostImpl implements ManterPost {
         if (id==null){
             throw new ExcecaoPersistencia("O id não pode ser nulo.");
         }
-        return postDAO.getPostById(id);
+        Post result = postDAO.getPostById(id);
+        return result;
     }
 
     @Override
@@ -84,6 +82,7 @@ public class ManterPostImpl implements ManterPost {
         if(idQuestao == null) {
             throw new ExcecaoPersistencia("Nenhum id informado!");
         }
-        return postDAO.listAllByQuestao(idQuestao);
+        List<Post> result = postDAO.listAllByQuestao(idQuestao);
+        return result;
     }
 }

@@ -15,20 +15,24 @@ public class ServletWeb extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String acao = request.getParameter("acao");
         
-        if(acao.equals("ProximaPagina"))
+        if(acao.equals("PaginaInicial"))
+            jsp = PaginaInicial.execute(request);
+        else if(acao.equals("ProximaPagina"))
             jsp = ProximaPagina.execute(request);
-        else if (acao.equals("PaginaAnterior"))
+        else if(acao.equals("PaginaAnterior"))
             jsp = PaginaAnterior.execute(request);
-        else if (acao.equals("GravarQuestaoFechadaResposta"))
+        else if(acao.equals("GravarQuestaoFechadaResposta"))
             jsp = GravarQuestaoFechadaResposta.execute(request);
-        else if (acao.equals("ContadorRespostaQuestao"))
+        else if(acao.equals("ContadorRespostaQuestao"))
             jsp = ContadorRespostaQuestao.execute(request);
-        else if (acao.equals("ListarForum"))
+        else if(acao.equals("ListarForum"))
             jsp = ListarForum.execute(request);
-        else if (acao.equals("Logar"))
+        else if(acao.equals("Logar"))
             jsp = Login.execute(request);
         else if(acao.equals("CarregaImagem"))
             jsp = CarregaImagem.execute(request, response);
+        else if(acao.equals("ListarPerfil"))
+            jsp = ListarPerfil.execute(request);
         
         if(!(jsp.equals("notFoward"))) {
             RequestDispatcher rd = request.getRequestDispatcher(jsp);

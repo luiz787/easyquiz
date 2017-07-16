@@ -1,17 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model.domain;
 
 
 import java.sql.Date;
 
-/**
- *
- * @author Luiz
- */
 public class Usuario {
 
     public Usuario() {
@@ -21,17 +12,19 @@ public class Usuario {
     private Perfil perfil;
     private String nome;
     private Date dataNascimento;
-    private String escolaridade;
+    private Escolaridade escolaridade;
     private String email;
     private String senha;
 
-    public String getEscolaridade() {
+    public Escolaridade getEscolaridade() {
         return escolaridade;
     }
 
-    public void setEscolaridade(String escolaridade) {
+    public void setEscolaridade(Escolaridade escolaridade) {
         this.escolaridade = escolaridade;
     }
+
+    
     
     public Long getId() {
         return id;

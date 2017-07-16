@@ -43,29 +43,13 @@ public class ManterQuestaoImpl implements ManterQuestao {
             errMsgList.add("A questão precisa de uma Disciplina.");
         }
         
+        if (questao.getModulo() == null) {
+            errMsgList.add("A questão precisa de um Modulo.");
+        }
+        
         if (questao.getDificuldade()==null) {
             errMsgList.add("A difículdade da questão não pode ser nula.");
         }
-        
-        /*if (questao instanceof QuestaoFechada){
-            
-            if(((QuestaoFechada) questao).getAlternativas() == null) {
-                errMsgList.add("A questão fechada precisa de alternativas.");
-            }else if(((QuestaoFechada) questao).getAlternativas().length <= 1 ){
-                errMsgList.add("A questão fechada deve conter pelo menos 2 alternativas.");
-            }
-            
-            if(((QuestaoFechada) questao).getAlternativaCorreta() == null){
-                errMsgList.add("A questão fechada deve conter uma alternativa correta.");
-            }else if(((QuestaoFechada) questao).getAlternativaCorreta().intValue() > ((QuestaoFechada) questao).getAlternativas().length){
-                errMsgList.add("A alternativa correta deve estar contida nas alternativas.");
-            }
-            
-        } else {
-            errMsgList.add("Uma questao deve ser Aberta ou Fechada");
-        }*/
-        // QuestaoFechada extends Questao?
-        
         
         if (!errMsgList.isEmpty()) {
             String errMsg = "";
@@ -75,15 +59,15 @@ public class ManterQuestaoImpl implements ManterQuestao {
             throw new ExcecaoNegocio(errMsg);
         }
         
-        questaoDAO.insert(questao);
+        Long result = questaoDAO.insert(questao);
         
-        return questao.getId();
+        return result;
     }
 
     @Override
-    public void alterarQuestao(Questao questao) throws ExcecaoPersistencia, ExcecaoNegocio {
+    public boolean alterarQuestao(Questao questao) throws ExcecaoPersistencia, ExcecaoNegocio {
         List<String> errMsgList = new ArrayList<>();
-        /*teste github*/
+        
         if(questao == null){
             throw new ExcecaoNegocio("Nenhuma questão informada");
         }
@@ -103,25 +87,6 @@ public class ManterQuestaoImpl implements ManterQuestao {
         if(questao.getDisciplina() == null){
             errMsgList.add("A questão precisa de uma Disciplina para ser alterada.");
         }
-        /*if (questao instanceof QuestaoFechada){
-            
-            if(((QuestaoFechada) questao).getAlternativas() == null){
-                errMsgList.add("A questão fechada precisa de alternativas para ser alterada.");
-            }else if(((QuestaoFechada) questao).getAlternativas().length <= 1 ){
-                errMsgList.add("A questão fechada deve conter pelo menos 2 alternativas para ser alterada.");
-            }
-            
-            if(((QuestaoFechada) questao).getAlternativaCorreta() == null){
-                errMsgList.add("A questão fechada deve conter uma alternativa correta para ser alterada.");
-            }else if(((QuestaoFechada) questao).getAlternativaCorreta().intValue() > ((QuestaoFechada) questao).getAlternativas().length){
-                errMsgList.add("A alternativa correta deve estar contida nas alternativas para ser alterada.");
-            }
-            // Integer.parseInt(String.valueOf(((QuestaoFechada) questao).getAlternativaCorreta()));
-            
-        } else {
-            errMsgList.add("Uma questao deve ser Aberta ou Fechada.");
-        }*/
-        
         
         if (!errMsgList.isEmpty()) {
             String errMsg = "";
@@ -130,7 +95,9 @@ public class ManterQuestaoImpl implements ManterQuestao {
             }
             throw new ExcecaoNegocio(errMsg);
         }
-        questaoDAO.update(questao);
+        
+        boolean result = questaoDAO.update(questao);
+        return result;
     }
 
     @Override
@@ -138,7 +105,8 @@ public class ManterQuestaoImpl implements ManterQuestao {
         if (id == null){
             throw new ExcecaoPersistencia("Insira um id válido para deletar a questão.");
         }
-        return questaoDAO.delete(id);
+        Questao result = questaoDAO.delete(id);
+        return result;
     }
 
     @Override
@@ -146,7 +114,8 @@ public class ManterQuestaoImpl implements ManterQuestao {
         if (id == null){
             throw new ExcecaoPersistencia("Insira um id válido para pesquisar uma questão.");
         }
-        return questaoDAO.getQuestaoById(id);
+        Questao result = questaoDAO.getQuestaoById(id);
+        return result;
     }
 
     @Override
@@ -157,6 +126,7 @@ public class ManterQuestaoImpl implements ManterQuestao {
 
     @Override
     public List<Questao> getAll(char cod_Tipo) throws ExcecaoPersistencia {
-        return questaoDAO.listAll(cod_Tipo);
+        List<Questao> result = questaoDAO.listAll(cod_Tipo);
+        return result;
     }
 }

@@ -15,8 +15,8 @@ import model.exception.ExcecaoPersistencia;
  * @author andro
  */
 public interface ManterModulo {
-    public void cadastrarModulo(Modulo modulo) throws ExcecaoPersistencia, ExcecaoNegocio;
-    public void alterarModulo(Modulo modulo) throws ExcecaoPersistencia, ExcecaoNegocio;
+    public Long cadastrarModulo(Modulo modulo) throws ExcecaoPersistencia, ExcecaoNegocio;
+    public boolean alterarModulo(Modulo modulo) throws ExcecaoPersistencia, ExcecaoNegocio;
     public Modulo deletarModulo(Long cod_Modulo) throws ExcecaoPersistencia, ExcecaoNegocio;
     public Modulo getModuloById(Long cod_Modulo) throws ExcecaoPersistencia, ExcecaoNegocio;
     public List<Modulo> getAll() throws ExcecaoPersistencia;

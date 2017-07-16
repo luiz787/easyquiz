@@ -25,7 +25,7 @@ public class ManterQuestaoFechadaRespostaImpl implements ManterQuestaoFechadaRes
     }
     
     @Override
-    public void cadastrarQuestaoFechadaResposta(QuestaoFechadaResposta questaoFechadaResposta) throws ExcecaoPersistencia, ExcecaoNegocio {
+    public boolean cadastrarQuestaoFechadaResposta(QuestaoFechadaResposta questaoFechadaResposta) throws ExcecaoPersistencia, ExcecaoNegocio {
         String errMsg = null;
         if (questaoFechadaResposta == null){
             throw new ExcecaoNegocio("A objeto resposta não pode ser nulo.");
@@ -43,11 +43,12 @@ public class ManterQuestaoFechadaRespostaImpl implements ManterQuestaoFechadaRes
         if (errMsg!=null){
             throw new ExcecaoNegocio(errMsg);
         }
-        questaoFechadaRespostaDAO.insert(questaoFechadaResposta);
+        boolean result = questaoFechadaRespostaDAO.insert(questaoFechadaResposta);
+        return result;
     }
     
     @Override
-    public void alterarQuestaoFechadaResposta(QuestaoFechadaResposta questaoFechadaResposta) throws ExcecaoPersistencia, ExcecaoNegocio {
+    public boolean alterarQuestaoFechadaResposta(QuestaoFechadaResposta questaoFechadaResposta) throws ExcecaoPersistencia, ExcecaoNegocio {
         String errMsg = null;
         if (questaoFechadaResposta == null){
             throw new ExcecaoNegocio("A objeto resposta não pode ser nulo.");
@@ -65,21 +66,25 @@ public class ManterQuestaoFechadaRespostaImpl implements ManterQuestaoFechadaRes
         if (errMsg!=null){
             throw new ExcecaoNegocio(errMsg);
         }
-        questaoFechadaRespostaDAO.update(questaoFechadaResposta);
+        boolean result = questaoFechadaRespostaDAO.update(questaoFechadaResposta);
+        return result;
     }
     
     @Override
     public List<QuestaoFechadaResposta> getAll() throws ExcecaoPersistencia {
-        return questaoFechadaRespostaDAO.listAll();
+        List<QuestaoFechadaResposta> result = questaoFechadaRespostaDAO.listAll();
+        return result;
     }
 
     @Override
     public List<QuestaoFechadaResposta> getAllByUsuarioSessao(Long cod_Usuario, Instant dat_Inicio) throws ExcecaoPersistencia {
-        return questaoFechadaRespostaDAO.listAllByUsuarioSessao(cod_Usuario, dat_Inicio);
+        List<QuestaoFechadaResposta> result = questaoFechadaRespostaDAO.listAllByUsuarioSessao(cod_Usuario, dat_Inicio);
+        return result;
     }
 
     @Override
     public QuestaoFechadaResposta getByUsuarioSessaoQuestao(Long cod_Usuario, Instant dat_Inicio, Long cod_Questao) throws ExcecaoPersistencia {
-        return questaoFechadaRespostaDAO.getByUsuarioSessaoQuestao(cod_Usuario, dat_Inicio, cod_Questao);
+        QuestaoFechadaResposta result = questaoFechadaRespostaDAO.getByUsuarioSessaoQuestao(cod_Usuario, dat_Inicio, cod_Questao);
+        return result;
     }
 }

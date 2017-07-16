@@ -41,7 +41,7 @@ public class ModuloDAOImpl implements ModuloDAO {
     }
 
     @Override
-    synchronized public void insert(Modulo modulo) throws ExcecaoPersistencia {
+    synchronized public Long insert(Modulo modulo) throws ExcecaoPersistencia {
         try {
             if (modulo == null) {
                 throw new ExcecaoPersistencia("Entidade não pode ser nula.");
@@ -49,22 +49,27 @@ public class ModuloDAOImpl implements ModuloDAO {
 
             Connection connection = JDBCManterConexao.getInstancia().getConexao();
 
-            String sql = "INSERT INTO modulo (cod_disciplina, nom_modulo) VALUES(?, ?) RETURNING cod_modulo";
+            String sql = "INSERT INTO modulo (cod_disciplina, nom_modulo) VALUES(?, ?)";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setLong(1, modulo.getDisciplina().getId());
             pstmt.setString(2, modulo.getNome());
             
-            ResultSet rs = pstmt.executeQuery();
-
+            pstmt.executeUpdate();
+            
+            ResultSet rs = pstmt.executeQuery("SELECT LAST_INSERT_ID() FROM modulo");
+            
+            Long id = null;
             if (rs.next()) {
-                Long cod_modulo = rs.getLong("cod_modulo");
-                modulo.setId(cod_modulo);
+                id = rs.getLong(2);
+                modulo.setId(id);
             }
-
+            
             rs.close();
             pstmt.close();
             connection.close();
+            
+            return id;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);
@@ -72,7 +77,7 @@ public class ModuloDAOImpl implements ModuloDAO {
     }
 
     @Override
-    synchronized public void update(Modulo modulo) throws ExcecaoPersistencia {
+    synchronized public boolean update(Modulo modulo) throws ExcecaoPersistencia {
         try {
             
             Connection connection = JDBCManterConexao.getInstancia().getConexao();
@@ -89,6 +94,8 @@ public class ModuloDAOImpl implements ModuloDAO {
 
             pstmt.close();
             connection.close();
+            
+            return true;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);

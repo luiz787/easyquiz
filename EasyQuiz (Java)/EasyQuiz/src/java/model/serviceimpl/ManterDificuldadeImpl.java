@@ -27,11 +27,13 @@ public class ManterDificuldadeImpl implements ManterDificuldade {
         if (codDificuldade == null){
             throw new ExcecaoNegocio("Código da dificuldade não pode ser nulo.");
         }
-        return dificuldadeDAO.getDificuldadeById(codDificuldade);
+        Dificuldade result = dificuldadeDAO.getDificuldadeById(codDificuldade);
+        return result;
     }
 
     @Override
     public List<Dificuldade> listAll() throws ExcecaoPersistencia {
-        return dificuldadeDAO.listAll();
+        List<Dificuldade> result = dificuldadeDAO.listAll();
+        return result;
     }
 }

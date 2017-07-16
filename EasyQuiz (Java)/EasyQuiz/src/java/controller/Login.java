@@ -6,23 +6,14 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.JOptionPane;
 import model.daoimpl.SessaoDAOImpl;
 import model.daoimpl.UsuarioDAOImpl;
 import model.domain.Sessao;
 import model.domain.Usuario;
-import model.exception.ExcecaoNegocio;
-import model.exception.ExcecaoPersistencia;
 import model.service.ManterSessao;
 import model.service.ManterUsuario;
 import model.serviceimpl.ManterSessaoImpl;
@@ -42,8 +33,6 @@ public class Login {
             
             String email = request.getParameter("email");
             String senha = request.getParameter("senha");
-            //String email = "rafaelneves.99@hotmail.com";
-            //String senha = "123456";
 
             ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
             Usuario usuario = manterUsuario.getUsuarioByEmailSenha(email, senha);
@@ -60,7 +49,7 @@ public class Login {
                 Sessao sessao = new Sessao();
                 sessao.setUsuario(usuario);
                 sessao.setDataInicio((Instant)request.getSession().getAttribute("dat_Inicio"));
-                manterSessao.cadastrarSessao(sessao);
+                boolean result = manterSessao.cadastrarSessao(sessao);
                 
                 request.getSession().setAttribute("contadorRespostaQuestao", 0);
                 request.getSession().setAttribute("listRespostaNaoLogado", null);

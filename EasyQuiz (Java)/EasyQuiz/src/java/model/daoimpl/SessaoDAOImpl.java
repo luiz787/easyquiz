@@ -31,7 +31,7 @@ public class SessaoDAOImpl implements SessaoDAO {
     }
     
     @Override
-    synchronized public void insert(Sessao sessao) throws ExcecaoPersistencia {
+    synchronized public boolean insert(Sessao sessao) throws ExcecaoPersistencia {
         try {
             if (sessao == null) {
                 throw new ExcecaoPersistencia("Entidade não pode ser nula.");
@@ -49,6 +49,8 @@ public class SessaoDAOImpl implements SessaoDAO {
             
             pstmt.close();
             connection.close();
+            
+            return true;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);
@@ -56,7 +58,7 @@ public class SessaoDAOImpl implements SessaoDAO {
     }
 
     @Override
-    synchronized public void update(Sessao sessao) throws ExcecaoPersistencia {
+    synchronized public boolean update(Sessao sessao) throws ExcecaoPersistencia {
         try {
             
             Connection connection = JDBCManterConexao.getInstancia().getConexao();
@@ -75,6 +77,8 @@ public class SessaoDAOImpl implements SessaoDAO {
 
             pstmt.close();
             connection.close();
+            
+            return true;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);

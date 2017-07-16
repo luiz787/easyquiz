@@ -14,8 +14,8 @@ import model.exception.ExcecaoPersistencia;
  * @author Aluno
  */
 public interface DisciplinaDAO {
-    public void insert(Disciplina disciplina) throws ExcecaoPersistencia;
-    public void update(Disciplina disciplina) throws ExcecaoPersistencia;
+    public Long insert(Disciplina disciplina) throws ExcecaoPersistencia;
+    public boolean update(Disciplina disciplina) throws ExcecaoPersistencia;
     public Disciplina delete(Long cod_Disciplina) throws ExcecaoPersistencia;
     public Disciplina getDisciplinaById(Long cod_Disciplina) throws ExcecaoPersistencia;
     public List<Disciplina> listAll() throws ExcecaoPersistencia;

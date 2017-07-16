@@ -16,7 +16,7 @@ import model.exception.ExcecaoPersistencia;
  * @author andro
  */
 public interface ManterQuestaoFechada {
-    public void cadastrarQuestaoFechada(List<QuestaoFechada> questoesFechada) throws ExcecaoPersistencia, ExcecaoNegocio;
+    public Long cadastrarQuestaoFechada(List<QuestaoFechada> questoesFechada) throws ExcecaoPersistencia, ExcecaoNegocio;
     public List<QuestaoFechada> deletarQuestaoFechada(Long cod_Questao) throws ExcecaoPersistencia;
     public List<QuestaoFechada> getAll(Long cod_Questao) throws ExcecaoPersistencia;
     public List<QuestaoFechada> getAll() throws ExcecaoPersistencia;
