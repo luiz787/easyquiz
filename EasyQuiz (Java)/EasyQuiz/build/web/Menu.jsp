@@ -71,7 +71,9 @@
       <li><a class="waves-effect waves-light grey darken-2 btn" href="/EasyQuiz/servletweb?acao=ListarPerfil">&ensp;Perfil&ensp;</a></li>
         <% if(user.getPerfil().getId() == 2) { %>
 
-      <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Questões</a></li>
+
+      <li><a class="waves-effect waves-light grey darken-2 btn" href="/EasyQuiz/servletweb?acao=GerenciarQuestoes">Questões</a></li>
+
        <% } %>
       <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Sair</a></li>
                     <% } %>

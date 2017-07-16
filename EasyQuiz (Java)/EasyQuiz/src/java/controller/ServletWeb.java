@@ -35,6 +35,8 @@ public class ServletWeb extends HttpServlet {
             jsp = ListarPerfil.execute(request);
         else if(acao.equals("AlterarUsuario"))
             jsp = AlterarUsuario.execute(request);
+        else if (acao.equals("GerenciarQuestoes"))
+            jsp = GerenciarQuestoes.execute(request);
         
         if(!(jsp.equals("notFoward"))) {
             RequestDispatcher rd = request.getRequestDispatcher(jsp);
