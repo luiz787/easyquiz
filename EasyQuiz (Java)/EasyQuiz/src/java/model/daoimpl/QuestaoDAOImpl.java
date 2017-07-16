@@ -65,7 +65,7 @@ public class QuestaoDAOImpl implements QuestaoDAO {
             pstmt.setString(4, String.valueOf(questao.getIdTipo()));
             pstmt.setString(5, questao.getTxtEnunciado());
             if(questao.getImgEnunciado()!=null) {
-                pstmt.setBlob(6, (Blob) questao.getImgEnunciado());
+                //pstmt.setBlob(6,  questao.getImgEnunciado());
             } else {
                 pstmt.setNull(6, java.sql.Types.NULL);
             }
@@ -122,7 +122,7 @@ public class QuestaoDAOImpl implements QuestaoDAO {
             pstmt.setString(4, String.valueOf(questao.getIdTipo()));
             pstmt.setString(5, questao.getTxtEnunciado());
             if(questao.getImgEnunciado()!=null) {
-                pstmt.setBlob(6, (Blob) questao.getImgEnunciado());
+                //pstmt.setBlob(6, (Blob) questao.getImgEnunciado());
             } else {
                 pstmt.setNull(6, java.sql.Types.NULL);
             }
@@ -197,7 +197,7 @@ public class QuestaoDAOImpl implements QuestaoDAO {
                 questao.setModulo(modulo);
                 questao.setIdTipo(rs.getString("cod_tipo").charAt(0));
                 questao.setTxtEnunciado(rs.getString("txt_enunciado"));
-                questao.setImgEnunciado((BufferedImage) rs.getBlob("img_enunciado"));
+                questao.setImgEnunciado(rs.getBytes("img_enunciado"));
                 questao.setSeqQuestaoCorreta(rs.getLong("seq_questao_correta"));
                 questao.setTxtResposta(rs.getString("txt_resposta_aberta"));
             }
@@ -239,7 +239,7 @@ public class QuestaoDAOImpl implements QuestaoDAO {
                     questao.setModulo(modulo);
                     questao.setIdTipo(rs.getString("cod_tipo").charAt(0));
                     questao.setTxtEnunciado(rs.getString("txt_enunciado"));
-                    questao.setImgEnunciado((BufferedImage) rs.getBlob("img_enunciado"));
+                    questao.setImgEnunciado(rs.getBytes("img_enunciado"));
                     questao.setSeqQuestaoCorreta(rs.getLong("seq_questao_correta"));
                     questao.setTxtResposta(rs.getString("txt_resposta_aberta"));
                     listAll.add(questao);
@@ -283,7 +283,7 @@ public class QuestaoDAOImpl implements QuestaoDAO {
                     questao.setModulo(modulo);
                     questao.setIdTipo(rs.getString("cod_tipo").charAt(0));
                     questao.setTxtEnunciado(rs.getString("txt_enunciado"));
-                    questao.setImgEnunciado((BufferedImage) rs.getBlob("img_enunciado"));
+                    questao.setImgEnunciado(rs.getBytes("img_enunciado"));
                     questao.setSeqQuestaoCorreta(rs.getLong("seq_questao_correta"));
                     questao.setTxtResposta(rs.getString("txt_resposta_aberta"));
                     listAll.add(questao);

@@ -17,7 +17,6 @@ CREATE INDEX IX_Relationship1 ON Usuario (cod_perfil)
 ALTER TABLE Usuario ADD UNIQUE txt_email (txt_email)
 ;
 
-
 CREATE TABLE Perfil
 (
   cod_perfil Bigint NOT NULL,
@@ -28,7 +27,6 @@ CREATE TABLE Perfil
 ALTER TABLE Perfil ADD  PRIMARY KEY (cod_perfil)
 ;
 
-
 CREATE TABLE Questao
 (
   cod_questao Bigint UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -37,7 +35,7 @@ CREATE TABLE Questao
   cod_modulo Bigint UNSIGNED NOT NULL,
   cod_tipo Char(1) NOT NULL,
   txt_enunciado Text NOT NULL,
-  img_enunciado Blob,
+  img_enunciado Longblob,
   seq_questao_correta Bigint,
   txt_resposta_aberta Text,
   PRIMARY KEY (cod_questao)
@@ -50,7 +48,6 @@ CREATE INDEX IX_Relationship6 ON Questao (cod_dificuldade)
 CREATE INDEX IX_Relationship7 ON Questao (cod_modulo,cod_disciplina)
 ;
 
-
 CREATE TABLE Questao_Fechada
 (
   cod_questao Bigint UNSIGNED NOT NULL,
@@ -62,7 +59,6 @@ CREATE TABLE Questao_Fechada
 ALTER TABLE Questao_Fechada ADD  PRIMARY KEY (cod_questao,seq_alternativa)
 ;
 
-
 CREATE TABLE Disciplina
 (
   cod_disciplina Bigint UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -70,7 +66,6 @@ CREATE TABLE Disciplina
   PRIMARY KEY (cod_disciplina)
 )
 ;
-
 
 CREATE TABLE Modulo
 (
@@ -80,7 +75,6 @@ CREATE TABLE Modulo
   PRIMARY KEY (cod_modulo,cod_disciplina)
 )
 ;
-
 
 CREATE TABLE Dificuldade
 (
@@ -92,11 +86,11 @@ CREATE TABLE Dificuldade
 ALTER TABLE Dificuldade ADD  PRIMARY KEY (cod_dificuldade)
 ;
 
-
 CREATE TABLE Post
 (
   cod_post Bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   cod_questao Bigint UNSIGNED NOT NULL,
+  cod_usuario Bigint UNSIGNED NOT NULL,
   txt_conteudo Text NOT NULL,
   dat_criacao Datetime NOT NULL,
   PRIMARY KEY (cod_post)
@@ -106,6 +100,8 @@ CREATE TABLE Post
 CREATE INDEX IX_Relationship8 ON Post (cod_questao)
 ;
 
+CREATE INDEX IX_Relationship17 ON Post (cod_usuario)
+;
 
 CREATE TABLE Sessao
 (
@@ -118,7 +114,6 @@ CREATE TABLE Sessao
 ALTER TABLE Sessao ADD  PRIMARY KEY (dat_inicio,cod_usuario)
 ;
 
-
 CREATE TABLE QuestaoFechadaResposta
 (
   dat_inicio Datetime NOT NULL,
@@ -130,7 +125,6 @@ CREATE TABLE QuestaoFechadaResposta
 
 ALTER TABLE QuestaoFechadaResposta ADD  PRIMARY KEY (dat_inicio,cod_usuario,cod_questao)
 ;
-
 
 ALTER TABLE Usuario ADD CONSTRAINT Relationship1 FOREIGN KEY (cod_perfil) REFERENCES Perfil (cod_perfil) ON DELETE RESTRICT ON UPDATE RESTRICT
 ;
@@ -157,5 +151,8 @@ ALTER TABLE QuestaoFechadaResposta ADD CONSTRAINT Relationship15 FOREIGN KEY (da
 ;
 
 ALTER TABLE QuestaoFechadaResposta ADD CONSTRAINT Relationship16 FOREIGN KEY (cod_questao) REFERENCES Questao (cod_questao) ON DELETE RESTRICT ON UPDATE RESTRICT
+;
+
+ALTER TABLE Post ADD CONSTRAINT Relationship17 FOREIGN KEY (cod_usuario) REFERENCES Usuario (cod_usuario) ON DELETE RESTRICT ON UPDATE RESTRICT
 ;
 
