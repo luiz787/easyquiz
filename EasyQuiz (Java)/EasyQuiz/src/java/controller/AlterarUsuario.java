@@ -30,17 +30,14 @@ public class AlterarUsuario {
                 Escolaridade escolaridade = manterEscolaridade.getEscolaridadeById(idEscolaridade);
                 
                 ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
-                Usuario usuario = manterUsuario.getUsuarioById(cod_Usuario);
                 
+                Usuario usuario = new Usuario();
+                usuario.setId(cod_Usuario);
                 usuario.setNome(nome);
                 usuario.setEmail(email);
                 usuario.setDataNascimento(data);
                 usuario.setEscolaridade(escolaridade);
-                if(!(senha.isEmpty())) {
-                    usuario.setSenha(senha);
-                } else {
-                    usuario.setSenha(null);
-                }
+                usuario.setSenha(senha);
                 
                 
                 

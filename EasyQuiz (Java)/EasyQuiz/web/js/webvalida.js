@@ -142,9 +142,9 @@ function validarCamposPerfil(form) {
         alert("Favor, preencha o campo data!");
         form.dataNascimento.focus();
         return false;
-    }   else if (senha !="" && senha.lenght<8) {
-        alert("Favor, preencha o campo senha com no mínimo 8 caracteres!");
-        form.dataNascimento.focus();
+    }   else if (senha == "") {
+        alert("Favor, preencha o campo senha!");
+        form.senha.focus();
         return false;
     }  else if (senha != "" && senha!=confirmarSenha) {
         alert("Favor, digitar confirmacao de senha corretamente!");
@@ -155,7 +155,7 @@ function validarCamposPerfil(form) {
         if (table == "Usuario") {
             if (form.acao.value == "alterar")
                 caminhourl = "/EasyQuiz/servletweb?acao=AlterarUsuario"; 
-            alert(dataNascimento)
+            alert(dataNascimento);
             form.action = caminhourl;
             form.submit();
         }
