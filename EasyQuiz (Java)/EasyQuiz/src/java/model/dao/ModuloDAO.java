@@ -14,8 +14,8 @@ import model.exception.ExcecaoPersistencia;
  * @author Aluno
  */
 public interface ModuloDAO {
-    public void insert(Modulo modulo) throws ExcecaoPersistencia;
-    public void update(Modulo modulo) throws ExcecaoPersistencia;
+    public Long insert(Modulo modulo) throws ExcecaoPersistencia;
+    public boolean update(Modulo modulo) throws ExcecaoPersistencia;
     public Modulo delete(Long cod_Modulo) throws ExcecaoPersistencia;
     public Modulo getModuloById(Long cod_Modulo) throws ExcecaoPersistencia;
     public List<Modulo> listAll() throws ExcecaoPersistencia;

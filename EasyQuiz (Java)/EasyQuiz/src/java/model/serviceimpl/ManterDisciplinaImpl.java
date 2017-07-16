@@ -23,7 +23,7 @@ public class ManterDisciplinaImpl implements ManterDisciplina {
         this.disciplinaDAO = disciplinaDAO;
     }
     @Override
-    public void cadastrarDisciplina(Disciplina disciplina) throws ExcecaoPersistencia, ExcecaoNegocio {
+    public Long cadastrarDisciplina(Disciplina disciplina) throws ExcecaoPersistencia, ExcecaoNegocio {
         String errMsg = null;
         if (disciplina == null) {
             throw new ExcecaoNegocio("Disciplina não pode ser nula.");
@@ -35,11 +35,13 @@ public class ManterDisciplinaImpl implements ManterDisciplina {
         if (errMsg!=null){
             throw new ExcecaoNegocio(errMsg);
         }
-        disciplinaDAO.insert(disciplina);
+        
+        Long result = disciplinaDAO.insert(disciplina);
+        return result;
     }
 
     @Override
-    public void alterarDisciplina(Disciplina disciplina) throws ExcecaoPersistencia, ExcecaoNegocio {
+    public boolean alterarDisciplina(Disciplina disciplina) throws ExcecaoPersistencia, ExcecaoNegocio {
         String errMsg = null;
         if (disciplina == null){
             throw new ExcecaoNegocio("Disciplina não pode ser nula.");
@@ -51,7 +53,9 @@ public class ManterDisciplinaImpl implements ManterDisciplina {
         if (errMsg!=null){
             throw new ExcecaoNegocio(errMsg);
         }
-        disciplinaDAO.update(disciplina);
+        
+        boolean result = disciplinaDAO.update(disciplina);
+        return result;
     }
 
     @Override
@@ -59,7 +63,8 @@ public class ManterDisciplinaImpl implements ManterDisciplina {
         if (codDisciplina == null){
             throw new ExcecaoNegocio("Código não pode ser nulo.");
         }
-        return disciplinaDAO.delete(codDisciplina);
+        Disciplina result = disciplinaDAO.delete(codDisciplina);
+        return result;
     }
 
     @Override
@@ -67,11 +72,13 @@ public class ManterDisciplinaImpl implements ManterDisciplina {
         if (codDisciplina == null){
             throw new ExcecaoNegocio("Código não pode ser nulo.");
         }
-        return disciplinaDAO.getDisciplinaById(codDisciplina);
+        Disciplina result = disciplinaDAO.getDisciplinaById(codDisciplina);
+        return result;
     }
 
     @Override
     public List<Disciplina> getAll() throws ExcecaoPersistencia {
-        return disciplinaDAO.listAll();
+        List<Disciplina> result = disciplinaDAO.listAll();
+        return result;
     }
 }

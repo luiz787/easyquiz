@@ -10,8 +10,8 @@ import model.domain.Questao;
 import model.exception.ExcecaoPersistencia;
 
 public interface QuestaoDAO {
-    public void insert(Questao questao) throws ExcecaoPersistencia;
-    public void update(Questao questao) throws ExcecaoPersistencia;
+    public Long insert(Questao questao) throws ExcecaoPersistencia;
+    public boolean update(Questao questao) throws ExcecaoPersistencia;
     public Questao delete(Long cod_Questao) throws ExcecaoPersistencia;
     public Questao getQuestaoById(Long cod_Questao) throws ExcecaoPersistencia;
     public List<Questao> listAll() throws ExcecaoPersistencia;

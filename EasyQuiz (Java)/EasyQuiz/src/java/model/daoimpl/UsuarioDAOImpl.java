@@ -14,8 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.dao.EscolaridadeDAO;
 import model.dao.PerfilDAO;
 import model.dao.UsuarioDAO;
+import model.domain.Escolaridade;
 import model.domain.Perfil;
 import model.domain.Usuario;
 import model.exception.ExcecaoPersistencia;
@@ -36,7 +38,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     }
 
     @Override
-    synchronized public void insert(Usuario usuario) throws ExcecaoPersistencia {
+    synchronized public Long insert(Usuario usuario) throws ExcecaoPersistencia {
         try {
             if (usuario == null) {
                 throw new ExcecaoPersistencia("Entidade não pode ser nula.");
@@ -49,8 +51,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                     + "nom_usuario, "
                     + "dat_nascimento, "
                     + "txt_email, "
-                    + "txt_senha"
-                    + ") VALUES(?, ?, ?, ?, md5(?))";
+                    + "txt_senha, "
+                    + "cod_escolaridade"
+                    + ") VALUES(?, ?, ?, ?, md5(?), ?)";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setLong(1, usuario.getPerfil().getId());
@@ -58,17 +61,23 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             pstmt.setDate(3, usuario.getDataNascimento());
             pstmt.setString(4, usuario.getEmail());
             pstmt.setString(5, usuario.getSenha());
+            pstmt.setLong(6, usuario.getEscolaridade().getId());
+            
             pstmt.executeUpdate();
-            //ResultSet rs = pstmt.executeQuery();
-            /*
+            
+            ResultSet rs = pstmt.executeQuery("SELECT LAST_INSERT_ID() FROM usuario");
+            
+            Long id = null;
             if (rs.next()) {
-                Long cod_usuario = rs.getLong("cod_usuario");
-                usuario.setCod_Usuario(cod_usuario);
+                id = rs.getLong(1);
+                usuario.setId(id);
             }
-            */
-            //rs.close();
+            
+            rs.close();
             pstmt.close();
             connection.close();
+            
+            return id;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);
@@ -76,7 +85,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     }
 
     @Override
-    synchronized public void update(Usuario usuario) throws ExcecaoPersistencia {
+    synchronized public boolean update(Usuario usuario) throws ExcecaoPersistencia {
         try {
             
             Connection connection = JDBCManterConexao.getInstancia().getConexao();
@@ -86,7 +95,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                     + "nom_usuario=?, "
                     + "dat_nascimento=?, "
                     + "txt_email=?, "
-                    + "txt_senha = md5(?)"
+                    + "txt_senha = md5(?), "
+                    + "cod_escolaridade=? "
                     + " WHERE cod_usuario = ?;";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
@@ -96,11 +106,14 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             pstmt.setDate(2, usuario.getDataNascimento());
             pstmt.setString(3, usuario.getEmail());
             pstmt.setString(4, usuario.getSenha());
-            pstmt.setLong(5, usuario.getId());
+            pstmt.setLong(5, usuario.getEscolaridade().getId());
+            pstmt.setLong(6, usuario.getId());
             pstmt.executeUpdate();
 
             pstmt.close();
             connection.close();
+            
+            return true;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);
@@ -144,6 +157,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
             Usuario usuario = null;
             PerfilDAO perfilDAOImpl = PerfilDAOImpl.getInstance();
+            EscolaridadeDAO escolaridadeDAOImpl = EscolaridadeDAOImpl.getInstance();
             if (rs.next()) {
                 usuario = new Usuario();
                 usuario.setId(rs.getLong("cod_usuario"));
@@ -153,6 +167,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                 usuario.setDataNascimento(rs.getDate("dat_nascimento"));
                 usuario.setEmail(rs.getString("txt_email"));
                 usuario.setSenha(rs.getString("txt_senha"));
+                Escolaridade escolaridade = escolaridadeDAOImpl.getEscolaridadeById(rs.getLong("cod_escolaridade"));
+                usuario.setEscolaridade(escolaridade);
             }
 
             rs.close();
@@ -178,6 +194,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
             List<Usuario> listAll = new ArrayList<>();
             PerfilDAO perfilDAOImpl = PerfilDAOImpl.getInstance();
+            EscolaridadeDAO escolaridadeDAOImpl = EscolaridadeDAOImpl.getInstance();
             if (rs.next()) {
                 do {
                     Usuario usuario = new Usuario();
@@ -188,6 +205,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                     usuario.setDataNascimento(rs.getDate("dat_nascimento"));
                     usuario.setEmail(rs.getString("txt_email"));
                     usuario.setSenha(rs.getString("txt_senha"));
+                    Escolaridade escolaridade = escolaridadeDAOImpl.getEscolaridadeById(rs.getLong("cod_escolaridade"));
+                    usuario.setEscolaridade(escolaridade);
                     listAll.add(usuario);
                 } while (rs.next());
             }
@@ -217,6 +236,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
             Usuario usuario = null;
             PerfilDAO perfilDAOImpl = PerfilDAOImpl.getInstance();
+            EscolaridadeDAO escolaridadeDAOImpl = EscolaridadeDAOImpl.getInstance();
             if (rs.next()) {
                 usuario = new Usuario();
                 usuario.setId(rs.getLong("cod_usuario"));
@@ -226,6 +246,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
                 usuario.setDataNascimento(rs.getDate("dat_nascimento"));
                 usuario.setEmail(rs.getString("txt_email"));
                 usuario.setSenha(rs.getString("txt_senha"));
+                Escolaridade escolaridade = escolaridadeDAOImpl.getEscolaridadeById(rs.getLong("cod_escolaridade"));
+                usuario.setEscolaridade(escolaridade);
             }
 
             rs.close();

@@ -47,11 +47,6 @@ public class ManterUsuarioImpl implements ManterUsuario {
  
         if ((usuario.getDataNascimento() == null)) {
             errMsgList.add("A data de nascimento nao pode ser nula.");
-            //data de nascimento posterior a data atual.
-        }
-
-        if (usuario.getId() != null) {
-            errMsgList.add("Na criaçao de um novo usuario o ID deve ser nulo.");
         }
 
         if (!errMsgList.isEmpty()) {
@@ -63,13 +58,13 @@ public class ManterUsuarioImpl implements ManterUsuario {
         }
         
 
-        usuarioDAO.insert(usuario);
+        Long result = usuarioDAO.insert(usuario);
 
-        return usuario.getId();
+        return result;
     }
 
     @Override
-    public void alterarUsuario(Usuario usuario) throws ExcecaoPersistencia, ExcecaoNegocio {
+    public boolean alterarUsuario(Usuario usuario) throws ExcecaoPersistencia, ExcecaoNegocio {
         List<String> errMsgList = new ArrayList<>();
         if (usuario == null) {
             
@@ -106,7 +101,8 @@ public class ManterUsuarioImpl implements ManterUsuario {
             throw new ExcecaoNegocio(errMsg);
         }
 
-        usuarioDAO.update(usuario);
+        boolean result = usuarioDAO.update(usuario);
+        return result;
     }
 
     @Override
@@ -114,7 +110,8 @@ public class ManterUsuarioImpl implements ManterUsuario {
         if (id == null){
             throw new ExcecaoPersistencia("ID não pode ser nulo.");
         }
-        return usuarioDAO.delete(id);
+        Usuario result = usuarioDAO.delete(id);
+        return result;
     }
 
     @Override
@@ -122,7 +119,8 @@ public class ManterUsuarioImpl implements ManterUsuario {
         if (id == null){
             throw new ExcecaoPersistencia("ID não pode ser nulo.");
         }
-        return usuarioDAO.getUsuarioById(id);
+        Usuario result = usuarioDAO.getUsuarioById(id);
+        return result;
     }
 
     @Override
@@ -136,6 +134,7 @@ public class ManterUsuarioImpl implements ManterUsuario {
         if (email==null || senha==null){
             throw new ExcecaoNegocio("O valor não pode ser nulo");
         }
-        return usuarioDAO.getUsuarioByEmailSenha(email, senha);
+        Usuario result = usuarioDAO.getUsuarioByEmailSenha(email, senha);
+        return result;
     }
 }

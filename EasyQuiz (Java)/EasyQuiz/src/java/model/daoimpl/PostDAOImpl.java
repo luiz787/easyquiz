@@ -43,7 +43,7 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    synchronized public void insert(Post post) throws ExcecaoPersistencia {
+    synchronized public Long insert(Post post) throws ExcecaoPersistencia {
         try {
             if (post == null) {
                 throw new ExcecaoPersistencia("Entidade não pode ser nula.");
@@ -51,23 +51,29 @@ public class PostDAOImpl implements PostDAO {
 
             Connection connection = JDBCManterConexao.getInstancia().getConexao();
 
-            String sql = "INSERT INTO post (cod_questao, txt_conteudo, dat_criacao, cod_usuario) VALUES(?, ?, ?) RETURNING cod_post";
+            String sql = "INSERT INTO post (cod_questao, txt_conteudo, dat_criacao, cod_usuario) VALUES(?, ?, ?, ?)";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setLong(1, post.getQuestao().getId());
             pstmt.setString(2, post.getTxtConteudo());
             pstmt.setTimestamp(3, java.sql.Timestamp.from(post.getDatCriacao()));
             pstmt.setLong(4, post.getAutor().getId());
-            ResultSet rs = pstmt.executeQuery();
-
+            
+            pstmt.executeUpdate();
+            
+            ResultSet rs = pstmt.executeQuery("SELECT LAST_INSERT_ID() FROM post");
+            
+            Long id = null;
             if (rs.next()) {
-                Long cod_post = rs.getLong("cod_post");
-                post.setCodigo(cod_post);
+                id = rs.getLong(1);
+                post.setCodigo(id);
             }
-
+            
             rs.close();
             pstmt.close();
             connection.close();
+            
+            return id;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);

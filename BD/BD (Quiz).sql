@@ -2,16 +2,19 @@ CREATE TABLE Usuario
 (
   cod_usuario Bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   cod_perfil Bigint NOT NULL,
+  cod_escolaridade Bigint NOT NULL,
   nom_usuario Char(40) NOT NULL,
   dat_nascimento Date NOT NULL,
   txt_email Char(40) NOT NULL,
   txt_senha Char(100) NOT NULL,
-  txt_escolaridade Char(20) NOT NULL,
   PRIMARY KEY (cod_usuario)
 )
 ;
 
 CREATE INDEX IX_Relationship1 ON Usuario (cod_perfil)
+;
+
+CREATE INDEX IX_Relationship18 ON Usuario (cod_escolaridade)
 ;
 
 ALTER TABLE Usuario ADD UNIQUE txt_email (txt_email)
@@ -126,6 +129,16 @@ CREATE TABLE QuestaoFechadaResposta
 ALTER TABLE QuestaoFechadaResposta ADD  PRIMARY KEY (dat_inicio,cod_usuario,cod_questao)
 ;
 
+CREATE TABLE Escolaridade
+(
+  cod_escolaridade Bigint NOT NULL,
+  nom_escolaridade Char(40) NOT NULL
+)
+;
+
+ALTER TABLE Escolaridade ADD  PRIMARY KEY (cod_escolaridade)
+;
+
 ALTER TABLE Usuario ADD CONSTRAINT Relationship1 FOREIGN KEY (cod_perfil) REFERENCES Perfil (cod_perfil) ON DELETE RESTRICT ON UPDATE RESTRICT
 ;
 
@@ -154,5 +167,8 @@ ALTER TABLE QuestaoFechadaResposta ADD CONSTRAINT Relationship16 FOREIGN KEY (co
 ;
 
 ALTER TABLE Post ADD CONSTRAINT Relationship17 FOREIGN KEY (cod_usuario) REFERENCES Usuario (cod_usuario) ON DELETE RESTRICT ON UPDATE RESTRICT
+;
+
+ALTER TABLE Usuario ADD CONSTRAINT Relationship18 FOREIGN KEY (cod_escolaridade) REFERENCES Escolaridade (cod_escolaridade) ON DELETE RESTRICT ON UPDATE RESTRICT
 ;
 

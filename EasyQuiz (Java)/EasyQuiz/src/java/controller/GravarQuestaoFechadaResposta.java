@@ -33,12 +33,6 @@ public class GravarQuestaoFechadaResposta {
     public static String execute(HttpServletRequest request) {
         String jsp = "";
         try {
-            /*
-            System.out.println("questao "+request.getParameter("questao"));
-            System.out.println("resposta "+request.getParameter("resposta"));
-            System.out.println("usuario "+request.getSession().getAttribute("cod_Usuario"));
-            System.out.println("dat_inicio "+request.getSession().getAttribute("dat_Inicio"));
-            */
             String questaoStr = request.getParameter("questao");
             Long cod_Questao = Long.parseLong(questaoStr);
             ManterQuestao manterQuestao = new ManterQuestaoImpl(QuestaoDAOImpl.getInstance());
@@ -66,12 +60,11 @@ public class GravarQuestaoFechadaResposta {
                 
                 if(questaoFechadaRespostaGravada!=null) {
                     if(questaoFechadaRespostaGravada.getQuestao().getId()==cod_Questao) {
-                        System.out.println("IGUAL!"+questaoFechadaRespostaGravada.getQuestao().getId());
-                        manterQuestaoFechadaResposta.alterarQuestaoFechadaResposta(questaoFechadaResposta);
+                        boolean result = manterQuestaoFechadaResposta.alterarQuestaoFechadaResposta(questaoFechadaResposta);
                     }
                 } else {
                 
-                    manterQuestaoFechadaResposta.cadastrarQuestaoFechadaResposta(questaoFechadaResposta);
+                    boolean result = manterQuestaoFechadaResposta.cadastrarQuestaoFechadaResposta(questaoFechadaResposta);
                 }
             }
             

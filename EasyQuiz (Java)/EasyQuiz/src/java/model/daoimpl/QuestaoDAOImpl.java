@@ -39,7 +39,7 @@ public class QuestaoDAOImpl implements QuestaoDAO {
     }
 
     @Override
-    synchronized public void insert(Questao questao) throws ExcecaoPersistencia {
+    synchronized public Long insert(Questao questao) throws ExcecaoPersistencia {
         try {
             if (questao == null) {
                 throw new ExcecaoPersistencia("Entidade não pode ser nula.");
@@ -56,7 +56,7 @@ public class QuestaoDAOImpl implements QuestaoDAO {
                     + "img_enunciado, "
                     + "seq_questao_correta, "
                     + "txt_resposta_aberta"
-                    + ") VALUES(?, ?, ?, ?, ?, ?, ?, ?) RETURNING cod_questao";
+                    + ") VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setLong(1, questao.getDificuldade().getId());
@@ -81,16 +81,21 @@ public class QuestaoDAOImpl implements QuestaoDAO {
             }
             
             
-            ResultSet rs = pstmt.executeQuery();
-
+            pstmt.executeUpdate();
+            
+            ResultSet rs = pstmt.executeQuery("SELECT LAST_INSERT_ID() FROM questao");
+            
+            Long id = null;
             if (rs.next()) {
-                Long cod_questao = rs.getLong("cod_questao");
-                questao.setId(cod_questao);
+                id = rs.getLong(1);
+                questao.setId(id);
             }
-
+            
             rs.close();
             pstmt.close();
             connection.close();
+            
+            return id;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);
@@ -98,7 +103,7 @@ public class QuestaoDAOImpl implements QuestaoDAO {
     }
 
     @Override
-    synchronized public void update(Questao questao) throws ExcecaoPersistencia {
+    synchronized public boolean update(Questao questao) throws ExcecaoPersistencia {
         try {
             
             Connection connection = JDBCManterConexao.getInstancia().getConexao();
@@ -141,6 +146,8 @@ public class QuestaoDAOImpl implements QuestaoDAO {
 
             pstmt.close();
             connection.close();
+            
+            return true;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);

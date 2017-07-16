@@ -16,8 +16,8 @@ import model.exception.ExcecaoPersistencia;
  * @author aluno
  */
 public interface ManterSessao {
-    public void cadastrarSessao(Sessao sessao) throws ExcecaoPersistencia, ExcecaoNegocio;
-    public void alterarSessao(Sessao sessao) throws ExcecaoPersistencia, ExcecaoNegocio;
+    public boolean cadastrarSessao(Sessao sessao) throws ExcecaoPersistencia, ExcecaoNegocio;
+    public boolean alterarSessao(Sessao sessao) throws ExcecaoPersistencia, ExcecaoNegocio;
     public Sessao getSessaoByUsuarioData(Long cod_Usuario, Instant dat_Inicio) throws ExcecaoPersistencia;
     public List<Sessao> getSessaoByUsuario(Long cod_Usuario) throws ExcecaoPersistencia;
     public List<Sessao> getAll() throws ExcecaoPersistencia;

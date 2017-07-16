@@ -39,7 +39,7 @@ public class QuestaoFechadaDAOImpl implements QuestaoFechadaDAO {
     }
 
     @Override
-    synchronized public void insert(List<QuestaoFechada> questaoFechada) throws ExcecaoPersistencia {
+    synchronized public Long insert(List<QuestaoFechada> questaoFechada) throws ExcecaoPersistencia {
         try {
             if (questaoFechada.isEmpty() || questaoFechada==null) {
                 throw new ExcecaoPersistencia("Entidade não pode ser vazia ou nula.");
@@ -54,9 +54,21 @@ public class QuestaoFechadaDAOImpl implements QuestaoFechadaDAO {
                 pstmt.setLong(1, questaoFechada.get(i).getQuestao().getId());
                 pstmt.setLong(2, questaoFechada.get(i).getSeqAlternativa());
                 pstmt.setString(3, questaoFechada.get(i).getTxtAlternativa());
+                
+                pstmt.executeUpdate();
             }
+            ResultSet rs = pstmt.executeQuery("SELECT LAST_INSERT_ID() FROM questao_fechada");
+
+            Long idQuestao = null;
+            if (rs.next()) {
+                idQuestao = rs.getLong(1);
+            }
+
+            rs.close();
             pstmt.close();
             connection.close();
+
+            return idQuestao;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);

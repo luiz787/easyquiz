@@ -38,7 +38,7 @@ public class DisciplinaDAOImpl implements DisciplinaDAO{
     }
 
     @Override
-    synchronized public void insert(Disciplina disciplina) throws ExcecaoPersistencia {
+    synchronized public Long insert(Disciplina disciplina) throws ExcecaoPersistencia {
         try {
             if (disciplina == null) {
                 throw new ExcecaoPersistencia("Entidade não pode ser nula.");
@@ -46,21 +46,26 @@ public class DisciplinaDAOImpl implements DisciplinaDAO{
 
             Connection connection = JDBCManterConexao.getInstancia().getConexao();
 
-            String sql = "INSERT INTO disciplina (nom_disciplina) VALUES(?) RETURNING cod_disciplina";
+            String sql = "INSERT INTO disciplina (nom_disciplina) VALUES(?)";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, disciplina.getNome());
 
-            ResultSet rs = pstmt.executeQuery();
-
+            pstmt.executeUpdate();
+            
+            ResultSet rs = pstmt.executeQuery("SELECT LAST_INSERT_ID() FROM disciplina");
+            
+            Long id = null;
             if (rs.next()) {
-                Long cod_disciplina = rs.getLong("cod_disciplina");
-                disciplina.setId(cod_disciplina);
+                id = rs.getLong(1);
+                disciplina.setId(id);
             }
-
+            
             rs.close();
             pstmt.close();
             connection.close();
+            
+            return id;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);
@@ -68,7 +73,7 @@ public class DisciplinaDAOImpl implements DisciplinaDAO{
     }
 
     @Override
-    synchronized public void update(Disciplina disciplina) throws ExcecaoPersistencia {
+    synchronized public boolean update(Disciplina disciplina) throws ExcecaoPersistencia {
         try {
             
             Connection connection = JDBCManterConexao.getInstancia().getConexao();
@@ -85,6 +90,8 @@ public class DisciplinaDAOImpl implements DisciplinaDAO{
 
             pstmt.close();
             connection.close();
+            
+            return true;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);

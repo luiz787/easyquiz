@@ -27,11 +27,13 @@ public class ManterPerfilImpl implements ManterPerfil {
         if (codPerfil==null){
             throw new ExcecaoNegocio("Código não pode ser nulo.");
         }
-        return perfilDAO.getPerfilById(codPerfil);
+        Perfil result = perfilDAO.getPerfilById(codPerfil);
+        return result;
     }
 
     @Override
     public List<Perfil> getAll() throws ExcecaoPersistencia {
-        return perfilDAO.listAll();
+        List<Perfil> result = perfilDAO.listAll();
+        return result;
     }
 }

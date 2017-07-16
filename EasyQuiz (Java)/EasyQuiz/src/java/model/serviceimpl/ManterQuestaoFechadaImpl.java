@@ -25,8 +25,9 @@ public class ManterQuestaoFechadaImpl implements ManterQuestaoFechada {
     }
 
     @Override
-    public void cadastrarQuestaoFechada(List<QuestaoFechada> questoesFechada) throws ExcecaoPersistencia, ExcecaoNegocio {
-        questaoFechadaDAO.insert(questoesFechada);
+    public Long cadastrarQuestaoFechada(List<QuestaoFechada> questoesFechada) throws ExcecaoPersistencia, ExcecaoNegocio {
+        Long result = questaoFechadaDAO.insert(questoesFechada);
+        return result;
     }
 
     @Override

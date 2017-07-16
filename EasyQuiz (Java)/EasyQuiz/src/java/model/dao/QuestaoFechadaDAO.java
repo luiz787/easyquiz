@@ -14,7 +14,7 @@ import model.exception.ExcecaoPersistencia;
  * @author Aluno
  */
 public interface QuestaoFechadaDAO {
-    public void insert(List<QuestaoFechada> questoesFechada) throws ExcecaoPersistencia;
+    public Long insert(List<QuestaoFechada> questoesFechada) throws ExcecaoPersistencia;
     public List<QuestaoFechada> delete(Long cod_Questao) throws ExcecaoPersistencia;
     public List<QuestaoFechada> listAll(Long cod_Questao) throws ExcecaoPersistencia;
     public List<QuestaoFechada> listAll() throws ExcecaoPersistencia;

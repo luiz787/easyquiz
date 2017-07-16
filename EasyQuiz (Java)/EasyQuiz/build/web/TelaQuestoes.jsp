@@ -21,23 +21,6 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%
-    /*
-    ManterPerfil manterPerfil = new ManterPerfilImpl(PerfilDAOImpl.getInstance());
-    Perfil perfil = manterPerfil.getPerfilById(new Long(2));
-    ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
-    Usuario usuario = new Usuario();
-    usuario.setDat_Nascimento(java.sql.Date.valueOf("2017-07-09"));
-    usuario.setNom_Usuario("Victor Gabriel");
-    usuario.setPerfil(perfil);
-    usuario.setTxt_Email("andromenus@gmail.com");
-    usuario.setTxt_Senha("123");
-    manterUsuario.cadastrarUsuario(usuario);
-    */
-    /*
-    if(request.getSession().getAttribute("cod_Usuario")==null) {
-        Login.execute(request);
-    }
-    */
     int logado = Login.validarSessao(request, response);
     int contadorRespostaQuestao = (Integer) request.getSession().getAttribute("contadorRespostaQuestao");
 %>
@@ -88,7 +71,6 @@
             maxQuestao=((numeroPagina*5)+5);
             showBotaoProximaPagina=true;
         }
-        
         for(int i=(5*numeroPagina); i<maxQuestao; i++) {
             Questao questao = listQuestao.get(i);
             Long cod_Questao = questao.getId();

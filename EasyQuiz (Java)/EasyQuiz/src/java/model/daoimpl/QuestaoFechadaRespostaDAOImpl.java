@@ -41,7 +41,7 @@ public class QuestaoFechadaRespostaDAOImpl implements QuestaoFechadaRespostaDAO 
     }
     
     @Override
-    synchronized public void insert(QuestaoFechadaResposta questaoFechadaResposta) throws ExcecaoPersistencia {
+    synchronized public boolean insert(QuestaoFechadaResposta questaoFechadaResposta) throws ExcecaoPersistencia {
         try {
             if (questaoFechadaResposta == null) {
                 throw new ExcecaoPersistencia("Entidade não pode ser nula.");
@@ -60,6 +60,8 @@ public class QuestaoFechadaRespostaDAOImpl implements QuestaoFechadaRespostaDAO 
             
             pstmt.close();
             connection.close();
+            
+            return true;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);
@@ -67,7 +69,7 @@ public class QuestaoFechadaRespostaDAOImpl implements QuestaoFechadaRespostaDAO 
     }
     
     @Override
-    synchronized public void update(QuestaoFechadaResposta questaoFechadaResposta) throws ExcecaoPersistencia {
+    synchronized public boolean update(QuestaoFechadaResposta questaoFechadaResposta) throws ExcecaoPersistencia {
         try {
             
             Connection connection = JDBCManterConexao.getInstancia().getConexao();
@@ -86,6 +88,8 @@ public class QuestaoFechadaRespostaDAOImpl implements QuestaoFechadaRespostaDAO 
 
             pstmt.close();
             connection.close();
+            
+            return true;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);
