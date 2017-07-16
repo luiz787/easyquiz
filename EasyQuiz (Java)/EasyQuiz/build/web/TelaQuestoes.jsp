@@ -137,9 +137,15 @@
                                 <span id='<%="modulo"+i%>' style=""><b>Módulo: </b><%= questao.getModulo().getNome() %></span>
                             </div>
                         </div>
+                        <%
+                            if(questao.getImgEnunciado()!=null) {
+                        %>
                         <div class="card-image">
-                            <img id='<%="imagem"+i%>' class="responsive-img" src="img/Geladeira.png">
+                            <img id='<%="imagem"+i%>' class="responsive-img" src="/EasyQuiz/servletweb?acao=CarregaImagem&questao=<%= questao.getId()%>">
                         </div>
+                        <%
+                            }
+                        %>
                         <div class="card-content">
                             <div id='<%="enunciado"+i%>'>
                                 <p><b><%= questao.getTxtEnunciado() %></b></p>
@@ -228,11 +234,15 @@
                                 <span id='<%="modulo"+i%>' style=""><b>Módulo: </b><%= questao.getModulo().getNome() %></span>
                             </div>
                         </div>
-                        <!--
+                        <%
+                            if(questao.getImgEnunciado()!=null) {
+                        %>
                         <div class="card-image">
-                            <img id="imagem2" class="responsive-img" src="">
+                            <img id='<%="imagem"+i%>' class="responsive-img" src="/EasyQuiz/servletweb?acao=CarregaImagem&questao=<%= questao.getId()%>">
                         </div>
-                        -->
+                        <%
+                            }
+                        %>
                         <div class="card-content">
                             <div id='<%="enunciado"+i%>'>
                                 <p><b><%= questao.getTxtEnunciado() %></b></p>

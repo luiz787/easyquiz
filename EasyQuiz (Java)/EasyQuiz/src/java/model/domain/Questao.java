@@ -19,7 +19,7 @@ public class Questao { //serializable?
     private Modulo modulo;
     private char idTipo;
     private String txtEnunciado;
-    private BufferedImage imgEnunciado;
+    private byte[] imgEnunciado;
     private Long seqQuestaoCorreta;
     private String txtResposta;
 
@@ -72,11 +72,11 @@ public class Questao { //serializable?
         this.txtEnunciado = txtEnunciado;
     }
 
-    public BufferedImage getImgEnunciado() {
+    public byte[] getImgEnunciado() {
         return imgEnunciado;
     }
 
-    public void setImgEnunciado(BufferedImage imgEnunciado) {
+    public void setImgEnunciado(byte[] imgEnunciado) {
         this.imgEnunciado = imgEnunciado;
     }
 
