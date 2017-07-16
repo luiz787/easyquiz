@@ -1,3 +1,10 @@
+<%@page import="model.domain.Escolaridade"%>
+<%@page import="java.util.List"%>
+<%@page import="model.serviceimpl.ManterEscolaridadeImpl"%>
+<%@page import="model.service.ManterEscolaridade"%>
+<%@page import="model.service.ManterEscolaridade"%>
+<%@page import="model.daoimpl.EscolaridadeDAOImpl"%>
+<%@page import="model.daoimpl.EscolaridadeDAOImpl"%>
 <%@page import="model.domain.Usuario"%>
 <%@page import="model.serviceimpl.ManterUsuarioImpl"%>
 <%@page import="model.service.ManterUsuario"%>
@@ -7,11 +14,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     int logado = Login.validarSessao(request, response);
+    Usuario usuario = null;
+    List<Escolaridade> listEscolaridade = null;
     if(logado==1) {
         Long cod_Usuario = (Long) request.getSession().getAttribute("cod_Usuario");
         ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
-        Usuario usuario = manterUsuario.getUsuarioById(cod_Usuario);
+        usuario = manterUsuario.getUsuarioById(cod_Usuario);
         
+        ManterEscolaridade manterEscolaridade = new ManterEscolaridadeImpl(EscolaridadeDAOImpl.getInstance());
+        listEscolaridade = manterEscolaridade.getAll();
     }
 %>
 <!DOCTYPE html>
@@ -39,16 +50,19 @@
 
         <H4 style="color: #47525E; padding-left: 80px; display: inline;">O que deseja alterar </H4> <H4 style="color: #C55353; display: inline;">Usuário?</H4>
         <div class="container">
-            <form class="col s12">
+            <form class="col s12" method="post" name="formPerfil">
+                <input type='hidden' name='table' value='Usuario'>
+                <input type='hidden' name='acao' value='alterar'>
+                
                 <div class="input-field col s6">
                     <i class="material-icons prefix">account_circle</i>
-                    <input id="nome" type="text" class="validate">
+                    <input name="nome" type="text" class="validate" value="<%= usuario.getNome() %>">
                     <label for="nome">Nome completo</label>
                 </div>
 
                 <div class="input-field col s6">
                     <i class="material-icons prefix">email</i>
-                    <input id="email" type="email" class="validate">
+                    <input name="email" type="email" class="validate" value="<%= usuario.getEmail() %>">
                     <label for="email">E-mail</label>
                 </div>
 
@@ -57,36 +71,40 @@
                 <label for="escolhe_data">Data de nascimento:</label>
                 <div class="input-field col s6">
                     <i class="material-icons prefix">perm_contact_calendar</i>
-                    <input id="escolhe_data" type="date" class="validate">
+                    <input name="dataNascimento" type="date" class="validate" value="<%= usuario.getDataNascimento() %>">
                 </div>
-
+                
                 <label for="escolaridade">Escolaridade:</label>
+                <input type='hidden' name="escolaridadeInput" value=''>
                 <div class="input-field col s6">
                     <i class="material-icons prefix">class</i>
                     <select id="escolaridade">
-                        <option value="" selected>Escolaridade</option>
-                        <option value="1">Analfabeto</option>
-                        <option value="2">Fundamental incompleto</option>
-                        <option value="3">Fundamental completo</option>
-                        <option value="4">Médio incompleto</option>
-                        <option value="5">Médio completo</option>
-                        <option value="6">Superior incompleto</option>
-                        <option value="7">Superior completo</option>
-                        <option value="8">Mestrado</option>
-                        <option value="9">Doutorado</option>
+                        <%
+                        for(int i=0; i<listEscolaridade.size(); i++) {
+                        %>
+                            <option value="<%= listEscolaridade.get(i).getId() %>"><%= listEscolaridade.get(i).getNome() %></option>
+                        <%
+                        }
+                        %>
                     </select>
                 </div>
+                
+                <script type="text/javascript">
+                    var select = document.getElementById("escolaridade");
+                    var escolaridade = select.options[<%= usuario.getEscolaridade().getId()-1 %>];
+                    escolaridade.selected = true;
+                </script>
 
                 <br>
 
                 <label for="senha">Senha:</label>
                 <div class="input-field col s6">
                     <i class="material-icons prefix">lock_outline</i>
-                    <input id="senha" type="password" class="validate">
+                    <input name="senha" type="password" class="validate">
                 </div>
                 <label for="senha">Confirmar senha:</label>
                 <div class="input-field col s6">
-                    <input type="password" id="confirma_senha">
+                    <input name="confirmarSenha" type="password">
                 </div>
 
                 <br>
@@ -94,9 +112,9 @@
                 <br>
 
                 <div align="right">
-                    <button class="btn waves-effect waves-light" type="button" onclick="window.open('../Tela de questões/TelaQuestoes.html');">Cancelar</button>
+                    <button class="btn waves-effect waves-light" type="button" onclick="paginaInicial(document.formPerfil)">Cancelar</button>
 
-                    <button class="btn waves-effect waves-light" type="submit" name="action" onclick="window.open('../Tela de questões/TelaQuestoes.html');">Confirmar
+                    <button class="btn waves-effect waves-light" type="button" name="action" onclick="validarCamposPerfil(document.formPerfil)">Confirmar
                         <i class="material-icons right">send</i>
                     </button>
                 </div>

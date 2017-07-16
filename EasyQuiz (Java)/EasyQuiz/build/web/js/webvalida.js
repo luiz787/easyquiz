@@ -75,6 +75,13 @@ function ContadorRespostaQuestao(form, resposta) {
     form.submit();
 }
 
+function paginaInicial(form) {
+    caminhourl = "/EasyQuiz/servletweb";
+    form.acao.value="PaginaInicial";
+    form.action = caminhourl;
+    form.submit();
+}
+
 function proximaPagina(form) {
     caminhourl = "/EasyQuiz/servletweb";
     form.acao.value="ProximaPagina";
@@ -107,5 +114,51 @@ function validarCamposLogin() {
         document.forms[0].action = caminhourl;
         window.document.forms[0].submit();
         return true;
+    }
+}
+
+function validarCamposPerfil(form) {
+    var nome = form.nome.value;
+    var email = form.email.value;
+    var dataNascimento = form.dataNascimento.value;
+    var senha = form.senha.value;
+    var confirmarSenha = form.confirmarSenha.value;
+    
+    var select = document.getElementById("escolaridade");
+    var selectedOption = select.options[select.selectedIndex].value;
+    var escolaridade = selectedOption;
+     
+    form.escolaridadeInput.value = escolaridade;
+    
+    if (nome == "") {
+        alert("Favor, preencha o campo nome!");
+        form.nome.focus();
+        return false;
+    }  else if (email == "") {
+        alert("Favor, preencha o campo email!");
+        form.email.focus();
+        return false;
+    }   else if (dataNascimento == "") {
+        alert("Favor, preencha o campo data!");
+        form.dataNascimento.focus();
+        return false;
+    }   else if (senha !="" && senha.lenght<8) {
+        alert("Favor, preencha o campo senha com no mínimo 8 caracteres!");
+        form.dataNascimento.focus();
+        return false;
+    }  else if (senha != "" && senha!=confirmarSenha) {
+        alert("Favor, digitar confirmacao de senha corretamente!");
+        form.confirmarSenha.focus();
+        return false;
+    } else {
+        var table = form.table.value;
+        if (table == "Usuario") {
+            if (form.acao.value == "alterar")
+                caminhourl = "/EasyQuiz/servletweb?acao=AlterarUsuario"; 
+            alert(dataNascimento)
+            form.action = caminhourl;
+            form.submit();
+        }
+        
     }
 }
