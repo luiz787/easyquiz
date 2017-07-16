@@ -114,7 +114,7 @@
                 <div align="right">
                     <button class="btn waves-effect waves-light" type="button" onclick="paginaInicial(document.formPerfil)">Cancelar</button>
 
-                    <button class="btn waves-effect waves-light" type="button" name="action" onclick="validarCamposPerfil(document.formPerfil)">Confirmar
+                    <button class="btn waves-effect waves-light" type="button" name="action" onclick="validarCamposPerfil(document.formPerfil)">Alterar
                         <i class="material-icons right">send</i>
                     </button>
                 </div>
