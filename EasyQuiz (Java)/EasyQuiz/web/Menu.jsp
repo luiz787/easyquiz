@@ -21,7 +21,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     int logado = Login.validarSessao(request, response);
-    Usuario user = (Usuario) request.getAttribute("Usuario");
+    Usuario user = null;
+    if(logado==1) {
+        Long cod_Usuario = (Long) request.getSession().getAttribute("cod_Usuario");
+        ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
+        user = manterUsuario.getUsuarioById(cod_Usuario);
+    }
+    
     
 %>
 <html lang="en">
@@ -38,7 +44,7 @@
     
 <nav class="nav-extended" style="background-color:#FFFFFF;">
             <div class="container" style="display: inline; margin-left: 50px;">
-                <a id="logo-container" href="#" style="color:#47525E; font-size: 32px;">EasyQuiz</a>
+                <a id="logo-container" href="/EasyQuiz/servletweb?acao=PaginaInicial" style="color:#47525E; font-size: 32px;">EasyQuiz</a>
                 <ul id="side-nav" class="right hide-on-med-and-down">
                     <% if(logado ==0) {          %>
                     <form name="frmLogin" method='post'>
@@ -61,8 +67,8 @@
         <h5 style="color:#EE6363; font-size: 32px;">&ensp; <% user.getNome(); %> </h5> 
       </li>
 
-      <li><a class="waves-effect waves-light grey darken-2 btn" href="#">&ensp;Perfil&ensp;</a></li>
-        <% if(user.getTipo() == 2) { %>
+      <li><a class="waves-effect waves-light grey darken-2 btn" href="/EasyQuiz/servletweb?acao=ListarPerfil">&ensp;Perfil&ensp;</a></li>
+        <% if(user.getPerfil().getId() == 2) { %>
       <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Questões</a></li>
        <% } %>
       <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Sair</a></li>
@@ -132,12 +138,5 @@
             </div>
         </nav>
     <div class="container" ></div>
-
         
-        <!--Scripts-->
-        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script type="text/javascript" language="JavaScript" src="js/webvalida.js"></script>
-        <script type="text/javascript" language="JavaScript" src="js/materialize.js"></script>
-        <script type="text/javascript" language="JavaScript" src="js/init.js"></script>
        
