@@ -87,4 +87,10 @@ public class ManterQuestaoFechadaRespostaImpl implements ManterQuestaoFechadaRes
         QuestaoFechadaResposta result = questaoFechadaRespostaDAO.getByUsuarioSessaoQuestao(cod_Usuario, dat_Inicio, cod_Questao);
         return result;
     }
+
+    @Override
+    public List<QuestaoFechadaResposta> getAllByUsuarioPeriodo(Long cod_Usuario, Instant dat_Inicio, Instant dat_Fim) throws ExcecaoPersistencia {
+        List<QuestaoFechadaResposta> result = questaoFechadaRespostaDAO.listAllByUsuarioPeriodo(cod_Usuario, dat_Inicio, dat_Fim);
+        return result;
+    }
 }

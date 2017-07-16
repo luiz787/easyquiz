@@ -19,5 +19,6 @@ public interface QuestaoFechadaRespostaDAO {
     public boolean update(QuestaoFechadaResposta questaoFechadaResposta) throws ExcecaoPersistencia;
     public QuestaoFechadaResposta getByUsuarioSessaoQuestao(Long cod_Usuario, Instant dat_Inicio, Long cod_Questao) throws ExcecaoPersistencia;
     public List<QuestaoFechadaResposta> listAllByUsuarioSessao(Long cod_Usuario, Instant dat_Inicio) throws ExcecaoPersistencia;
+    public List<QuestaoFechadaResposta> listAllByUsuarioPeriodo(Long cod_Usuario, Instant dat_Inicio, Instant dat_Fim) throws ExcecaoPersistencia;
     public List<QuestaoFechadaResposta> listAll() throws ExcecaoPersistencia;
 }

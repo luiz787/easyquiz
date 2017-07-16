@@ -213,5 +213,48 @@ public class QuestaoFechadaRespostaDAOImpl implements QuestaoFechadaRespostaDAO 
         }
     }
 
+    @Override
+    public List<QuestaoFechadaResposta> listAllByUsuarioPeriodo(Long cod_Usuario, Instant dat_Inicio, Instant dat_Fim) throws ExcecaoPersistencia {
+        try {
+            Connection connection = JDBCManterConexao.getInstancia().getConexao();
+
+            String sql = "SELECT * FROM questaofechadaresposta "
+                    + "WHERE (dat_inicio BETWEEN ? AND ?) "
+                    + "AND cod_usuario = ?";
+
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setTimestamp(1, java.sql.Timestamp.from(dat_Inicio));
+            pstmt.setTimestamp(2, java.sql.Timestamp.from(dat_Fim));
+            pstmt.setLong(3, cod_Usuario);
+            ResultSet rs = pstmt.executeQuery();
+
+            List<QuestaoFechadaResposta> listAll = new ArrayList<>();
+            SessaoDAO sessaoDAOImpl = SessaoDAOImpl.getInstance();
+            QuestaoDAO questaoDAOImpl = QuestaoDAOImpl.getInstance();
+            if (rs.next()) {
+                do {
+                    QuestaoFechadaResposta questaoFechadaResposta = new QuestaoFechadaResposta();
+                    
+                    Sessao sessao = sessaoDAOImpl.getSessaoByUsuarioData(
+                            rs.getLong("cod_usuario"), rs.getTimestamp("dat_inicio").toInstant());
+                    questaoFechadaResposta.setSessao(sessao);
+                    Questao questao = questaoDAOImpl.getQuestaoById(rs.getLong("cod_questao"));
+                    questaoFechadaResposta.setQuestao(questao);
+                    questaoFechadaResposta.setSeqQuestaoResposta(rs.getLong("seq_questao_resposta"));
+                    listAll.add(questaoFechadaResposta);
+                } while (rs.next());
+            }
+
+            rs.close();
+            pstmt.close();
+            connection.close();
+
+            return listAll;
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ExcecaoPersistencia(ex);
+        }
+    }
+
     
 }
