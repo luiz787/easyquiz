@@ -89,14 +89,17 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         try {
             
             Connection connection = JDBCManterConexao.getInstancia().getConexao();
-
+            String senha = "";
+            if(usuario.getSenha()!=null) {
+                senha = "txt_senha = md5(?) ";
+            }
             String sql = "UPDATE usuario "
                     + "   SET "
                     + "nom_usuario=?, "
                     + "dat_nascimento=?, "
                     + "txt_email=?, "
-                    + "txt_senha = md5(?), "
-                    + "cod_escolaridade=? "
+                    + "cod_escolaridade=?, "
+                    + senha
                     + " WHERE cod_usuario = ?;";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
@@ -105,9 +108,14 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             pstmt.setString(1, usuario.getNome());
             pstmt.setDate(2, usuario.getDataNascimento());
             pstmt.setString(3, usuario.getEmail());
-            pstmt.setString(4, usuario.getSenha());
-            pstmt.setLong(5, usuario.getEscolaridade().getId());
-            pstmt.setLong(6, usuario.getId());
+            pstmt.setLong(4, usuario.getEscolaridade().getId());
+            if(usuario.getSenha()!=null) {
+                pstmt.setString(5, usuario.getSenha());
+                pstmt.setLong(6, usuario.getId());
+            } else {
+                pstmt.setLong(5, usuario.getId());
+            }
+            
             pstmt.executeUpdate();
 
             pstmt.close();

@@ -14,7 +14,7 @@ public class ServletWeb extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String acao = request.getParameter("acao");
-        
+        System.out.println("ACAO: "+acao);
         if(acao.equals("PaginaInicial"))
             jsp = PaginaInicial.execute(request);
         else if(acao.equals("ProximaPagina"))
@@ -33,6 +33,8 @@ public class ServletWeb extends HttpServlet {
             jsp = CarregaImagem.execute(request, response);
         else if(acao.equals("ListarPerfil"))
             jsp = ListarPerfil.execute(request);
+        else if(acao.equals("AlterarUsuario"))
+            jsp = AlterarUsuario.execute(request);
         
         if(!(jsp.equals("notFoward"))) {
             RequestDispatcher rd = request.getRequestDispatcher(jsp);

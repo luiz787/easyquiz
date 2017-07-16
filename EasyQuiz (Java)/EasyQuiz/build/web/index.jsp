@@ -19,15 +19,15 @@
 <%
             /*
             ManterPerfil manterPerfil = new ManterPerfilImpl(PerfilDAOImpl.getInstance());
-            Perfil perfil = manterPerfil.getPerfilById(new Long(2));
+            Perfil perfil = manterPerfil.getPerfilById(new Long(1));
             ManterEscolaridade manterEscolaridade = new ManterEscolaridadeImpl(EscolaridadeDAOImpl.getInstance());
             Escolaridade escolaridade = manterEscolaridade.getEscolaridadeById(new Long(1));
             ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
             Usuario usuario = new Usuario();
-            usuario.setDataNascimento(java.sql.Date.valueOf("2017-07-09"));
-            usuario.setNome("Victor Gabriel");
+            usuario.setDataNascimento(java.sql.Date.valueOf("2010-05-28"));
+            usuario.setNome("Gabriel Victor");
             usuario.setPerfil(perfil);
-            usuario.setEmail("andromenus@gmail.com");
+            usuario.setEmail("gabrielvictor@gmail.com");
             usuario.setSenha("123456789");
             usuario.setEscolaridade(escolaridade);
             
