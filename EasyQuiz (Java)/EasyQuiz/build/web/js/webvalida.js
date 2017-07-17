@@ -173,3 +173,9 @@ function validarCamposPerfil(form) {
         
     }
 }
+
+function AdicionarQuestao(form) {
+    caminhourl = "/EasyQuiz/servletweb?acao=Cadastro";
+    form.action = caminhourl;
+    form.submit();
+}

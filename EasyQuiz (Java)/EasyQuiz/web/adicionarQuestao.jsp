@@ -45,11 +45,13 @@
         <jsp:include page ="Menu.jsp"/>
         <%
             if (logado != 0) {
+                System.out.println(request.getAttribute("listDificuldade"));
         %>        
 
 
         <div class="container" style=" z-index: 1">
-            <form id="cadastro" method="GET" action="cadastro.jsp">
+            <form name="cadastro" id="cadastro" method="GET" action="Cadastro.jsp">
+                <input type="hidden" name="acao" value="Cadastro" />
                 <div>
                     <h3>Cadastrar questão</h3>
                     Tipo da questão:
@@ -163,7 +165,7 @@
                 </div>
                 <div class="row" id="linhafinal">
                     <div class="col s6">
-                        <button class="btn waves-effect waves-light deep-orange darken-1" type="submit" name="action">Confirmar
+                        <button class="btn waves-effect waves-light deep-orange darken-1" type="button" onclick="AdicionarQuestao(document.cadastro)" name="actionn">Confirmar
                             <i class="material-icons right">send</i>
                         </button>
                     </div>
@@ -189,6 +191,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
         <script src="js/addQuestao.js"></script>
+        <script src="js/webvalida.js"></script>
         <script type="text/javascript">
                                             $(document).ready(function () {
                                                 $('select').material_select();
