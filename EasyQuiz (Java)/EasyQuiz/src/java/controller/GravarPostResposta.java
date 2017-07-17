@@ -36,13 +36,13 @@ public class GravarPostResposta {
             Long cod_Usuario = (Long) request.getSession().getAttribute("cod_Usuario");
             Usuario usuario = manterUsuario.getUsuarioById(cod_Usuario);
 
-            //Long cod_Questao = new Long (2);
-            Long cod_Questao = (Long) request.getAttribute("cod_Questao");
             ManterQuestao manterQuestao = new ManterQuestaoImpl(QuestaoDAOImpl.getInstance());
+            String str_Questao = request.getParameter("CodQuestaoPostResposta");
+            Long cod_Questao = new Long(str_Questao);
             Questao questao = manterQuestao.getQuestaoById(cod_Questao);
 
-            Instant datCriacao = (Instant) request.getSession().getAttribute("dat_datCriacao");
-            //Instant datCriacao = Instant.now();
+            //Instant datCriacao = (Instant) request.getSession().getAttribute("dat_datCriacao");
+            Instant datCriacao = Instant.now();
 
             ManterPost manterPostOriginal = new ManterPostImpl(PostDAOImpl.getInstance());
             Post post_original = manterPostOriginal.getPostById(new Long(request.getParameter("CodigoPostOriginal")));
@@ -63,7 +63,7 @@ public class GravarPostResposta {
 
             System.out.println("SÓ SUCESSO");
 
-            jsp = "/TelaForum.jsp";
+            jsp = "/servletweb?acao=ListarForum&questao="+cod_Questao;
 
         } catch (Exception e) {
             erro = e.getMessage();

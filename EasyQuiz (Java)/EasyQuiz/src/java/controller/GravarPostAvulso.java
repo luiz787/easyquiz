@@ -13,6 +13,7 @@ import model.daoimpl.UsuarioDAOImpl;
 import model.domain.Post;
 import model.domain.Questao;
 import model.domain.Usuario;
+import model.exception.ExcecaoPersistencia;
 import model.service.ManterPost;
 import model.service.ManterQuestao;
 import model.service.ManterUsuario;
@@ -34,31 +35,32 @@ public class GravarPostAvulso {
             ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
             Long cod_Usuario = (Long) request.getSession().getAttribute("cod_Usuario");
             Usuario usuario = manterUsuario.getUsuarioById(cod_Usuario);
-            
-            Long cod_Questao = (Long) request.getAttribute("cod_Questao");            
+
             ManterQuestao manterQuestao = new ManterQuestaoImpl(QuestaoDAOImpl.getInstance());
+            String str_Questao = request.getParameter("CodQuestaoPostAvulso");
+            Long cod_Questao = new Long(str_Questao);
             Questao questao = manterQuestao.getQuestaoById(cod_Questao);
 
             String Comentario = request.getParameter("Comentario");
-            
-            Instant datCriacao = (Instant) request.getSession().getAttribute("dat_datCriacao");
-            //Instant datCriacao = Instant.now();
-            
+
+            //Instant datCriacao = (Instant) request.getSession().getAttribute("dat_datCriacao");
+            Instant datCriacao = Instant.now();
+
             Post post = new Post();
 
             post.setTxtConteudo(Comentario);
             post.setDatCriacao(datCriacao);
             post.setAutor(usuario);
             post.setQuestao(questao);
-            post.setCodigo(new Long (1));
+            post.setCodigo(new Long(1));
 
             ManterPost manterPost = new ManterPostImpl(PostDAOImpl.getInstance());
             manterPost.cadastrarPost(post);
-            
+
             System.out.println("SÓ SUCESSO");
-            
-            jsp = "/TelaForum.jsp";
-            
+
+            jsp = "/servletweb?acao=ListarForum&questao="+cod_Questao;
+
         } catch (Exception e) {
             erro = e.getMessage();
             System.out.println("erro ao gravar o post");
