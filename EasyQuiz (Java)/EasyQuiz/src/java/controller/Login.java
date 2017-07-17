@@ -10,6 +10,7 @@ import java.time.Instant;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 import model.daoimpl.SessaoDAOImpl;
 import model.daoimpl.UsuarioDAOImpl;
 import model.domain.Sessao;
@@ -24,6 +25,7 @@ import model.serviceimpl.ManterUsuarioImpl;
  * @author andro
  */
 public class Login {
+
     @SuppressWarnings("static-access")
     public static String execute(HttpServletRequest request) {
 
@@ -31,9 +33,18 @@ public class Login {
 
         try {
             
-            String email = request.getParameter("email");
-            String senha = request.getParameter("senha");
-
+            String email;
+            String senha;
+            System.out.println("chego");
+            
+            if (request.getAttribute("tipo") != null && request.getAttribute("tipo").equals("cadastro")) {
+                email = (String)request.getAttribute("email");
+                senha = (String)request.getAttribute("senha");
+            } else {
+                email = request.getParameter("email");
+                senha = request.getParameter("senha");
+            }
+            
             ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
             Usuario usuario = manterUsuario.getUsuarioByEmailSenha(email, senha);
 
@@ -44,13 +55,13 @@ public class Login {
             } else {
                 request.getSession().setAttribute("cod_Usuario", usuario.getId());
                 request.getSession().setAttribute("dat_Inicio", Instant.now());
-                ManterSessao manterSessao = 
-                        new ManterSessaoImpl(SessaoDAOImpl.getInstance());
+                ManterSessao manterSessao
+                        = new ManterSessaoImpl(SessaoDAOImpl.getInstance());
                 Sessao sessao = new Sessao();
                 sessao.setUsuario(usuario);
-                sessao.setDataInicio((Instant)request.getSession().getAttribute("dat_Inicio"));
+                sessao.setDataInicio((Instant) request.getSession().getAttribute("dat_Inicio"));
                 boolean result = manterSessao.cadastrarSessao(sessao);
-                
+
                 request.getSession().setAttribute("contadorRespostaQuestao", 0);
                 request.getSession().removeAttribute("listTxtResposta");
                 request.getSession().removeAttribute("listRespostaNaoLogado");

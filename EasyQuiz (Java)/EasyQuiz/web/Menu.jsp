@@ -49,6 +49,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
         <title>EasyQuiz</title>
         
+        <!-- JavaScript  -->
+        <script type="text/javascript" src="lib/jquery.js" ></script>
+        <script type="text/javascript" src="lib/jquery-3.1.1.js" ></script>
+        
         <!-- CSS  -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/materialize.css"/>

@@ -21,7 +21,7 @@ $(document).ready(function () {
                             required: true
                         },
 
-                        senha: {
+                        senhaCadastro: {
                             required: true,
                             rangelength: [8, 20]
                         },
@@ -29,7 +29,7 @@ $(document).ready(function () {
                         confirma_senha: {
                             required: true,
                             rangelength: [8, 20],
-                            equalTo: "#senha"
+                            equalTo: "#senhaCadastro"
                         }
                     },
                     //For custom messages
