@@ -94,9 +94,10 @@
             </div>
             <div class="row" style="background-color: #EE6363; margin-top: 15px;" >
                 <div class="col s8" >Disciplinas comuns:
+                    <a id="botao-fisica" class="waves-effect waves-light" href="http://localhost:8080/EasyQuiz/servletweb?palavras=&materia=1&acao=PaginaInicial" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top:    2px; background-color: #E5E9F2; color: #47525E">Física</a>
+                    <a id="botao-fisica" class="waves-effect waves-light" href="http://localhost:8080/EasyQuiz/servletweb?palavras=&materia=2&acao=PaginaInicial" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top:    2px; background-color: #E5E9F2; color: #47525E">História</a>
                     <a id="botao-matematica" class="waves-effect waves-light" href="http://localhost:8080/EasyQuiz/servletweb?palavras=&materia=3&acao=PaginaInicial" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Matemática</a>
                     <a id="botao-portugues" class="waves-effect waves-light" href="http://localhost:8080/EasyQuiz/servletweb?palavras=&materia=4&acao=PaginaInicial" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Português</a>
-                    <a id="botao-fisica" class="waves-effect waves-light" href="http://localhost:8080/EasyQuiz/servletweb?palavras=&materia=1&acao=PaginaInicial" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top:    2px; background-color: #E5E9F2; color: #47525E">Física</a>
                 </div>
                 <div class="col s4">
                     <a class="btn-small waves-effect waves-light grey darken-2 btn" onclick="mostrarform()">Filtrar</a></li>  			

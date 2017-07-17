@@ -172,3 +172,31 @@ ALTER TABLE Post ADD CONSTRAINT Relationship17 FOREIGN KEY (cod_usuario) REFEREN
 ALTER TABLE Usuario ADD CONSTRAINT Relationship18 FOREIGN KEY (cod_escolaridade) REFERENCES Escolaridade (cod_escolaridade) ON DELETE RESTRICT ON UPDATE RESTRICT
 ;
 
+
+INSERT INTO `dificuldade` (`cod_dificuldade`, `des_dificuldade`) VALUES
+(1, 'Desafio'),
+(2, 'Difícil'),
+(3, 'Médio'),
+(4, 'Fácil');
+
+INSERT INTO `disciplina` (`cod_disciplina`, `nom_disciplina`) VALUES
+(1, 'Física'),
+(2, 'História'),
+(3, 'Matemática'),
+(4, 'Português');
+
+INSERT INTO `escolaridade` (`cod_escolaridade`, `nom_escolaridade`) VALUES
+(1, 'Analfabeto'),
+(2, 'Fundamental incompleto'),
+(3, 'Fundamental completo'),
+(4, 'Médio incompleto'),
+(5, 'Médio completo'),
+(6, 'Superior incompleto'),
+(7, 'Superior completo'),
+(8, 'Mestrado'),
+(9, 'Doutorado');
+
+INSERT INTO `perfil` (`cod_perfil`, `nom_perfil`) VALUES
+(1, 'aluno'),
+(2, 'professor');
+
