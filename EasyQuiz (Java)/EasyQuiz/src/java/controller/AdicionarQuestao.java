@@ -27,6 +27,7 @@ class AdicionarQuestao {
     public static String execute(HttpServletRequest request) {
         String jsp = "";
         try {
+            System.out.println("Teste AddQuestaoo");
             ManterDisciplina manterDisciplina = new ManterDisciplinaImpl(DisciplinaDAOImpl.getInstance());
             List<Disciplina> disciplinas = manterDisciplina.getAll();
             ManterModulo manterModulo = new ManterModuloImpl(ModuloDAOImpl.getInstance());
