@@ -1,3 +1,7 @@
+<%@page import="model.domain.Modulo"%>
+<%@page import="model.serviceimpl.ManterModuloImpl"%>
+<%@page import="model.daoimpl.ModuloDAOImpl"%>
+<%@page import="model.daoimpl.ModuloDAOImpl"%>
 <%@page import="model.domain.Disciplina"%>
 <%@page import="model.serviceimpl.ManterDisciplinaImpl"%>
 <%@page import="model.daoimpl.DisciplinaDAOImpl"%>
@@ -82,7 +86,7 @@
 
       <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Questões</a></li>
        <% } %>
-      <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Sair</a></li>
+      <li><a class="waves-effect waves-light grey darken-2 btn" href="/EasyQuiz/servletweb?acao=Sair">Sair</a></li>
                     <% } %>
                 </ul>
             </div>
@@ -90,7 +94,7 @@
                 <div class="col s8" >Matérias comuns:
                     <a id="botao-matematica" class="waves-effect waves-light" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Matemática</a>
                     <a id="botao-portugues" class="waves-effect waves-light" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Português</a>
-                    <a id="botao-fisica" class="waves-effect waves-light" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top:    2px; background-color: #E5E9F2; color: #47525E">Física</a>
+                    <a id="botao-fisica" class="waves-effect waves-light" href="http://localhost:8080/EasyQuiz/servletweb?palavras=&materia=1&acao=PaginaInicial" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top:    2px; background-color: #E5E9F2; color: #47525E">Física</a>
                 </div>
                 <div class="col s4">
                     <a class="btn-small waves-effect waves-light grey darken-2 btn" onclick="mostrarform()">Filtrar</a></li>  			
@@ -118,8 +122,8 @@
                                 </select>
                             </div>
                             <div class="input-field col s6">
-                               <select id="materia" name="materia">
-                                    <option value="0" disabled selected>Escolha uma Matéria</option>
+                               <select id="materia" name="materia" onChange="getStates(this);">
+                                    <option value="" disabled selected>Escolha uma Matéria</option>
                                     
                                      <% 
                                         ManterDisciplinaImpl Disciplina = new ManterDisciplinaImpl(DisciplinaDAOImpl.getInstance()); 
@@ -133,6 +137,10 @@
                                     <% } %>
                                     <option value="">Nenhum</option>
                                 </select>
+                                    <script> function getStates(mat){ 
+                                      mat = document.getElementsById("meteria").value;
+                                      alert("debug");
+                                     //document.location.href="oi.jsp?tuavar="+variavel;} </script>
                             </div>
                         </div>
                         <div class="row">
@@ -146,7 +154,18 @@
                             </div>
                             <div class="input-field col s6">
                                 <select id="modulo" name="modulo">
-                                    <option value="0" disabled selected>Escolha um módulo</option>
+                                    <option value="" disabled selected>Escolha um módulo</option>
+                                     <% 
+                                        ManterModuloImpl Modulo = new ManterModuloImpl(ModuloDAOImpl.getInstance()); 
+                                        List<Modulo> listamodulos = Modulo.getAll() ;
+                                        
+                                        for (Modulo M : listamodulos) { 
+                                         String nommodulo = M.getNome();
+                                         int valmodulo = M.getId().intValue();
+                                         %>
+                                         <option value="<%=valmodulo%>" style="color:blue;"><%=nommodulo%></option>
+                                    
+                                    <% } %>
                                     <option value="">Nenhum</option>
                                 </select>
                             </div>
