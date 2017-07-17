@@ -1,3 +1,15 @@
+<%@page import="model.domain.Modulo"%>
+<%@page import="model.serviceimpl.ManterModuloImpl"%>
+<%@page import="model.daoimpl.ModuloDAOImpl"%>
+<%@page import="model.daoimpl.ModuloDAOImpl"%>
+<%@page import="model.domain.Disciplina"%>
+<%@page import="model.serviceimpl.ManterDisciplinaImpl"%>
+<%@page import="model.daoimpl.DisciplinaDAOImpl"%>
+<%@page import="model.daoimpl.DisciplinaDAOImpl"%>
+<%@page import="model.domain.Dificuldade"%>
+<%@page import="model.serviceimpl.ManterDificuldadeImpl"%>
+<%@page import="model.daoimpl.DificuldadeDAOImpl"%>
+<%@page import="model.daoimpl.DificuldadeDAOImpl"%>
 <%@page import="model.domain.QuestaoFechadaResposta"%>
 <%@page import="model.domain.Perfil"%>
 <%@page import="model.domain.Usuario"%>
@@ -26,8 +38,9 @@
         Long cod_Usuario = (Long) request.getSession().getAttribute("cod_Usuario");
         ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
         user = manterUsuario.getUsuarioById(cod_Usuario);
+        
     }
-    
+
     
 %>
 <html lang="en">
@@ -35,11 +48,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
         <title>EasyQuiz</title>
+        
         <!-- CSS  -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/materialize.css"/>
         <link rel="stylesheet" type="text/css" href="css/style.css"/>
         <link rel="stylesheet" type="text/css" href="css/styleTelaQuestoes.css"/>
+        <link rel="stylesheet" type="text/css" href="css/styleValidarForm.css"/>
     </head>
     
 <nav class="nav-extended" style="background-color:#FFFFFF;">
@@ -64,18 +79,16 @@
 
       </li>
       <li>
-        <h5 style="color:#EE6363; font-size: 32px;">&ensp; <% user.getNome(); %> </h5> 
+        <h5 style="color:#EE6363; font-size: 32px;">&ensp; <%= user.getNome() %> </h5> 
       </li>
 
 
       <li><a class="waves-effect waves-light grey darken-2 btn" href="/EasyQuiz/servletweb?acao=ListarPerfil">&ensp;Perfil&ensp;</a></li>
         <% if(user.getPerfil().getId() == 2) { %>
 
-
-      <li><a class="waves-effect waves-light grey darken-2 btn" href="/EasyQuiz/servletweb?acao=GerenciarQuestoes">Questões</a></li>
-
+      <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Questões</a></li>
        <% } %>
-      <li><a class="waves-effect waves-light grey darken-2 btn" href="#">Sair</a></li>
+      <li><a class="waves-effect waves-light grey darken-2 btn" href="/EasyQuiz/servletweb?acao=Sair">Sair</a></li>
                     <% } %>
                 </ul>
             </div>
@@ -83,7 +96,7 @@
                 <div class="col s8" >Matérias comuns:
                     <a id="botao-matematica" class="waves-effect waves-light" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Matemática</a>
                     <a id="botao-portugues" class="waves-effect waves-light" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Português</a>
-                    <a id="botao-fisica" class="waves-effect waves-light" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top:    2px; background-color: #E5E9F2; color: #47525E">Física</a>
+                    <a id="botao-fisica" class="waves-effect waves-light" href="http://localhost:8080/EasyQuiz/servletweb?palavras=&materia=1&acao=PaginaInicial" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top:    2px; background-color: #E5E9F2; color: #47525E">Física</a>
                 </div>
                 <div class="col s4">
                     <a class="btn-small waves-effect waves-light grey darken-2 btn" onclick="mostrarform()">Filtrar</a></li>  			
@@ -91,56 +104,79 @@
             </div>
             <div class="row " id="pesquisa" style="display: none; position: absolute;   width: 47%; background: rgba(255, 255, 255, 0.7);">
                 <div class="col s12 offset-s12" id="pesquisa" style="border: 4px solid; border-color:#D3D3D3; background: rgba(255, 255, 255, 1.0); ; text-align:center;border-radius: 10px; z-index: 2;" >
-                    <form>
-                        <input id="search" type="search" placeholder="Busque por palavras chave" style="color: #696969;">
+                    <form name="frmbusca" >
+                        <input id="palavras" name="palavras" type="search" placeholder="Busque por palavras chave" style="color: #696969;">
                         <div class="row">
                             <div class="input-field col s6">
-                                <select id="nivel">
+                                <select id="nivel" name="nivel">
                                     <option value="" disabled selected>Escolha uma Dificuldade</option>
-                                    <option value="1">Fácil</option>
-                                    <option value="2">Médio</option>
-                                    <option value="3">Difícil</option>
-                                    <option value="4">Desafio</option>
-                                    <option value="0">Nenhum</option>
+                                    <% 
+                                        ManterDificuldadeImpl Dificuldade = new ManterDificuldadeImpl(DificuldadeDAOImpl.getInstance()); 
+                                        List<Dificuldade> listadificuldades = Dificuldade.listAll();
+                                        
+                                        for (Dificuldade D : listadificuldades) { 
+                                         String nomdif = D.getDescricao();
+                                         int valdif = D.getId().intValue(); %>
+                                    <option value="<%=valdif%>"><%=nomdif%></option>
+                                    
+                                    <% } %>
+                                    <option value="">Nenhum</option>
                                 </select>
                             </div>
                             <div class="input-field col s6">
-                                <select id="materia">
+                               <select id="materia" name="materia" onChange="getStates(this);">
                                     <option value="" disabled selected>Escolha uma Matéria</option>
-                                    <option value="1">Matemática</option>
-                                    <option value="2">Português</option>
-                                    <option value="3">Física</option>
-                                    <option value="4">Geografia</option>
-                                    <option value="5">História</option>
-                                    <option value="6">Química</option>
-                                    <option value="7">Inglês</option>
-                                    <option value="0">Nenhum</option>
+                                    
+                                     <% 
+                                        ManterDisciplinaImpl Disciplina = new ManterDisciplinaImpl(DisciplinaDAOImpl.getInstance()); 
+                                        List<Disciplina> listadisciplinas = Disciplina.getAll() ;
+                                        
+                                        for (Disciplina D : listadisciplinas) { 
+                                         String nomdisc = D.getNome();
+                                         int valdisc = D.getId().intValue(); %>
+                                    <option value="<%=valdisc%>"><%=nomdisc%></option>
+                                    
+                                    <% } %>
+                                    <option value="">Nenhum</option>
                                 </select>
+                                    <script> function getStates(mat){ 
+                                      mat = document.getElementsById("meteria").value;
+                                      alert("debug");
+                                     //document.location.href="oi.jsp?tuavar="+variavel;} </script>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s6">
-                                <select id="tipo">
+                                <select id="tipo" name="tipo">
                                     <option value="" disabled selected>Escolha um tipo</option>
-                                    <option value="1">Aberta</option>
-                                    <option value="2">Fechada</option>
-                                    <option value="3">Nenhum</option>
+                                    <option value="A">Aberta</option>
+                                    <option value="F">Fechada</option>
+                                    <option value="">Nenhum</option>
                                 </select>
                             </div>
                             <div class="input-field col s6">
-                                <select id="materia">
+                                <select id="modulo" name="modulo">
                                     <option value="" disabled selected>Escolha um módulo</option>
-                                    <option value="0">Nenhum</option>
+                                     <% 
+                                        ManterModuloImpl Modulo = new ManterModuloImpl(ModuloDAOImpl.getInstance()); 
+                                        List<Modulo> listamodulos = Modulo.getAll() ;
+                                        
+                                        for (Modulo M : listamodulos) { 
+                                         String nommodulo = M.getNome();
+                                         int valmodulo = M.getId().intValue();
+                                         %>
+                                         <option value="<%=valmodulo%>" style="color:blue;"><%=nommodulo%></option>
+                                    
+                                    <% } %>
+                                    <option value="">Nenhum</option>
                                 </select>
                             </div>
                         </div>
-                    </form>
-                    <button class="btn-large waves-effect waves-light grey darken-2" type="submit" name="action">avançar 
-                        <i class="material-icons right">send</i>
-                    </button>
+                    
+                         <input type='hidden' name='acao' value=''>           
+                    <a class="btn-large waves-effect waves-light grey darken-2" onclick="paginaInicial(document.frmbusca)" >avançar          
+                    </a>
+                        </form>            
                 </div>
             </div>
         </nav>
-    <div class="container" ></div>
-        
-       
