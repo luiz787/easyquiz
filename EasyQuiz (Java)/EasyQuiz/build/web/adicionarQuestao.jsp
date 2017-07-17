@@ -115,7 +115,7 @@
                             <label for="textarea1">Alternativa</label>
                         </div>
                         <div class="col s3">
-                            <a class="waves-effect waves-light btn deep-orange darken-1" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
+                            <a class="waves-effect waves-light btn deep-orange darken-1 disabled" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
                         </div>
                     </div>
                     <div class="row">
@@ -128,7 +128,7 @@
                             <label for="textarea1">Alternativa</label>
                         </div>
                         <div class="col s3">
-                            <a class="waves-effect waves-light btn deep-orange darken-1" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
+                            <a class="waves-effect waves-light btn deep-orange darken-1 disabled" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
                         </div>
                     </div>
                     <div class="row">
@@ -141,7 +141,7 @@
                             <label for="textarea1">Alternativa</label>
                         </div>
                         <div class="col s3">
-                            <a class="waves-effect waves-light btn deep-orange darken-1" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
+                            <a class="waves-effect waves-light btn deep-orange darken-1 disabled" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
                         </div>
                     </div>
                     <div class="row">
@@ -150,16 +150,16 @@
                             <label for="test4">Correta</label>
                         </div>
                         <div class="input-field col s7">
-                            <textarea name="alt3" id="alt3" class="materialize-textarea"></textarea>
+                            <textarea name="alt3" id="alt3" class="materialize-textarea disabled"></textarea>
                             <label for="textarea1">Alternativa</label>
                         </div>
                         <div class="col s3">
-                            <a class="waves-effect waves-light btn deep-orange darken-1" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
+                            <a class="waves-effect waves-light btn deep-orange darken-1 disabled" onclick="excluirAlternativa(this)"><i class="material-icons left">delete</i>Excluir</a>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col s12">
-                            <a class="waves-effect waves-light btn deep-orange darken-1" onclick="addAlternativa(this)"><i class="material-icons left">add</i>Adicionar alternativa</a>
+                            <a class="waves-effect waves-light btn deep-orange darken-1 disabled" onclick="addAlternativa(this)"><i class="material-icons left">add</i>Adicionar alternativa</a>
                         </div>
                     </div>
                 </div>
