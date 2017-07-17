@@ -180,6 +180,7 @@ function alternativasToTextArea(idQuestao) {
         txtAreaAlternativa.style.resize = "vertical";
         txtAreaAlternativa.setAttribute("name", "txtArea"+idQuestao+"-"+i);
         let texto = label.textContent;
+        texto = texto.slice(2);
         $(txtAreaAlternativa).val(texto);
         colTxtArea.appendChild(txtAreaAlternativa);
         divAlt.replaceChild(divRow, paragrafoAtual);
