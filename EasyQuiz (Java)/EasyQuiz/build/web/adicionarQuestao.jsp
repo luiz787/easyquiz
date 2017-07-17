@@ -49,7 +49,7 @@
 
 
         <div class="container" style=" z-index: 1">
-            <form id="cadastro" method="GET" action="Cadastro.jsp">
+            <form id="cadastro" method="GET" action="cadastro.jsp">
                 <div>
                     <h3>Cadastrar questão</h3>
                     Tipo da questão:
