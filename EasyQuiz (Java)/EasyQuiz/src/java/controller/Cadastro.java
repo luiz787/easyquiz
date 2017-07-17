@@ -91,13 +91,14 @@ public class Cadastro {
                     String resposta = request.getParameter("txtresposta");
                     questao.setTxtResposta(resposta);
                     System.out.println("Resposta correta: "+resposta);
+                } else {
+                    questao.setIdTipo('F');
                 }
                 ManterQuestao manterQuestao = new ManterQuestaoImpl(QuestaoDAOImpl.getInstance());
                 Long novoId = manterQuestao.cadastrarQuestao(questao);
                 questao.setId(novoId);
                 if (tipo.equals("fechada")){
                     QuestaoFechada[] qf = new QuestaoFechada[4];
-                    questao.setIdTipo('F');
                     String[] alternativas = new String[4];
                     List<QuestaoFechada> questoesFechadas = new ArrayList();
                     for (int i=0; i<alternativas.length; i++){
@@ -105,16 +106,19 @@ public class Cadastro {
                         alternativas[i] = request.getParameter("alt"+i);
                         System.out.println(alternativas[i]);
                         qf[i].setQuestao(questao);
-                        qf[i].setSeqAlternativa(new Long(i));
+                        qf[i].setSeqAlternativa(new Long(i+1));
                         qf[i].setTxtAlternativa(alternativas[i]);
                         questoesFechadas.add(qf[i]);
                     }
                     int seqCorreta = Integer.parseInt(request.getParameter("group1"))+1;
                     questao.setSeqQuestaoCorreta(new Long(seqCorreta));
                     System.out.println(seqCorreta);
-                    
+                    System.out.println("debug alternativasss");
+                    for (int i=0; i<questoesFechadas.size(); i++){
+                        System.out.println(questoesFechadas.get(i).getTxtAlternativa());
+                    }
                     ManterQuestaoFechada manterQuestaoFechada = new ManterQuestaoFechadaImpl(QuestaoFechadaDAOImpl.getInstance());
-                    manterQuestaoFechada.cadastrarQuestaoFechada(questoesFechadas);
+                    manterQuestaoFechada.cadastrarQuestaoFechada(questoesFechadas); //algo está dando errado AQUI
                 }
                 System.out.println("NOVO ID DA QUESTAO: "+novoId);
                 /*System.out.println("\n\nFINALIZANDO");

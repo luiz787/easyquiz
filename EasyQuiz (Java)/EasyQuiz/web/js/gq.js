@@ -126,7 +126,7 @@ function enunToTextArea(idQuestao) {
     let contador = 0;
     let id = idQuestao;
     let content = document.getElementById(id).childNodes.item(3);
-    let form = content.getElementsByTagName("form").item(0);
+    let form = document.getElementById("form"+id);
     let divForm = form.childNodes.item(1);
     let enunciado = divForm.childNodes.item(1);
     let paragrafoEnunciado = enunciado.childNodes.item(1);
@@ -147,13 +147,13 @@ function enunToTextArea(idQuestao) {
 function alternativasToTextArea(idQuestao) {
     let id = idQuestao;
     console.log("Id da questao: "+id);
-    let content = document.getElementById(id).childNodes.item(3);
-    console.log("DIV CONTENT: "+content);
-    console.log(content.childNodes);
-    let form = document.getElementById("form"+idQuestao);
+    //let content = document.getElementById(id).childNodes.item(3);
+    //console.log("DIV CONTENT: "+content);
+    //console.log(content.childNodes);
+    //let form = document.getElementById("form"+idQuestao);
     //let form = content.childNodes.item(3);
-    let divForm = form.childNodes.item(1);
-    let divAlt = divForm.childNodes.item(3); //DIV Alternativas
+    //let divForm = form.childNodes.item(1);
+    let divAlt = document.getElementById("alternativas"+idQuestao); //DIV Alternativas
     let divAltChildren = divAlt.getElementsByTagName("p");
     let iteracao = divAltChildren.length;
     for (let i = 0; i < iteracao; i++) {
