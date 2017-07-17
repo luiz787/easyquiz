@@ -74,7 +74,8 @@
                             <%
                                 }
                             %>
-                            <form action="#" id='<%="form" + i%>'>
+                            <form action="#" id='<%="form" + i%>' name='<%="form" + i%>'>
+                                
                                 <div>
                                     <div id='<%="enunciado" + i%>'>
                                         <p class="enun"><%=questao.getTxtEnunciado()%></p>
@@ -137,14 +138,16 @@
                                     <br>
                                     <div class="row">
                                         <div class="col s6" name="divEditar">
-                                            <a class="waves-effect waves-light btn deep-orange darken-1" onclick="editarquestao('<%="questao" + i%>', this)"><i class="material-icons left">edit</i>Editar questão</a>
+                                            <a class="waves-effect waves-light btn deep-orange darken-1" onclick="editarquestao('<%=i%>', this)"><i class="material-icons left">edit</i>Editar questão</a>
                                         </div>
                                         <div class="col s6" name="divExcluir">
                                             <a class="waves-effect waves-light btn deep-orange darken-1" href="/EasyQuiz/servletweb?acao=ExcluirQuestao&questao=<%= questao.getId()%>"><i class="material-icons left">delete</i>Excluir questão</a>
                                         </div>
                                     </div>
                                 </div>
-
+                                <input type="hidden" name="acao" value="EditarQuestao"/>
+                                <input type='hidden' name="idquestao" value="<%=questao.getId()%>"/>
+                                <input type="hidden" name="ordem" value="<%=i%>"/>
                             </form>
 
                         </div>

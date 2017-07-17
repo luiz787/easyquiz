@@ -45,6 +45,9 @@ public class ServletWeb extends HttpServlet {
             System.out.println("Entrei no cadastro!!!");
             jsp = Cadastro.execute(request);
         }
+        else if (acao.equals("EditarQuestao")){
+            jsp = EditarQuestao.execute(request);
+        }
         else if(acao.equals("Sair"))
             jsp = Logout.execute(request);
         

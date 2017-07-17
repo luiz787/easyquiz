@@ -1,28 +1,28 @@
 /*Alterar para questões abertas (possuem ou não img), questões fechadas que não possuem img*/
 function editarquestao(idQuestao, botaoEditar) {
-		//let nomeDivImg = "container-img"+idQuestao; // errado
-		let divImg = document.getElementById("container-img2");//valor tem que ser dinâmico
-		if (divImg!=null) {
-			addBotoesImg(idQuestao);
-		}
+    /*let nomeDivImg = "containerImg" + idQuestao;
+    let divImg = document.getElementById(nomeDivImg);
+    if (divImg != null) {
+        addBotoesImg(idQuestao);
+    }*/
     enunToTextArea(idQuestao);
-		let divAltFechada = document.getElementById("alternativas2"); //valor tem que ser dinâmico
-		let divQAberta = document.getElementById("resposta-aberta2"); //valor tem que ser dinâmico
-		if (divAltFechada!=null){
-			alternativasToTextArea(idQuestao);
-		} else if (divQAberta!=null){
-			//alert("OI")
-			respostaToTextArea(idQuestao);
-		}
-	
+    let divAltFechada = document.getElementById("alternativas"+idQuestao);
+    let divQAberta = document.getElementById("resposta-aberta"+idQuestao);
+    if (divAltFechada != null) {
+        alternativasToTextArea(idQuestao);
+    } else if (divQAberta != null) {
+        respostaToTextArea(idQuestao);
+    }
     let btnEditar = botaoEditar;
     let btnParent = btnEditar.parentElement;
     let divBtnExcluir = document.getElementsByName("divExcluir").item(0);
     let btnExcluir = divBtnExcluir.childNodes.item(1);
     let botaoConfirma = document.createElement("button");
     botaoConfirma.setAttribute("class", "btn waves-effect waves-light deep-orange darken-1");
-    botaoConfirma.setAttribute("type", "submit");
-    botaoConfirma.setAttribute("name", "submit");
+    botaoConfirma.setAttribute("type", "button");
+    botaoConfirma.setAttribute("name", "submitbtn");
+    let parametro = "editarQuestaoFormulario(document.form"+idQuestao+")";
+    botaoConfirma.setAttribute("onclick", parametro);
     botaoConfirma.innerHTML = "Confirmar";
     let iconBtnConf = document.createElement("i");
     iconBtnConf.setAttribute("class", "material-icons right");
@@ -40,16 +40,24 @@ function editarquestao(idQuestao, botaoEditar) {
     divBtnExcluir.replaceChild(botaoCancela, btnExcluir);
 }
 
-function respostaToTextArea(idQuestao){
-	let divResposta = document.getElementById("resposta-aberta2");
-	let paragrafo = divResposta.childNodes.item(1);
-	let texto = paragrafo.innerHTML;
-	let txtArea = document.createElement("textarea");
-	txtArea.setAttribute("id", "resposta-correta-2");
-	$(txtArea).val(texto);
-	divResposta.replaceChild(txtArea, paragrafo);
-	let id = idQuestao;
-	let questao = document.getElementById(id);
+function editarQuestaoFormulario(form){
+    alert(form);
+    caminhourl = "/EasyQuiz/servletweb?acao=EditarQuestao";
+    form.action = caminhourl;
+    form.submit();
+}
+
+function respostaToTextArea(idQuestao) {
+    let divResposta = document.getElementById("resposta-aberta"+idQuestao);
+    let paragrafo = divResposta.childNodes.item(1);
+    let texto = paragrafo.innerHTML;
+    let txtArea = document.createElement("textarea");
+    txtArea.setAttribute("id", "resposta-correta"+idQuestao);
+    txtArea.setAttribute("name", "resposta-correta"+idQuestao)
+    $(txtArea).val(texto);
+    divResposta.replaceChild(txtArea, paragrafo);
+    let id = idQuestao;
+    let questao = document.getElementById(id);
 }
 
 function addBotoesImg(idQuestao) {
@@ -127,6 +135,7 @@ function enunToTextArea(idQuestao) {
     //txtAreaEnunciado.className = "materialize-textarea";
     let idAtual = "txtAreaEnun" + contador;
     txtAreaEnunciado.setAttribute("id", idAtual);
+    txtAreaEnunciado.setAttribute("name", idAtual);
     $(txtAreaEnunciado).val(txtEnunciado);
     let inputField = document.createElement("div");
     inputField.setAttribute("class", "input-field col s12");
@@ -137,8 +146,12 @@ function enunToTextArea(idQuestao) {
 
 function alternativasToTextArea(idQuestao) {
     let id = idQuestao;
+    console.log("Id da questao: "+id);
     let content = document.getElementById(id).childNodes.item(3);
-    let form = content.childNodes.item(3);
+    console.log("DIV CONTENT: "+content);
+    console.log(content.childNodes);
+    let form = document.getElementById("form"+idQuestao);
+    //let form = content.childNodes.item(3);
     let divForm = form.childNodes.item(1);
     let divAlt = divForm.childNodes.item(3); //DIV Alternativas
     let divAltChildren = divAlt.getElementsByTagName("p");
@@ -153,7 +166,7 @@ function alternativasToTextArea(idQuestao) {
         let colBtn = document.createElement("div");
         colBtn.setAttribute("class", "col s3");
         let botaoExcluir = document.createElement("a");
-        botaoExcluir.setAttribute("class", "waves-effect waves-light btn deep-orange darken-1");
+        botaoExcluir.setAttribute("class", "waves-effect waves-light btn deep-orange darken-1 disabled");
         botaoExcluir.setAttribute("id", "botaoExcluir" + i);
         botaoExcluir.setAttribute("onclick", "excluirAlternativa(this)");
         let iconBotaoExcluir = document.createElement("i");
@@ -165,6 +178,7 @@ function alternativasToTextArea(idQuestao) {
         divRow.appendChild(colBtn);
         let txtAreaAlternativa = document.createElement("textarea");
         txtAreaAlternativa.style.resize = "vertical";
+        txtAreaAlternativa.setAttribute("name", "txtArea"+idQuestao+"-"+i);
         let texto = label.textContent;
         $(txtAreaAlternativa).val(texto);
         colTxtArea.appendChild(txtAreaAlternativa);
@@ -187,7 +201,7 @@ function addBotaoAddAlternativas(divAlt) {
     let col = document.createElement("div");
     col.setAttribute("class", "col s12");
     let botaoAdd = document.createElement("a");
-    botaoAdd.setAttribute("class", "waves-effect waves-light btn deep-orange darken-1");
+    botaoAdd.setAttribute("class", "waves-effect waves-light btn deep-orange darken-1 disabled");
     botaoAdd.setAttribute("id", "botaoAddAlt");
     botaoAdd.setAttribute("onclick", "addAlternativa(this)");
     botaoAdd.innerHTML = "Alternativa";
