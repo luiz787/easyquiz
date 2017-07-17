@@ -18,7 +18,6 @@ public class PaginaAnterior {
             int numeroPagina = (Integer) request.getSession().getAttribute("numeroPagina");
             request.getSession().setAttribute("numeroPagina", --numeroPagina);
             request.setAttribute("acao", "PaginaAnterior");
-            
             jsp = ListarQuestao.execute(request);
         } catch (Exception e) {
             e.printStackTrace();

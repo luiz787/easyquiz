@@ -46,7 +46,8 @@
 
         <div class="container" >
 <%
-    if(request.getAttribute("listQuestao")!=null) {
+    if(request.getAttribute("listQuestao")!=null && ((List<Questao>) request.getAttribute("listQuestao")).size()!=0) {
+        System.out.println("NAO TEM QUESTAO: "+((List<Questao>) request.getAttribute("listQuestao")).size());
         List<Questao> listQuestao = (List<Questao>) request.getAttribute("listQuestao");
         List<QuestaoFechada> listQuestaoFechada = (List<QuestaoFechada>) request.getAttribute("listQuestaoFechada");
         
@@ -298,6 +299,13 @@
             <input type='hidden' name='acao' value=''>
             <input type='hidden' name='numeroPagina' value='<%=(numeroPagina+1)%>'>
             <input type='hidden' name='maxQuestao' value='<%=maxQuestao%>'>
+            
+            <input type='hidden' name='nivel' value='<%= request.getParameter("nivel") %>'>
+            <input type='hidden' name='materia' value='<%= request.getParameter("materia") %>'>
+            <input type='hidden' name='modulo' value='<%= request.getParameter("modulo") %>'>
+            <input type='hidden' name='tipo' value='<%= request.getParameter("tipo") %>'>
+            <input type='hidden' name='palavras' value='<%= request.getParameter("palavras") %>'>
+            
             <div class="card-action">
             <%
                 if(showBotaoProximaPagina) {
