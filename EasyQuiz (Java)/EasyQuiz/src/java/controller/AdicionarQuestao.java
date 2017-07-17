@@ -37,7 +37,7 @@ class AdicionarQuestao {
             request.setAttribute("listDisciplina", disciplinas);
             request.setAttribute("listModulo", modulos);
             request.setAttribute("listDificuldade", dificuldades);
-            jsp = "/AdicionarQuestao.jsp";
+            jsp = "/adicionarQuestao.jsp";
         } catch (Exception e) {
             e.printStackTrace();
             jsp = "";
