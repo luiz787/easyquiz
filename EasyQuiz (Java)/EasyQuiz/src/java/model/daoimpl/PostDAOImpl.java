@@ -45,7 +45,7 @@ public class PostDAOImpl implements PostDAO {
     }
 
    @Override
-    synchronized public void insert(Post post) throws ExcecaoPersistencia {
+    synchronized public Long insert(Post post) throws ExcecaoPersistencia {
         try {
             if (post == null) {
                 throw new ExcecaoPersistencia("Entidade não pode ser nula.");
@@ -61,6 +61,24 @@ public class PostDAOImpl implements PostDAO {
             pstmt.setTimestamp(3, java.sql.Timestamp.from(post.getDatCriacao()));
             pstmt.setLong(4, post.getAutor().getId());
             
+            pstmt.executeUpdate();
+            
+            ResultSet rs = pstmt.executeQuery("SELECT LAST_INSERT_ID() FROM post");
+            
+            Long codigo = null;
+            if (rs.next()) {
+                codigo = rs.getLong(1);
+                post.setCodigo(codigo);
+            }
+            
+            rs.close();
+            pstmt.close();
+            connection.close();
+            
+            return codigo;
+            
+            
+            /*
             int linhas = pstmt.executeUpdate();
 
             if (linhas == 0) {
@@ -76,6 +94,7 @@ public class PostDAOImpl implements PostDAO {
             rs.close();
             pstmt.close();
             connection.close();
+            */
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);

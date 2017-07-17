@@ -52,8 +52,8 @@ public class Login {
                 boolean result = manterSessao.cadastrarSessao(sessao);
                 
                 request.getSession().setAttribute("contadorRespostaQuestao", 0);
-                request.getSession().setAttribute("listRespostaNaoLogado", null);
-                request.getSession().setAttribute("listTxtRespostaNaoLogado", null);
+                request.getSession().removeAttribute("listTxtResposta");
+                request.getSession().removeAttribute("listRespostaNaoLogado");
                 jsp = ListarQuestao.execute(request);
             }
 
