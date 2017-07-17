@@ -71,7 +71,7 @@
                         <input id="password" placeholder="senha" name="senha" type="password" class="validate" style="color: #696969;border-color:#D3D3D3;">
                     </li>
                     <a class="btn-small waves-effect waves-light grey darken-2 btn" onclick="validarCamposLogin()">Login</a>
-                    <a class="btn-small waves-effect waves-light grey darken-2 btn" href="./Cadastro.jsp">Cadastrar</a>
+                    <a class="btn-small waves-effect waves-light grey darken-2 btn" href="./TelaCadastro.jsp">Cadastrar</a>
                      </form>
                     <% }else{ %>
                      <li> 
@@ -93,9 +93,9 @@
                 </ul>
             </div>
             <div class="row" style="background-color: #EE6363; margin-top: 15px;" >
-                <div class="col s8" >Matérias comuns:
-                    <a id="botao-matematica" class="waves-effect waves-light" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Matemática</a>
-                    <a id="botao-portugues" class="waves-effect waves-light" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Português</a>
+                <div class="col s8" >Disciplinas comuns:
+                    <a id="botao-matematica" class="waves-effect waves-light" href="http://localhost:8080/EasyQuiz/servletweb?palavras=&materia=3&acao=PaginaInicial" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Matemática</a>
+                    <a id="botao-portugues" class="waves-effect waves-light" href="http://localhost:8080/EasyQuiz/servletweb?palavras=&materia=4&acao=PaginaInicial" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top: 2px; background-color: #E5E9F2; color: #47525E">Português</a>
                     <a id="botao-fisica" class="waves-effect waves-light" href="http://localhost:8080/EasyQuiz/servletweb?palavras=&materia=1&acao=PaginaInicial" style="margin-left: 5px; margin-right: 5px; padding-left: 5px; padding-right: 5px; padding-top:    2px; background-color: #E5E9F2; color: #47525E">Física</a>
                 </div>
                 <div class="col s4">
@@ -125,7 +125,7 @@
                             </div>
                             <div class="input-field col s6">
                                <select id="materia" name="materia" onChange="getStates(this);">
-                                    <option value="" disabled selected>Escolha uma Matéria</option>
+                                    <option value="" disabled selected>Escolha uma Disciplina</option>
                                     
                                      <% 
                                         ManterDisciplinaImpl Disciplina = new ManterDisciplinaImpl(DisciplinaDAOImpl.getInstance()); 
@@ -140,9 +140,18 @@
                                     <option value="">Nenhum</option>
                                 </select>
                                     <script> function getStates(mat){ 
-                                      mat = document.getElementsById("meteria").value;
-                                      alert("debug");
-                                     //document.location.href="oi.jsp?tuavar="+variavel;} 
+                                         var select = document.getElementById("modulo");
+                                        
+                                            for (i = 0 ; i < document.getElementById("modulo").length+1; i++ ){
+                                            var modu = select.options[i];
+                                            if(mat.value != modu.id){
+                                            select.remove(i);
+                                            $('select').material_select();
+                                            i--;
+                                            }
+                                         }
+                                         
+                                        }
                                     </script>
                             </div>
                         </div>
@@ -156,8 +165,8 @@
                                 </select>
                             </div>
                             <div class="input-field col s6">
-                                <select id="modulo" name="modulo">
-                                    <option value="" disabled selected>Escolha um módulo</option>
+                                 <select id="modulo" name="modulo" >
+                                    <option value="" id="0" disabled selected>Escolha um módulo</option>
                                      <% 
                                         ManterModuloImpl Modulo = new ManterModuloImpl(ModuloDAOImpl.getInstance()); 
                                         List<Modulo> listamodulos = Modulo.getAll() ;
@@ -165,11 +174,13 @@
                                         for (Modulo M : listamodulos) { 
                                          String nommodulo = M.getNome();
                                          int valmodulo = M.getId().intValue();
-                                         %>
-                                         <option value="<%=valmodulo%>" style="color:blue;"><%=nommodulo%></option>
+                                         long idmate = M.getDisciplina().getId(); 
+                                     %>
+                                     
+                                     <option id="<%=idmate%>" value="<%=valmodulo%>" style="color:blue;"><%=nommodulo%></option>
                                     
                                     <% } %>
-                                    <option value="">Nenhum</option>
+                                    <option id="-1" value="">Nenhum</option>
                                 </select>
                             </div>
                         </div>
