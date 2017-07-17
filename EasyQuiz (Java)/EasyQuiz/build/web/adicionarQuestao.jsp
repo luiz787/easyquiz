@@ -63,8 +63,8 @@
 
 
         <div class="container" style=" z-index: 1">
-            <form name="cadastro" id="cadastro" method="GET" action="Cadastro.jsp">
-                <input type="hidden" name="acao" value="Cadastro" />
+            <form name="cadastro" id="cadastro" method="GET" action="CadastroQuestao.jsp">
+                <input type="hidden" name="acao" value="CadastroQuestao" />
                 <div>
                     <h3>Cadastrar questão</h3>
                     Tipo da questão:

@@ -31,7 +31,7 @@ import model.serviceimpl.ManterQuestaoImpl;
  *
  * @author Luiz
  */
-public class Cadastro {
+public class CadastroQuestao {
     public static String execute(HttpServletRequest request) {
         String jsp = "";
         try {
