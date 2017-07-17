@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ import model.exception.ExcecaoPersistencia;
  * @author Aluno
  */
 public class PostDAOImpl implements PostDAO {
+
     private static PostDAOImpl postDAO = null;
 
     private PostDAOImpl() {
@@ -42,8 +44,8 @@ public class PostDAOImpl implements PostDAO {
         return postDAO;
     }
 
-    @Override
-    synchronized public Long insert(Post post) throws ExcecaoPersistencia {
+   @Override
+    synchronized public void insert(Post post) throws ExcecaoPersistencia {
         try {
             if (post == null) {
                 throw new ExcecaoPersistencia("Entidade não pode ser nula.");
@@ -53,33 +55,33 @@ public class PostDAOImpl implements PostDAO {
 
             String sql = "INSERT INTO post (cod_questao, txt_conteudo, dat_criacao, cod_usuario) VALUES(?, ?, ?, ?)";
 
-            PreparedStatement pstmt = connection.prepareStatement(sql);
+            PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setLong(1, post.getQuestao().getId());
             pstmt.setString(2, post.getTxtConteudo());
             pstmt.setTimestamp(3, java.sql.Timestamp.from(post.getDatCriacao()));
             pstmt.setLong(4, post.getAutor().getId());
             
-            pstmt.executeUpdate();
-            
-            ResultSet rs = pstmt.executeQuery("SELECT LAST_INSERT_ID() FROM post");
-            
-            Long id = null;
-            if (rs.next()) {
-                id = rs.getLong(1);
-                post.setCodigo(id);
+            int linhas = pstmt.executeUpdate();
+
+            if (linhas == 0) {
+                System.out.println("ERRO AO GRAVAR");
             }
-            
+            ResultSet rs = pstmt.getGeneratedKeys();
+
+            if (rs.next()) {
+                Long cod_post = rs.getLong(1);
+                post.setCodigo(cod_post);
+            }
+
             rs.close();
             pstmt.close();
             connection.close();
-            
-            return id;
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);
         }
     }
-
+    
     @Override
     synchronized public Post delete(Long cod_Post) throws ExcecaoPersistencia {
         try {
@@ -90,7 +92,7 @@ public class PostDAOImpl implements PostDAO {
             String sql = "DELETE FROM post WHERE cod_post = ?";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
-            
+
             pstmt.setLong(1, cod_Post);
             pstmt.executeUpdate();
 
@@ -122,11 +124,11 @@ public class PostDAOImpl implements PostDAO {
                 post = new Post();
                 post.setCodigo(rs.getLong("cod_post"));
                 Questao questao = questaoDAOImpl.getQuestaoById(rs.getLong("cod_questao"));
+                Usuario usuario = usuarioDAOImpl.getUsuarioById(rs.getLong("cod_usuario"));
                 post.setQuestao(questao);
                 post.setTxtConteudo(rs.getString("txt_conteudo"));
-                post.setDatCriacao((rs.getTimestamp("dat_criacao")).toInstant());
-                Usuario usuario = usuarioDAOImpl.getUsuarioById(rs.getLong("cod_usuario"));
                 post.setAutor(usuario);
+                post.setDatCriacao((rs.getTimestamp("dat_criacao")).toInstant());
             }
 
             rs.close();
@@ -141,11 +143,11 @@ public class PostDAOImpl implements PostDAO {
     }
 
     @Override
-    public List<Post> listAllByQuestao(Long cod_Questao) throws ExcecaoPersistencia {
+    public List<Post> listAll() throws ExcecaoPersistencia {
         try {
             Connection connection = JDBCManterConexao.getInstancia().getConexao();
 
-            String sql = "SELECT * FROM post WHERE cod_questao = ? ORDER BY cod_post;";
+            String sql = "SELECT * FROM post ORDER BY cod_post;";
 
             PreparedStatement pstmt = connection.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
@@ -158,15 +160,53 @@ public class PostDAOImpl implements PostDAO {
                     Post post = new Post();
                     post.setCodigo(rs.getLong("cod_post"));
                     Questao questao = questaoDAOImpl.getQuestaoById(rs.getLong("cod_questao"));
+                    Usuario usuario = usuarioDAOImpl.getUsuarioById(rs.getLong("cod_usuario"));
                     post.setQuestao(questao);
                     post.setTxtConteudo(rs.getString("txt_conteudo"));
-                    post.setDatCriacao((rs.getTimestamp("dat_criacao")).toInstant());
-                    Usuario usuario = usuarioDAOImpl.getUsuarioById(rs.getLong("cod_usuario"));
                     post.setAutor(usuario);
+                    post.setDatCriacao((rs.getTimestamp("dat_criacao")).toInstant());
                     listAll.add(post);
                 } while (rs.next());
             }
 
+            rs.close();
+            pstmt.close();
+            connection.close();
+
+            return listAll;
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ExcecaoPersistencia(ex);
+        }
+    }
+
+    @Override
+    public List<Post> listAllByQuestao(Long cod_Questao) throws ExcecaoPersistencia {
+        try {
+            Connection connection = JDBCManterConexao.getInstancia().getConexao();
+
+            String sql = "SELECT * FROM post WHERE cod_questao = ? ORDER BY cod_post;";
+
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+
+            pstmt.setString(1, String.valueOf(cod_Questao));
+            ResultSet rs = pstmt.executeQuery();
+            List<Post> listAll = new ArrayList<>();
+            QuestaoDAO questaoDAOImpl = QuestaoDAOImpl.getInstance();
+            UsuarioDAO usuarioDAOImpl = UsuarioDAOImpl.getInstance();
+            if (rs.next()) {
+                do {
+                    Post post = new Post();
+                    post.setCodigo(rs.getLong("cod_post"));
+                    Questao questao = questaoDAOImpl.getQuestaoById(rs.getLong("cod_questao"));
+                    Usuario usuario = usuarioDAOImpl.getUsuarioById(rs.getLong("cod_usuario"));
+                    post.setQuestao(questao);
+                    post.setTxtConteudo(rs.getString("txt_conteudo"));
+                    post.setAutor(usuario);
+                    post.setDatCriacao((rs.getTimestamp("dat_criacao")).toInstant());
+                    listAll.add(post);
+                } while (rs.next());
+            }
             rs.close();
             pstmt.close();
             connection.close();
