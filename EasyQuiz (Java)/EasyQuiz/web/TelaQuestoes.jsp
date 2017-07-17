@@ -186,7 +186,7 @@
                         </div>
                         <div class="card-action">
                             <button onclick="ResponderQuestao(document.<%="formInserirResposta"+i%>)" class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important;" id='<%="responder"+i%>'>Responder</button>
-                            <a id='<%="forum"+i%>' href="/EasyQuiz/servletweb?acao=ListarForum&questao=<%= questao.getId()%>"><b>Forum</b></a>
+                            <a id='<%="forum"+i%>' onclick="ValidaLoginForum(document.<%="formInserirResposta"+i%>)" href="#"><b>Forum</b></a>
                         </div>
                     </div>
                 </div>
@@ -271,7 +271,7 @@
 
                         <div class="card-action">
                             <button onclick="ResponderQuestao(document.<%="formInserirResposta"+i%>)" class="btn waves-effect waves-orange orange right" style="background-color: #f4511e !important;" id='<%="responder"+i%>'>Responder</button>
-                            <a id='<%="forum"+i%>' href="/EasyQuiz/servletweb?acao=ListarForum&questao=<%= questao.getId()%>"><b>Forum</b></a>
+                            <a id='<%="forum"+i%>' onclick="ValidaLoginForum(document.<%="formInserirResposta"+i%>)" href="#"><b>Forum</b></a>
                         </div>
 
                     </div>

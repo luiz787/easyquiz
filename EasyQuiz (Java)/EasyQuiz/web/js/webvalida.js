@@ -55,7 +55,18 @@ function ResponderQuestao(form) {
         }
     } else {
         alert("Voce excedeu o limite de questoes a ser respondidas! "
-              + "Efetue o cadastro para responder mais questões.");
+              + "Efetue o login para responder mais questões.");
+    }
+}
+
+function ValidaLoginForum(form) {
+    var logado = form.logado.value;
+    if(form.logado.value==1) {
+        caminhourl = "/EasyQuiz/servletweb?acao=ListarForum&questao="+form.questao.value;
+        form.action = caminhourl;
+        form.submit();
+    } else {
+        alert("Efetue o login para poder acessar o forum da questão!")
     }
 }
 

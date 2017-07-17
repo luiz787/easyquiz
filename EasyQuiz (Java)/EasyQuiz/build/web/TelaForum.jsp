@@ -77,12 +77,15 @@
 
         <%
             Long cod_Questao = (Long) request.getAttribute("cod_Questao");
-            //request.setAttribute("cod_Questao", new Long((long) 1));
             ManterQuestao manterQuestao = new ManterQuestaoImpl(QuestaoDAOImpl.getInstance());
             Questao questao = manterQuestao.getQuestaoById(cod_Questao);
+            
+            ManterQuestaoFechada manterQuestaoFechada = 
+                                 new ManterQuestaoFechadaImpl(QuestaoFechadaDAOImpl.getInstance());
+            List<QuestaoFechada> listQuestaoFechada = manterQuestaoFechada.getAll(cod_Questao);
         %>
 
-        <H4 style="color: #47525E; padding-left: 180px;">Fórum</H4>
+        <H4 style="color: #47525E; padding-left: 50%;">Fórum</H4>
         <div class="container #f4511e deep-orange darken-1 white-text">
             <p><H8 style="color: #000000; display: inline;"> &nbsp &nbsp &nbsp Disciplina: </H8> <H8><text style="color: #fbe9e7; display: inline;" name="Disciplina"/><%= questao.getDisciplina().getNome()%>  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</H8>
             <H8 style="color: #000000; display: inline;">Dificuldade: </H8><H8><text name="Dificuldade" style="color: #fbe9e7; display: inline;"/><%= questao.getDificuldade().getDescricao()%> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</H8>
@@ -109,8 +112,29 @@
 
         <div class="container">
             <p><h8 class="deep-orange-text text-deep-orange"><b>Resposta correta: </b></h8>
-                <% if (questao.getIdTipo() == 'F') {%>                
-            <h8><b><text name="RespostaCorretaFechada"/><%= questao.getSeqQuestaoCorreta()%></b></h8>
+                <% if (questao.getIdTipo() == 'F') {
+<%
+                                    char letra='a';
+                                    for(int j=0; j<alternativas.size(); j++) {
+                                        
+%>
+                                    <p>
+                                        <input class="with-gap" name='<%="grupo"+i%>' type="radio" id='<%="grupo"+i+"alternativa"+j%>'  />
+                                        <label id='<%="grupo"+i+"txtAlternativa"+j%>' for='<%="grupo"+i+"alternativa"+j%>'><b><%=((char)(letra+j))+")"%></b> <%= alternativas.get(j).getTxtAlternativa() %> </label>
+                                    </p>
+<%
+                                    }
+%>
+                %>                
+            <h8>
+                <b>
+                    <text name="RespostaCorretaFechada"/>
+                    <%
+                        
+                        ((char) (letra + questao.getSeqQuestaoCorreta()-1))+")";
+                    %>
+                </b>
+            </h8>
                     <% } else if (questao.getIdTipo() == 'A') {%>
             <h8><b><text name="RespostaCorretaAberta"/><%= questao.getTxtResposta()%></b></h8>
                     <% } %>
@@ -124,7 +148,6 @@
         <div class="container">
 
             <%
-                //Long cod_Questao = new Long(2);
                 ManterPost manterPost = new ManterPostImpl(PostDAOImpl.getInstance());
                 List<Post> listPost = (List<Post>) manterPost.getAllByQuestao(cod_Questao);
                 if (listPost.size() != 0) {
