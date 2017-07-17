@@ -79,7 +79,8 @@
                 </div>
                 <div id="dados">
                     <div class="input-field">
-                        <select id="disciplina" name="disciplina" onChange="getStates(this);">
+                        <input name="disciplina" type="text" list="disciplina" />
+                        <datalist id="disciplina">
                             <option value="" disabled selected>Escolha uma Disciplina</option>
 
                             <% 
@@ -93,7 +94,7 @@
 
                             <% } %>
                             <option value="">Nenhum</option>
-                        </select>
+                        </datalist>
                             <label>Disciplina</label>
                     </div>
                     <div class="input-field">

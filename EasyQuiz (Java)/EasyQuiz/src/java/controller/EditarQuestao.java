@@ -35,9 +35,9 @@ class EditarQuestao {
             manterQuestao.alterarQuestao(questaoAlterada);
             if (questaoAlterada.getIdTipo()=='A'){
                 String novaResposta = request.getParameter("resposta-correta"+ordem);
-                System.out.println(novaResposta);
+                //System.out.println(novaResposta);
                 questaoAlterada.setTxtResposta(novaResposta);
-                System.out.println("Nova resposta: "+questaoAlterada.getTxtResposta());
+                //System.out.println("Nova resposta: "+questaoAlterada.getTxtResposta());
                 manterQuestao.alterarQuestao(questaoAlterada);
             } else if (questaoAlterada.getIdTipo()=='F'){
                 ManterQuestaoFechada manterQuestaoFechada = new ManterQuestaoFechadaImpl(QuestaoFechadaDAOImpl.getInstance());
