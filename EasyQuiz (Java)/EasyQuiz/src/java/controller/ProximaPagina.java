@@ -18,7 +18,6 @@ public class ProximaPagina {
             int numeroPagina = (Integer) request.getSession().getAttribute("numeroPagina");
             request.getSession().setAttribute("numeroPagina", ++numeroPagina);
             request.getSession().setAttribute("acao", "ProximaPagina");
-            
             jsp = ListarQuestao.execute(request);
         } catch (Exception e) {
             e.printStackTrace();
