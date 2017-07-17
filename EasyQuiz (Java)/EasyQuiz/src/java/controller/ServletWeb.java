@@ -41,6 +41,8 @@ public class ServletWeb extends HttpServlet {
             jsp = ExcluirQuestao.execute(request);
         else if (acao.equals("AdicionarQuestao"))
             jsp = AdicionarQuestao.execute(request);
+        else if(acao.equals("Sair"))
+            jsp = Logout.execute(request);
         
         if(!(jsp.equals("notFoward"))) {
             RequestDispatcher rd = request.getRequestDispatcher(jsp);
