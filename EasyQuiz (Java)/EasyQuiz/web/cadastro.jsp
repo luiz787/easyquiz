@@ -35,7 +35,11 @@
                 String dificuldade = request.getParameter("dificuldade");
                 System.out.println(dificuldade);
                 String disciplina = request.getParameter("disciplina");
-                System.out.println(disciplina);/*
+                System.out.println(disciplina);
+                if (request.getAttribute("listDificuldade")!=null){
+                    System.out.println("Deu certo.");
+                }
+                /*
                 List<Dificuldade> listDificuldade = (List<Dificuldade>) request.getAttribute("listDificuldade");
                 for (int i=0; i<listDificuldade.size(); i++){
                     if (dificuldade.equals(listDificuldade.get(i).getDescricao())){
