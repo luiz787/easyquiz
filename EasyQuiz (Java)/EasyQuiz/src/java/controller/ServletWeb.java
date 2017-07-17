@@ -15,6 +15,7 @@ public class ServletWeb extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String acao = request.getParameter("acao");
         System.out.println("ACAO: "+acao);
+        
         if(acao.equals("PaginaInicial"))
             jsp = PaginaInicial.execute(request);
         else if(acao.equals("ProximaPagina"))
@@ -41,15 +42,16 @@ public class ServletWeb extends HttpServlet {
             jsp = ExcluirQuestao.execute(request);
         else if (acao.equals("AdicionarQuestao"))
             jsp = AdicionarQuestao.execute(request);
-        else if (acao.equals("CadastroQuestao")){
-            System.out.println("Entrei no CadastroQuestao!!!");
-            jsp = CadastroQuestao.execute(request);
-        }
-        else if (acao.equals("EditarQuestao")){
-            jsp = EditarQuestao.execute(request);
+        else if (acao.equals("Cadastro")){
+            System.out.println("Entrei no cadastro!!!");
+            jsp = Cadastro.execute(request);
         }
         else if(acao.equals("Sair"))
             jsp = Logout.execute(request);
+        else if(acao.equals("GravarPostAvulso"))
+            jsp = GravarPostAvulso.execute(request);
+        else if (acao.equals("GravarPostResposta"))
+            jsp = GravarPostResposta.execute(request);
         
         if(!(jsp.equals("notFoward"))) {
             RequestDispatcher rd = request.getRequestDispatcher(jsp);
