@@ -7,8 +7,12 @@ public class ListarForum {
         String jsp = "";
         try {
             System.out.println("ListarForum!!!");
+            String questaoStr = request.getParameter("questao");
+            Long cod_Questao = Long.parseLong(questaoStr);
             
-            jsp = "/erro.jsp";
+            request.setAttribute("cod_Questao", cod_Questao);
+            
+            jsp = "/TelaForum.jsp";
         } catch (Exception e) {
             e.printStackTrace();
             jsp = "";
