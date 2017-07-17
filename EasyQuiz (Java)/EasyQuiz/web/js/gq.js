@@ -41,7 +41,6 @@ function editarquestao(idQuestao, botaoEditar) {
 }
 
 function editarQuestaoFormulario(form){
-    alert(form);
     caminhourl = "/EasyQuiz/servletweb?acao=EditarQuestao";
     form.action = caminhourl;
     form.submit();

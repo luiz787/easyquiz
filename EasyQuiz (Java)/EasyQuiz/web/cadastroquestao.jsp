@@ -29,12 +29,8 @@
         <%
             if (request!=null){
                 
-                /*TODO:
-                comparar a entrada com elementos da lista
-                setar
-                chamar o servico para persistir a questao*/
         %>    
-        <div class="container"><h3>Questão cadastrada com sucesso! Id da questão: </h3></div>
+        <div class="container"><h3>Questão cadastrada com sucesso!</h3></div>
         <%
             }
         %>

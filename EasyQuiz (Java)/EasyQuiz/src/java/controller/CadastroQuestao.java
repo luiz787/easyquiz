@@ -130,7 +130,7 @@ public class CadastroQuestao {
                     System.out.println("SEQUENCIAL CORRETO: "+questao.getSeqQuestaoCorreta());
                     
                 }*/
-            jsp = "/cadastro.jsp";
+            jsp = "/cadastroquestao.jsp";
         } catch (Exception e) {
             e.printStackTrace();
             jsp = "";

@@ -15,7 +15,7 @@
         <jsp:include page ="Menu.jsp"/>
         <div class="container">
             <h4>Questão Editada Com Sucesso!</h4>
-            <a class="" href="">Voltar</a>
+            <a class="waves-effect waves-light btn deep-orange darken-1" href="/EasyQuiz/servletweb?acao=GerenciarQuestoes">Voltar</a>
         </div>
         
         <jsp:include page ="Footer.jsp"/>
