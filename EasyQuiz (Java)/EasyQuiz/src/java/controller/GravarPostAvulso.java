@@ -24,19 +24,17 @@ import model.serviceimpl.ManterUsuarioImpl;
  *
  * @author Carol
  */
-class GravarPostAvulso {
+public class GravarPostAvulso {
 
     static String execute(HttpServletRequest request) {
         String jsp = "/erro.jsp";
         String erro = "Erro desconhecido";
 
         try {
-            //Long cod_Usuario = new Long (2);
             ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
             Long cod_Usuario = (Long) request.getSession().getAttribute("cod_Usuario");
             Usuario usuario = manterUsuario.getUsuarioById(cod_Usuario);
-
-            //Long cod_Questao = new Long (2);
+            
             Long cod_Questao = (Long) request.getAttribute("cod_Questao");            
             ManterQuestao manterQuestao = new ManterQuestaoImpl(QuestaoDAOImpl.getInstance());
             Questao questao = manterQuestao.getQuestaoById(cod_Questao);
