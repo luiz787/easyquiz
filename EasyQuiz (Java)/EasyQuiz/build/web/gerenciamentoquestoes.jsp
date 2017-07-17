@@ -169,7 +169,7 @@
 
                 </div>
                 <div class="col s4 m3 l3">
-                    <a class="waves-effect waves-light btn deep-orange darken-1" href="#"><i class="material-icons left">add</i>Adicionar questão</a><!-- mudar cor -->
+                    <a class="waves-effect waves-light btn deep-orange darken-1" href="/EasyQuiz/servletweb?acao=AdicionarQuestao"><i class="material-icons left">add</i>Adicionar questão</a><!-- mudar cor -->
                 </div>	
             </div>
         </div>

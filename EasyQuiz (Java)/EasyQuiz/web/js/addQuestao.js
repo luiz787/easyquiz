@@ -7,19 +7,19 @@ function addAlternativa(botaoAdd) {
     colTxtArea.setAttribute("class", "input-field col s7");
     let colBtn = document.createElement("div");
     colBtn.setAttribute("class", "col s3");
-		let colRadio = document.createElement("div");
-		colRadio.setAttribute("class", "col s2");
-		let btnRadio = document.createElement("input");
-		btnRadio.setAttribute("type", "radio");
-		btnRadio.setAttribute("class", "with-gap");
-		btnRadio.setAttribute("name", "group1");
-		let idBtnRadio = "test5";//id tem que ser dinâmico
-		btnRadio.setAttribute("id", idBtnRadio); 
-		let labelBtnRadio = document.createElement("label");
-		colRadio.appendChild(btnRadio);
-		colRadio.appendChild(labelBtnRadio);
-		labelBtnRadio.setAttribute("for", idBtnRadio);
-		labelBtnRadio.innerHTML = "Correta"; // por algum motivo está com cor diferente e fora do alinhamento.
+    let colRadio = document.createElement("div");
+    colRadio.setAttribute("class", "col s2");
+    let btnRadio = document.createElement("input");
+    btnRadio.setAttribute("type", "radio");
+    btnRadio.setAttribute("class", "with-gap");
+    btnRadio.setAttribute("name", "group1");
+    let idBtnRadio = "test5";//id tem que ser dinâmico
+    btnRadio.setAttribute("id", idBtnRadio);
+    let labelBtnRadio = document.createElement("label");
+    colRadio.appendChild(btnRadio);
+    colRadio.appendChild(labelBtnRadio);
+    labelBtnRadio.setAttribute("for", idBtnRadio);
+    labelBtnRadio.innerHTML = "Correta"; // por algum motivo está com cor diferente e fora do alinhamento.
     let botaoExcluir = document.createElement("a");
     botaoExcluir.setAttribute("class", "waves-effect waves-light btn deep-orange darken-1");
     //botaoExcluir.setAttribute("id", "botaoExcluirNova");
@@ -30,7 +30,7 @@ function addAlternativa(botaoAdd) {
     iconBotaoExcluir.innerHTML = "delete";
     botaoExcluir.appendChild(iconBotaoExcluir);
     colBtn.appendChild(botaoExcluir);
-		divRow.appendChild(colRadio);
+    divRow.appendChild(colRadio);
     divRow.appendChild(colTxtArea);
     divRow.appendChild(colBtn);
     let txtAreaAlternativa = document.createElement("textarea");
@@ -65,6 +65,7 @@ function questaoAberta() {
     divCol.setAttribute("class", "input-field col s12");
     let txtAreaRespAberta = document.createElement("textarea");
     txtAreaRespAberta.setAttribute("id", "txtresposta");
+    txtAreaRespAberta.setAttribute("name", "txtresposta");
     txtAreaRespAberta.setAttribute("class", "materialize-textarea");
     let labelresposta = document.createElement("label");
     labelresposta.setAttribute("for", "txtresposta");

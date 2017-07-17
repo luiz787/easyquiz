@@ -39,6 +39,8 @@ public class ServletWeb extends HttpServlet {
             jsp = GerenciarQuestoes.execute(request);
         else if (acao.equals("ExcluirQuestao"))
             jsp = ExcluirQuestao.execute(request);
+        else if (acao.equals("AdicionarQuestao"))
+            jsp = AdicionarQuestao.execute(request);
         
         if(!(jsp.equals("notFoward"))) {
             RequestDispatcher rd = request.getRequestDispatcher(jsp);
