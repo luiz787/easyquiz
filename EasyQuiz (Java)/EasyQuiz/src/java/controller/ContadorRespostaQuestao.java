@@ -37,19 +37,19 @@ public class ContadorRespostaQuestao {
                 Questao questao = manterQuestao.getQuestaoById(cod_Questao);
                 
                 if(questao.getIdTipo()=='A') {
-                    if(request.getSession().getAttribute("listTxtRespostaNaoLogado")==null) {
-                        List<Questao> listTxtRespostaNaoLogado = new ArrayList<Questao>();
-                        request.getSession().setAttribute("listTxtRespostaNaoLogado", listTxtRespostaNaoLogado);
+                    if(request.getSession().getAttribute("listTxtResposta")==null) {
+                        List<Questao> listTxtResposta = new ArrayList<Questao>();
+                        request.getSession().setAttribute("listTxtResposta", listTxtResposta);
                     }
-                    List<Questao> listTxtRespostaNaoLogado = 
-                            (List<Questao>) request.getSession().getAttribute("listTxtRespostaNaoLogado");
+                    List<Questao> listTxtResposta = 
+                            (List<Questao>) request.getSession().getAttribute("listTxtResposta");
                     String txtResposta = request.getParameter("resposta");
                     
                     Questao questaoFechada = questao;
                     questaoFechada.setTxtResposta(txtResposta);
                     
-                    listTxtRespostaNaoLogado.add(questao);
-                    request.getSession().setAttribute("listTxtRespostaNaoLogado", listTxtRespostaNaoLogado);
+                    listTxtResposta.add(questao);
+                    request.getSession().setAttribute("listTxtResposta", listTxtResposta);
                     
                 } else if(questao.getIdTipo()=='F') {
                     if(request.getSession().getAttribute("listRespostaNaoLogado")==null) {

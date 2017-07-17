@@ -142,7 +142,8 @@
                                     <script> function getStates(mat){ 
                                       mat = document.getElementsById("meteria").value;
                                       alert("debug");
-                                     //document.location.href="oi.jsp?tuavar="+variavel;} </script>
+                                     //document.location.href="oi.jsp?tuavar="+variavel;} 
+                                    </script>
                             </div>
                         </div>
                         <div class="row">

@@ -31,55 +31,53 @@ public class ListarQuestao {
              
             for (int i=0; i < listQuestao.size(); i++ ) { 
                Questao Q = listQuestao.get(i);
-           if ( request.getParameter("nivel")!=  null  )  {
-               if(!request.getParameter("nivel").equals(""))  { 
-                 if(! Q.getDificuldade().getId().toString().equals(request.getParameter("nivel"))){
-                        listQuestao.remove(Q);
-                        i--;
-                        continue;
+                if ( request.getParameter("nivel")!=  null  )  {
+                    if(!request.getParameter("nivel").equals(""))  { 
+                      if(! Q.getDificuldade().getId().toString().equals(request.getParameter("nivel"))){
+                             listQuestao.remove(Q);
+                             i--;
+                             continue;
+                         }
                     }
-               }
-           }
-           if ( request.getParameter("materia") !=  null ) {
-               if(!request.getParameter("materia").equals(""))  { 
-                        if(! Q.getDisciplina().getId().toString().equals(request.getParameter("materia"))){
-                        listQuestao.remove(Q);
-                        i--;
-                        continue;
-                    }
-               }        
-            }
-             if ( request.getParameter("modulo") !=  null ) {
-                 if(!request.getParameter("nivel").equals(""))  { 
-                        if(! Q.getModulo().getId().toString().equals(request.getParameter("modulo"))){
-                        listQuestao.remove(Q);
-                        i--;
-                        continue;
-                    }
+                }
+                if ( request.getParameter("materia") !=  null ) {
+                    if(!request.getParameter("materia").equals(""))  { 
+                             if(! Q.getDisciplina().getId().toString().equals(request.getParameter("materia"))){
+                             listQuestao.remove(Q);
+                             i--;
+                             continue;
+                         }
+                    }        
                  }
-            }
-            if ( request.getParameter("tipo") !=  null ) {
-                if(!request.getParameter("tipo").equals(""))  { 
-                        System.out.println("tipo request:" +request.getParameter("tipo") + " tipo questao: "+ Q.getIdTipo() );
-                        if(!request.getParameter("tipo").contains(String.valueOf(Q.getIdTipo())) ){
-                    
+                if ( request.getParameter("modulo") !=  null ) {
+                    if(!request.getParameter("modulo").equals(""))  { 
+                           if(! Q.getModulo().getId().toString().equals(request.getParameter("modulo"))){
+                           listQuestao.remove(Q);
+                           i--;
+                           continue;
+                       }
+                    }
+                }
+                if ( request.getParameter("tipo") !=  null ) {
+                    if(!request.getParameter("tipo").equals(""))  { 
+                            System.out.println("tipo request:" +request.getParameter("tipo") + " tipo questao: "+ Q.getIdTipo() );
+                            if(!request.getParameter("tipo").contains(String.valueOf(Q.getIdTipo())) ){
+
+                                listQuestao.remove(Q);
+                                i--;
+                                continue;
+                        }
+                    }        
+                }
+                if ( request.getParameter("palavras") !=  null ) {
+                    if(!request.getParameter("palavras").equals(""))  { 
+                            if(! Q.getTxtEnunciado().contains(request.getParameter("palavras"))){
                             listQuestao.remove(Q);
                             i--;
                             continue;
-                    }
-                }        
-            }
-            if ( request.getParameter("palavras") !=  null ) {
-                if(!request.getParameter("palavras").equals(""))  { 
-                        if(! Q.getTxtEnunciado().contains(request.getParameter("palavras"))){
-                        listQuestao.remove(Q);
-                        i--;
-                        continue;
-                    }
-                }        
-            }
-            
-             
+                        }
+                    }        
+                }
             }
             
             

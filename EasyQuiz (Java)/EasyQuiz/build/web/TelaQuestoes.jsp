@@ -60,9 +60,9 @@
         }
         
         List<Questao> listQuestaoAbertaResposta=null;
-        if(request.getSession().getAttribute("listTxtRespostaNaoLogado")!=null) {
+        if(request.getSession().getAttribute("listTxtResposta")!=null) {
             listQuestaoAbertaResposta = 
-                    (List<Questao>) request.getSession().getAttribute("listTxtRespostaNaoLogado");
+                    (List<Questao>) request.getSession().getAttribute("listTxtResposta");
         }
         
         if((listQuestao.size()-(numeroPagina*5))<5) {

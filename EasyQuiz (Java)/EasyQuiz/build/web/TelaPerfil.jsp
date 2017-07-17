@@ -52,7 +52,7 @@
                 = new ManterQuestaoFechadaRespostaImpl(QuestaoFechadaRespostaDAOImpl.getInstance());
         List<QuestaoFechadaResposta> listQuestaoFechadaResposta =
                 manterQuestaoFechadaResposta.getAllByUsuarioPeriodo(cod_Usuario, dat_Inicio, dat_Fim);
-        if(listQuestaoFechadaResposta == null) {
+        if(listQuestaoFechadaResposta == null || listQuestaoFechadaResposta.size()==0) {
             System.out.println("NULL");
         } else {
             System.out.println("SIZE: "+listQuestaoFechadaResposta.size());
