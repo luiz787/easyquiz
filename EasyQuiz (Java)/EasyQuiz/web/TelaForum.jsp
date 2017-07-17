@@ -79,10 +79,6 @@
             Long cod_Questao = (Long) request.getAttribute("cod_Questao");
             ManterQuestao manterQuestao = new ManterQuestaoImpl(QuestaoDAOImpl.getInstance());
             Questao questao = manterQuestao.getQuestaoById(cod_Questao);
-            
-            ManterQuestaoFechada manterQuestaoFechada = 
-                                 new ManterQuestaoFechadaImpl(QuestaoFechadaDAOImpl.getInstance());
-            List<QuestaoFechada> listQuestaoFechada = manterQuestaoFechada.getAll(cod_Questao);
         %>
 
         <H4 style="color: #47525E; padding-left: 50%;">Fórum</H4>
@@ -112,27 +108,14 @@
 
         <div class="container">
             <p><h8 class="deep-orange-text text-deep-orange"><b>Resposta correta: </b></h8>
-                <% if (questao.getIdTipo() == 'F') {
-<%
-                                    char letra='a';
-                                    for(int j=0; j<alternativas.size(); j++) {
+<% 
+                    if (questao.getIdTipo() == 'F') {
+                        char letra='a';
                                         
-%>
-                                    <p>
-                                        <input class="with-gap" name='<%="grupo"+i%>' type="radio" id='<%="grupo"+i+"alternativa"+j%>'  />
-                                        <label id='<%="grupo"+i+"txtAlternativa"+j%>' for='<%="grupo"+i+"alternativa"+j%>'><b><%=((char)(letra+j))+")"%></b> <%= alternativas.get(j).getTxtAlternativa() %> </label>
-                                    </p>
-<%
-                                    }
-%>
-                %>                
+%>             
             <h8>
                 <b>
-                    <text name="RespostaCorretaFechada"/>
-                    <%
-                        
-                        ((char) (letra + questao.getSeqQuestaoCorreta()-1))+")";
-                    %>
+                    <text name="RespostaCorretaFechada"/><%= (char) (letra + questao.getSeqQuestaoCorreta()-1)%>
                 </b>
             </h8>
                     <% } else if (questao.getIdTipo() == 'A') {%>
