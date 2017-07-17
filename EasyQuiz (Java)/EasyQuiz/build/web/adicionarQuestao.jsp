@@ -51,6 +51,7 @@
 
         <div class="container" style=" z-index: 1">
             <form name="cadastro" id="cadastro" method="GET" action="Cadastro.jsp">
+                <input type="hidden" name="acao" value="Cadastro" />
                 <div>
                     <h3>Cadastrar questão</h3>
                     Tipo da questão:
@@ -164,7 +165,7 @@
                 </div>
                 <div class="row" id="linhafinal">
                     <div class="col s6">
-                        <button class="btn waves-effect waves-light deep-orange darken-1" type="button" onclick="AdicionarQuestao(document.cadastro)" name="action">Confirmar
+                        <button class="btn waves-effect waves-light deep-orange darken-1" type="button" onclick="AdicionarQuestao(document.cadastro)" name="actionn">Confirmar
                             <i class="material-icons right">send</i>
                         </button>
                     </div>
