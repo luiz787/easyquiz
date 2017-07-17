@@ -55,6 +55,8 @@ public class ServletWeb extends HttpServlet {
             jsp = GravarPostAvulso.execute(request);
         else if (acao.equals("GravarPostResposta"))
             jsp = GravarPostResposta.execute(request);
+        else if(acao.equals("FiltrarDesempenho"))
+            jsp = FiltrarDesempenho.execute(request);
         
         if(!(jsp.equals("notFoward"))) {
             RequestDispatcher rd = request.getRequestDispatcher(jsp);

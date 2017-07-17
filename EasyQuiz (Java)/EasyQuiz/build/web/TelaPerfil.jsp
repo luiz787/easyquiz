@@ -28,6 +28,10 @@
     Usuario usuario = null;
     List<Escolaridade> listEscolaridade = null;
     String primeiroNome = null;
+    int total=0;
+    int acertos=0;
+    int erros=0;
+    int porcentagem=0;
     if(logado==1) {
         Long cod_Usuario = (Long) request.getSession().getAttribute("cod_Usuario");
         ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
@@ -39,25 +43,31 @@
         primeiroNome = usuario.getNome().split(" ")[0];
         
         
-        SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd");
-        java.util.Date date1 = new SimpleDateFormat("dd-MM-yyyy").parse("15-07-2017");
-        Instant dat_Inicio = date1.toInstant();
-        java.util.Date date2 = new SimpleDateFormat("dd-MM-yyyy").parse("17-07-2017");
-        Instant dat_Fim = date2.toInstant();
-        
-        System.out.println("INSTANTE: "+java.sql.Timestamp.from(dat_Inicio));
-        System.out.println("INSTANTE: "+java.sql.Timestamp.from(dat_Fim));
-        
-        ManterQuestaoFechadaResposta manterQuestaoFechadaResposta 
-                = new ManterQuestaoFechadaRespostaImpl(QuestaoFechadaRespostaDAOImpl.getInstance());
-        List<QuestaoFechadaResposta> listQuestaoFechadaResposta =
-                manterQuestaoFechadaResposta.getAllByUsuarioPeriodo(cod_Usuario, dat_Inicio, dat_Fim);
-        if(listQuestaoFechadaResposta == null || listQuestaoFechadaResposta.size()==0) {
-            System.out.println("NULL");
-        } else {
-            System.out.println("SIZE: "+listQuestaoFechadaResposta.size());
-            System.out.println(listQuestaoFechadaResposta.get(0).getQuestao().getTxtEnunciado());
+        if(request.getSession().getAttribute("Desempenho") != null) {
+            List<QuestaoFechadaResposta> listQuestaoFechadaResposta = 
+                (List<QuestaoFechadaResposta>) request.getSession().getAttribute("Desempenho");
+            if(listQuestaoFechadaResposta.size()!=0) {
+                total = listQuestaoFechadaResposta.size();
+                Long seqResposta;
+                Long seqCorreta;
+                for(int i=0; i<listQuestaoFechadaResposta.size(); i++) {
+                    seqResposta = listQuestaoFechadaResposta.get(i).getSeqQuestaoResposta();
+                    seqCorreta = listQuestaoFechadaResposta.get(i).getQuestao().getSeqQuestaoCorreta();
+                    if(seqResposta==seqCorreta) {
+                        acertos++;
+                    } else {
+                        erros++;
+                    }
+                }
+                porcentagem = (acertos*100)/total;
+            }
         }
+        
+        
+        System.out.println("TOTAL: "+total);
+        System.out.println("ACERTOS: "+acertos);
+        System.out.println("ERROS: "+erros);
+        System.out.println("PORCENTAGEM "+porcentagem);
     }
 %>
 <!DOCTYPE html>
@@ -72,24 +82,35 @@
         <div class="container">
             <label for="dataInicio">De:</label>
             <label for="dataFim">Até:</label>
-            <div class="row">
-                <div class="input-field col s6">
-                  <input name="dataInicio" type="date" value="<%= usuario.getDataNascimento() %>">
+            <form method="post" name="formDesempenho">
+                <input type='hidden' name='acao' value=''>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input name="dataInicio" type="date" value="<%= LocalDate.now() %>">
+                    </div>
+                    <div class="input-field col s6">
+                        <input name="dataFim" type="date" value="<%= LocalDate.now() %>">
+                    </div>
+                    <div class="input-field col s6">
+                        <button class="btn waves-effect waves-light" type="button" onclick="filtrarDesempenho(document.formDesempenho)">Filtrar</button>
+                    </div>
                 </div>
-                <div class="input-field col s6">
-                  <input name="dataFim" type="date" value="<%= usuario.getDataNascimento() %>">
-                </div>
-            </div>
+            </form>
             
             
-            <H5 style="color: #47525E; display: inline;">Perguntas respondidas:</H5> <H5 style="color: #C55353; display: inline;">250</H5>
-            <H5 style="color: #47525E; display: inline; padding-left: 50px;">Perguntas acertadas:</H5> <H5 style="color: #C55353; display: inline;">175</H5>
+            <H5 style="color: #47525E; display: inline;">Questões respondidas:</H5> <H5 style="color: #C55353; display: inline;"><%=total%></H5>
+            <H5 style="color: #47525E; display: inline; padding-left: 50px;">Questões acertadas:</H5> <H5 style="color: #C55353; display: inline;"><%=acertos%></H5>
+            <H5 style="color: #47525E; display: inline; padding-left: 50px;">Questões erradas:</H5> <H5 style="color: #C55353; display: inline;"><%=erros%></H5>
             <br>
             <br>
-            <H5 style="color: #47525E; display: inline;">Coeficiente de acerto:</H5> <H5 style="color: #C55353; display: inline;">70%</H5>
+            <H5 style="color: #47525E; display: inline;">Coeficiente de acerto:</H5> <H5 style="color: #C55353; display: inline;"><%=(porcentagem)%>%</H5>
             <div class="progress" style="z-index: -1;">
-              <div class="determinate" style="width: 70%; z-index: -11;"></div>
+              <div class="determinate" id="porcentagem" style="z-index: -11;"></div>
             </div>
+            <script type="text/javascript">
+                document.getElementById("porcentagem").style.width = "<%=(porcentagem)%>%";
+            </script>
+            
         </div>
 
         <br>

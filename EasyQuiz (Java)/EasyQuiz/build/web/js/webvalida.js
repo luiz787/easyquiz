@@ -179,3 +179,10 @@ function AdicionarQuestao(form) {
     form.action = caminhourl;
     form.submit();
 }
+
+function filtrarDesempenho(form) {
+    alert(form.dataInicio.value+" | "+form.dataFim.value);
+    caminhourl = "/EasyQuiz/servletweb?acao=FiltrarDesempenho";
+    form.action = caminhourl;
+    form.submit();
+}
