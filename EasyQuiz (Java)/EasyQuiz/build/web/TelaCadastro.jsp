@@ -1,9 +1,11 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
+    <jsp:include page ="Menu.jsp"/>
     <head>
+        <meta charset="UTF-8">
         <!-- JavaScript  -->
-        <script type="text/javascript" src="lib/jquery.js" ></script>
-        <script type="text/javascript" src="lib/jquery-3.1.1.js" ></script>
         <script type="text/javascript" src="dist/jquery.validate.js" ></script>
         <script type="text/javascript" src="dist/jquery.validate.min.js" ></script>
         <script type="text/javascript" src="dist/additional-methods.min.js" ></script>
@@ -11,7 +13,6 @@
         <script type="text/javascript" src="js/validaForm.js"></script>
     </head>
     <body>
-        <jsp:include page ="Menu.jsp"/>
         <br>
         <H4 style="color: #47525E; padding-left: 80px;">Preencha todos os campos a seguir:</H4>
         <div class="container">
@@ -25,7 +26,7 @@
                 <div class="input-field col s6">
                     <i class="material-icons prefix">email</i>
                     <label for="emailCadastro">E-mail</label>
-                    <input id="email" name="emailCadastro" type="email" class="validate" >
+                    <input id="emailCadastro" name="emailCadastro" type="email" class="validate" >
                 </div>
 
                 <br>
@@ -39,7 +40,7 @@
                 <label for="escolaridade">Escolaridade:</label>
                 <div class="input-field col s6">
                     <i class="material-icons prefix">class</i>
-                    <select name="escolaridade">
+                    <select name="escolaridade" id="escolaridade">
                         <option value="">Escolaridade</option>
                         <option value="Analfabeto">Analfabeto</option>
                         <option value="Fundamental incompleto">Fundamental incompleto</option>
@@ -54,10 +55,22 @@
 
                 <br>
 
-                <label for="senha">Senha:</label>
+                <label for="perfil">Perfil:</label>
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">perm_identity</i>
+                    <select name="perfil" id="perfil">
+                        <option value="">Perfil</option>
+                        <option value="aluno">Aluno</option>
+                        <option value="professor">Professor</option>
+                    </select>
+                </div>
+
+                <br>
+
+                <label for="senhaCadastro">Senha:</label>
                 <div class="input-field col s6">
                     <i class="material-icons prefix">lock_outline</i>
-                    <input id="senha" name="senha" type="password" class="validate" >
+                    <input id="senhaCadastro" name="senhaCadastro" type="password" class="validate" >
                 </div>
                 <label for="confirma_senha">Confirmar senha:</label>
                 <div class="input-field col s6">

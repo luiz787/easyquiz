@@ -2,6 +2,23 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/playc/Documents/GitHub/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/controller/GravarPostAvulso.java</file>
+            <file>file:/C:/Users/playc/Documents/GitHub/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/exception/ExcecaoNegocio.java</file>
+            <file>file:/C:/Users/playc/Documents/GitHub/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/exception/ExcecaoPersistencia.java</file>
+            <file>file:/C:/Users/playc/Documents/GitHub/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/daoimpl/UsuarioDAOImpl.java</file>
+            <file>file:/C:/Users/playc/Documents/GitHub/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/controller/AlterarUsuario.java</file>
+            <file>file:/C:/Users/playc/Documents/GitHub/easyquiz/EasyQuiz%20(Java)/EasyQuiz/web/Menu.jsp</file>
+            <file>file:/C:/Users/playc/Documents/GitHub/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/domain/Usuario.java</file>
+            <file>file:/C:/Users/playc/Documents/GitHub/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/serviceimpl/ManterUsuarioImpl.java</file>
+            <file>file:/C:/Users/playc/Documents/GitHub/easyquiz/EasyQuiz%20(Java)/EasyQuiz/web/gerenciamentoquestoes.jsp</file>
+            <file>file:/C:/Users/playc/Documents/GitHub/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/domain/Escolaridade.java</file>
+            <file>file:/C:/Users/playc/Documents/GitHub/easyquiz/EasyQuiz%20(Java)/EasyQuiz/web/TelaPerfil.jsp</file>
+            <file>file:/C:/Users/playc/Documents/GitHub/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/model/domain/Perfil.java</file>
+            <file>file:/C:/Users/playc/Documents/GitHub/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/controller/GerenciarQuestoes.java</file>
+            <file>file:/C:/Users/playc/Documents/GitHub/easyquiz/EasyQuiz%20(Java)/EasyQuiz/web/TelaQuestoes.jsp</file>
+            <file>file:/C:/Users/playc/Documents/GitHub/easyquiz/EasyQuiz%20(Java)/EasyQuiz/web/index.jsp</file>
+            <file>file:/C:/Users/playc/Documents/GitHub/easyquiz/EasyQuiz%20(Java)/EasyQuiz/src/java/controller/GravarPostResposta.java</file>
+        </group>
     </open-files>
 </project-private>
