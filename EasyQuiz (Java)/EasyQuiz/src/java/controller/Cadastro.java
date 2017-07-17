@@ -22,7 +22,7 @@ import model.serviceimpl.ManterModuloImpl;
  *
  * @author Luiz
  */
-class Cadastro {
+public class Cadastro {
     public static String execute(HttpServletRequest request) {
         String jsp = "";
         try {
@@ -36,7 +36,7 @@ class Cadastro {
             request.setAttribute("listDisciplina", disciplinas);
             request.setAttribute("listModulo", modulos);
             request.setAttribute("listDificuldade", dificuldades);
-            jsp = "/Cadastro.jsp";
+            jsp = "/cadastro.jsp";
         } catch (Exception e) {
             e.printStackTrace();
             jsp = "";

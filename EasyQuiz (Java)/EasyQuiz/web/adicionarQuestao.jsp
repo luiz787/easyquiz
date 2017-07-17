@@ -6,6 +6,19 @@
 
 <%@page import="controller.Login"%>
 <%@page import="model.domain.Disciplina"%>
+<%@page import="model.domain.Modulo"%>
+<%@page import="model.serviceimpl.ManterModuloImpl"%>
+<%@page import="model.daoimpl.ModuloDAOImpl"%>
+<%@page import="model.daoimpl.ModuloDAOImpl"%>
+<%@page import="model.serviceimpl.ManterDisciplinaImpl"%>
+<%@page import="model.daoimpl.DisciplinaDAOImpl"%>
+<%@page import="model.daoimpl.DisciplinaDAOImpl"%>
+<%@page import="model.domain.Dificuldade"%>
+<%@page import="model.serviceimpl.ManterDificuldadeImpl"%>
+<%@page import="model.daoimpl.DificuldadeDAOImpl"%>
+<%@page import="model.daoimpl.DificuldadeDAOImpl"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
@@ -66,34 +79,62 @@
                 </div>
                 <div id="dados">
                     <div class="input-field">
-                        <select id="disciplina" name="disciplina">
-                            <option value="" disabled selected>Escolha a disciplina</option>
-                            <option value="Física">Física</option>
-                            <option value="Matemática">Matemática</option>
-                            <option value="Sistemas Operacionais">Sistemas Operacionais</option>
+                        <select id="disciplina" name="disciplina" onChange="getStates(this);">
+                            <option value="" disabled selected>Escolha uma Disciplina</option>
+
+                            <% 
+                               ManterDisciplinaImpl Disciplina = new ManterDisciplinaImpl(DisciplinaDAOImpl.getInstance()); 
+                               List<Disciplina> listadisciplinas = Disciplina.getAll() ;
+                                        
+                               for (Disciplina D : listadisciplinas) { 
+                                String nomdisc = D.getNome();
+                                int valdisc = D.getId().intValue(); %>
+                            <option value="<%=nomdisc%>"><%=nomdisc%></option>
+
+                            <% } %>
+                            <option value="">Nenhum</option>
                         </select>
-                        <label>Disciplina</label>
+                            <label>Disciplina</label>
                     </div>
                     <div class="input-field">
-                        <select id="modulo" name="modulo">
-                            <option value="" disabled selected>Escolha o módulo</option>
-                            <option value="Máquinas térmicas">Máquinas térmicas</option>
-                            <option value="Óptica">Óptica</option>
-                            <option value="Termodinâmica">Termodinâmica</option>
-                        </select>
+                        <select id="modulo" name="modulo" >
+                            <option value="" id="0" disabled selected>Escolha um módulo</option>
+                            <% 
+                               ManterModuloImpl Modulo = new ManterModuloImpl(ModuloDAOImpl.getInstance()); 
+                               List<Modulo> listamodulos = Modulo.getAll() ;
+                                        
+                               for (Modulo M : listamodulos) { 
+                                String nommodulo = M.getNome();
+                                int valmodulo = M.getId().intValue();
+                                long idmate = M.getDisciplina().getId(); 
+                            %>
+
+                            <option id="<%=idmate%>" value="<%=nommodulo%>" style="color:blue;"><%=nommodulo%></option>
+
+                            <% } %>
+                            <option id="-1" value="">Nenhum</option>
+                                </select>
                         <label>Módulo</label>
                     </div>
                     <div class="input-field">
                         <select id="dificuldade" name="dificuldade">
-                            <option value="" disabled selected>Escolha a dificuldade</option>
-                            <option value="Fácil">Fácil</option>
-                            <option value="Médio">Médio</option>
-                            <option value="Difícil">Difícil</option>
-                            <option value="Desafio">Desafio</option>
+                            <option value="" disabled selected>Escolha uma Dificuldade</option>
+                            <% 
+                                ManterDificuldadeImpl Dificuldade = new ManterDificuldadeImpl(DificuldadeDAOImpl.getInstance()); 
+                                List<Dificuldade> listadificuldades = Dificuldade.listAll();
+                                        
+                                for (Dificuldade D : listadificuldades) { 
+                                 String nomdif = D.getDescricao();
+                                 int valdif = D.getId().intValue(); %>
+                            <option value="<%=nomdif%>"><%=nomdif%></option>
+
+                            <% } %>
+                            <option value="">Nenhum</option>
                         </select>
-                        <label>Módulo</label>
+                        <label>Dificuldade</label>
                     </div>
                 </div>
+                
                 <div id="divEnunciado">
                     <h5>Enunciado</h5>
                     <div class="row">

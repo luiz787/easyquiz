@@ -77,3 +77,16 @@ function questaoAberta() {
     let linha = document.getElementById("linhafinal");
     form.insertBefore(divRespostaAberta, linha);
 }
+
+function getStates(mat) {
+    var select = document.getElementById("modulo");
+
+    for (i = 0; i < document.getElementById("modulo").length + 1; i++) {
+        var modu = select.options[i];
+        if (mat.value != modu.id) {
+            select.remove(i);
+            $('select').material_select();
+            i--;
+        }
+    }
+}

@@ -5,6 +5,7 @@
 --%>
 
 <%@page import="model.domain.Disciplina"%>
+<%@page import="model.domain.Modulo"%>
 <%@page import="model.domain.Dificuldade"%>
 <%@page import="java.util.List"%>
 <%@page import="model.domain.Questao"%>
@@ -42,8 +43,9 @@
                         && request.getAttribute("listModulo")!=null){
                     System.out.println("Deu certo.");
                 }
-                
+                System.out.println("debug");
                 List<Dificuldade> listDificuldade = (List<Dificuldade>) request.getAttribute("listDificuldade");
+                System.out.println("debug");
                 for (int i=0; i<listDificuldade.size(); i++){
                     System.out.println(listDificuldade.get(i).getDescricao());
                     if (dificuldade.equals(listDificuldade.get(i).getDescricao())){
@@ -57,12 +59,12 @@
                     if (disciplina.equals(listDisciplina.get(i).getNome())){
                         questao.setDisciplina(listDisciplina.get(i));
                     }
-                }*/
-                /*
+                }
+                
                 List<Modulo> listModulo = (List<Modulo>) request.getAttribute("listModulo");
                 for (int i=0; i<listModulo.size(); i++){
                     if (modulo.equals(listModulo.get(i).getNome())){
-                        questao.setModulo(listDModulo.get(i));
+                        questao.setModulo(listModulo.get(i));
                     }
                 }*/
                 
