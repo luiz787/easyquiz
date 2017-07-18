@@ -6,7 +6,6 @@ public class ListarForum {
     public static String execute(HttpServletRequest request) {
         String jsp = "";
         try {
-            System.out.println("ListarForum!!!");
             String questaoStr = request.getParameter("questao");
             Long cod_Questao = Long.parseLong(questaoStr);
             

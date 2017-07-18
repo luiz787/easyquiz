@@ -62,12 +62,6 @@
                 porcentagem = (acertos*100)/total;
             }
         }
-        
-        
-        System.out.println("TOTAL: "+total);
-        System.out.println("ACERTOS: "+acertos);
-        System.out.println("ERROS: "+erros);
-        System.out.println("PORCENTAGEM "+porcentagem);
     }
 %>
 <!DOCTYPE html>

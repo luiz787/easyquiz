@@ -57,8 +57,6 @@ public class GravarPostAvulso {
             ManterPost manterPost = new ManterPostImpl(PostDAOImpl.getInstance());
             manterPost.cadastrarPost(post);
 
-            System.out.println("SÓ SUCESSO");
-
             jsp = "/servletweb?acao=ListarForum&questao="+cod_Questao;
 
         } catch (Exception e) {

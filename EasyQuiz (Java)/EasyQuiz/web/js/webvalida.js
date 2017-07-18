@@ -166,7 +166,6 @@ function validarCamposPerfil(form) {
         if (table == "Usuario") {
             if (form.acao.value == "alterar")
                 caminhourl = "/EasyQuiz/servletweb?acao=AlterarUsuario"; 
-            alert(dataNascimento);
             form.action = caminhourl;
             form.submit();
         }
@@ -181,7 +180,6 @@ function AdicionarQuestao(form) {
 }
 
 function filtrarDesempenho(form) {
-    alert(form.dataInicio.value+" | "+form.dataFim.value);
     caminhourl = "/EasyQuiz/servletweb?acao=FiltrarDesempenho";
     form.action = caminhourl;
     form.submit();

@@ -27,28 +27,22 @@ class EditarQuestao {
             ManterQuestao manterQuestao = new ManterQuestaoImpl(QuestaoDAOImpl.getInstance());
             Long idDaQuestao = Long.parseLong(request.getParameter("idquestao"));
             int ordem = Integer.parseInt(request.getParameter("ordem"));
-            //System.out.println("ID :::"+idDaQuestao);
             Questao questaoAlterada = manterQuestao.getQuestaoById(idDaQuestao);
             String novoEnunciado = request.getParameter("txtAreaEnun0");
-            //System.out.println("Enunciado: " + novoEnunciado);
             questaoAlterada.setTxtEnunciado(novoEnunciado);
             manterQuestao.alterarQuestao(questaoAlterada);
             if (questaoAlterada.getIdTipo()=='A'){
                 String novaResposta = request.getParameter("resposta-correta"+ordem);
-                //System.out.println(novaResposta);
                 questaoAlterada.setTxtResposta(novaResposta);
-                //System.out.println("Nova resposta: "+questaoAlterada.getTxtResposta());
                 manterQuestao.alterarQuestao(questaoAlterada);
             } else if (questaoAlterada.getIdTipo()=='F'){
                 ManterQuestaoFechada manterQuestaoFechada = new ManterQuestaoFechadaImpl(QuestaoFechadaDAOImpl.getInstance());
                 int qtdAlternativas = manterQuestaoFechada.getAll(idDaQuestao).size();
-                //System.out.println("Quantidade de alternativas: " + qtdAlternativas);
                 List<QuestaoFechada> novasAlternativas = new ArrayList();
                 for (int i=0; i<qtdAlternativas; i++){
                     QuestaoFechada qf = new QuestaoFechada();
                     qf.setQuestao(questaoAlterada);
                     String txtAlternativa = request.getParameter("txtArea"+ordem+"-"+i);
-                    //System.out.println(txtAlternativa);
                     qf.setTxtAlternativa(txtAlternativa);
                     qf.setSeqAlternativa(new Long(i));
                     novasAlternativas.add(qf);

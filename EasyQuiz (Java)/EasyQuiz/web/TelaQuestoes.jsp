@@ -47,7 +47,6 @@
         <div class="container" >
 <%
     if(request.getAttribute("listQuestao")!=null && ((List<Questao>) request.getAttribute("listQuestao")).size()!=0) {
-        System.out.println("NAO TEM QUESTAO: "+((List<Questao>) request.getAttribute("listQuestao")).size());
         List<Questao> listQuestao = (List<Questao>) request.getAttribute("listQuestao");
         List<QuestaoFechada> listQuestaoFechada = (List<QuestaoFechada>) request.getAttribute("listQuestaoFechada");
         

@@ -35,7 +35,6 @@ public class CadastroQuestao {
     public static String execute(HttpServletRequest request) {
         String jsp = "";
         try {
-            System.out.println("Teste AddQuestaoo");
             ManterDisciplina manterDisciplina = new ManterDisciplinaImpl(DisciplinaDAOImpl.getInstance());
             List<Disciplina> disciplinas = manterDisciplina.getAll();
             ManterModulo manterModulo = new ManterModuloImpl(ModuloDAOImpl.getInstance());
@@ -47,29 +46,18 @@ public class CadastroQuestao {
             request.setAttribute("listDificuldade", dificuldades);
             Questao questao = new Questao();
                 String enunciado = request.getParameter("enunciado");
-                System.out.println("Enunciado: " + enunciado);
                 String tipo = request.getParameter("tipo");
-                System.out.println("Tipo (A ou F): " + tipo);
                 String dificuldade = request.getParameter("dificuldade");
-                System.out.println("Dificuldade: "+dificuldade);
                 String disciplina = request.getParameter("disciplina");
-                System.out.println("Disciplina: "+disciplina);
                 String modulo = request.getParameter("moduloo");
-                System.out.println("Modulo: "+ modulo);
                 if (request.getAttribute("listDificuldade")!=null && request.getAttribute("listDisciplina")!=null
                         && request.getAttribute("listModulo")!=null){
-                    System.out.println("Deu certo.");
                 }
-                System.out.println("debug");
-                //List<Dificuldade> listDificuldade = (List<Dificuldade>) request.getAttribute("listDificuldade");
-                System.out.println("debug");
                 for (int i=0; i<dificuldades.size(); i++){
-                    System.out.println(dificuldades.get(i).getDescricao());
                     if (dificuldade.equals(dificuldades.get(i).getDescricao())){
                         questao.setDificuldade(dificuldades.get(i));
                     }
                 }
-                System.out.println("Dificuldade da questão setada: "+questao.getDificuldade().getDescricao());
                 
                 Disciplina objDisciplina=null;
                 boolean gravouDisciplina = false;
@@ -80,12 +68,10 @@ public class CadastroQuestao {
                         gravouDisciplina = true;
                     }
                 }
-                System.out.println(gravouDisciplina);
                 if (!gravouDisciplina){
                     Disciplina novaDisciplina = new Disciplina();
                     novaDisciplina.setNome(disciplina);
                     Long novoIdDisciplina = manterDisciplina.cadastrarDisciplina(novaDisciplina);
-                    System.out.println("NOVO ID DISC: "+novoIdDisciplina);
                     novaDisciplina.setId(novoIdDisciplina);
                     questao.setDisciplina(novaDisciplina);
                     objDisciplina = novaDisciplina;
@@ -98,11 +84,9 @@ public class CadastroQuestao {
                         gravouModulo = true;
                     }
                 }
-                System.out.println("GRAVOU MODULO: "+gravouModulo);
                 if (!gravouModulo){
                     Modulo novoModulo = new Modulo();
                     novoModulo.setNome(modulo);
-                    System.out.println("ID DA DISCIPLINA Q TA ENTRANDO NO MODULO: "+objDisciplina.getId());
                     novoModulo.setDisciplina(objDisciplina); //get Disciplina que foi colocada pelo usuário (se nao existia já foi criada)
                     Long novoIdModulo = manterModulo.cadastrarModulo(novoModulo);
                     novoModulo.setId(novoIdModulo);
@@ -113,7 +97,6 @@ public class CadastroQuestao {
                     questao.setIdTipo('A');
                     String resposta = request.getParameter("txtresposta");
                     questao.setTxtResposta(resposta);
-                    System.out.println("Resposta correta: "+resposta);
                 } else {
                     questao.setIdTipo('F');
                 }
@@ -127,7 +110,6 @@ public class CadastroQuestao {
                     for (int i=0; i<alternativas.length; i++){
                         qf[i] = new QuestaoFechada();
                         alternativas[i] = request.getParameter("alt"+i);
-                        System.out.println(alternativas[i]);
                         qf[i].setQuestao(questao);
                         qf[i].setSeqAlternativa(new Long(i+1));
                         qf[i].setTxtAlternativa(alternativas[i]);
@@ -135,24 +117,12 @@ public class CadastroQuestao {
                     }
                     int seqCorreta = Integer.parseInt(request.getParameter("group1"))+1;
                     questao.setSeqQuestaoCorreta(new Long(seqCorreta));
-                    System.out.println(seqCorreta);
-                    System.out.println("debug alternativasss");
                     for (int i=0; i<questoesFechadas.size(); i++){
-                        System.out.println(questoesFechadas.get(i).getTxtAlternativa());
                     }
+                    boolean result = manterQuestao.alterarQuestao(questao);
                     ManterQuestaoFechada manterQuestaoFechada = new ManterQuestaoFechadaImpl(QuestaoFechadaDAOImpl.getInstance());
                     manterQuestaoFechada.cadastrarQuestaoFechada(questoesFechadas); //algo está dando errado AQUI
                 }
-                System.out.println("NOVO ID DA QUESTAO: "+novoId);
-                /*System.out.println("\n\nFINALIZANDO");
-                System.out.println(questao.getTxtEnunciado());
-                System.out.println(questao.getIdTipo());
-                if (questao.getIdTipo()=='A'){
-                    System.out.println(questao.getTxtResposta());
-                } else {
-                    System.out.println("SEQUENCIAL CORRETO: "+questao.getSeqQuestaoCorreta());
-                    
-                }*/
             jsp = "/cadastroquestao.jsp";
         } catch (Exception e) {
             e.printStackTrace();

@@ -61,7 +61,7 @@ public class ModuloDAOImpl implements ModuloDAO {
             
             Long id = null;
             if (rs.next()) {
-                id = rs.getLong(2);
+                id = rs.getLong(1);
                 modulo.setId(id);
             }
             

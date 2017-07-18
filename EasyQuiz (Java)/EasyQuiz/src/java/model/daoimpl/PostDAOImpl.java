@@ -76,25 +76,6 @@ public class PostDAOImpl implements PostDAO {
             connection.close();
             
             return codigo;
-            
-            
-            /*
-            int linhas = pstmt.executeUpdate();
-
-            if (linhas == 0) {
-                System.out.println("ERRO AO GRAVAR");
-            }
-            ResultSet rs = pstmt.getGeneratedKeys();
-
-            if (rs.next()) {
-                Long cod_post = rs.getLong(1);
-                post.setCodigo(cod_post);
-            }
-
-            rs.close();
-            pstmt.close();
-            connection.close();
-            */
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(QuestaoDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new ExcecaoPersistencia(ex);

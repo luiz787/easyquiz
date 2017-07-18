@@ -16,25 +16,7 @@
 <%@page import="model.domain.Perfil"%>
 <%@page import="controller.ListarQuestao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-            /*
-            ManterPerfil manterPerfil = new ManterPerfilImpl(PerfilDAOImpl.getInstance());
-            Perfil perfil = manterPerfil.getPerfilById(new Long(1));
-            ManterEscolaridade manterEscolaridade = new ManterEscolaridadeImpl(EscolaridadeDAOImpl.getInstance());
-            Escolaridade escolaridade = manterEscolaridade.getEscolaridadeById(new Long(1));
-            ManterUsuario manterUsuario = new ManterUsuarioImpl(UsuarioDAOImpl.getInstance());
-            Usuario usuario = new Usuario();
-            usuario.setDataNascimento(java.sql.Date.valueOf("2010-05-28"));
-            usuario.setNome("Gabriel Victor");
-            usuario.setPerfil(perfil);
-            usuario.setEmail("gabrielvictor@gmail.com");
-            usuario.setSenha("123456789");
-            usuario.setEscolaridade(escolaridade);
-            
-            Long id = manterUsuario.cadastrarUsuario(usuario);
-            System.out.println("ID usuario: "+id);
-            */
-            
+<%        
     request.getSession().setAttribute("contadorRespostaQuestao", 0);
     String jsp = ListarQuestao.execute(request);
     RequestDispatcher rd = request.getRequestDispatcher(jsp);

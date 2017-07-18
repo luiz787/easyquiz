@@ -49,7 +49,6 @@ public class CadastroUsuario extends HttpServlet {
             perfil.setNome(strPerfil);
 
             escolaridade = new Escolaridade();
-            System.out.println("ESCOLARIDADE: "+strEscolaridade);
             switch(strEscolaridade) {
                 case "Analfabeto": escolaridade.setId(new Long(1)); break;
                 case "Fundamental incompleto": escolaridade.setId(new Long(2)); break;
@@ -83,7 +82,7 @@ public class CadastroUsuario extends HttpServlet {
             response.sendRedirect("index.jsp");
              
         } catch (ParseException | ExcecaoPersistencia | ExcecaoNegocio ex) {
-            System.out.println(ex);
+             System.out.println(ex);
         }
     }
 }
