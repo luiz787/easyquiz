@@ -80,13 +80,9 @@ public class CadastroUsuario extends HttpServlet {
             request.setAttribute("tipo", "cadastro");
             
             Login.execute(request);
-            response.sendRedirect("TelaQuestoes.jsp");
+            response.sendRedirect("index.jsp");
              
-        } catch (ParseException ex) {
-            System.out.println(ex);
-        } catch (ExcecaoPersistencia ex) {
-            System.out.println(ex);
-        } catch (ExcecaoNegocio ex) {
+        } catch (ParseException | ExcecaoPersistencia | ExcecaoNegocio ex) {
             System.out.println(ex);
         }
     }
