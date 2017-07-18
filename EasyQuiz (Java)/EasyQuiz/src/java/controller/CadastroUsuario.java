@@ -49,16 +49,17 @@ public class CadastroUsuario extends HttpServlet {
             perfil.setNome(strPerfil);
 
             escolaridade = new Escolaridade();
-            
+            System.out.println("ESCOLARIDADE: "+strEscolaridade);
             switch(strEscolaridade) {
-                case "Analfabeto": escolaridade.setId(new Long(1));
-                case "Fundamental incompleto": escolaridade.setId(new Long(2));
-                case "Fundamental completo": escolaridade.setId(new Long(3));
-                case "Médio incompleto": escolaridade.setId(new Long(4));
-                case "Médio completo": escolaridade.setId(new Long(5));
-                case "Superior incompleto": escolaridade.setId(new Long(6));
-                case "Superior completo": escolaridade.setId(new Long(7));
-                case "Pós graduado": escolaridade.setId(new Long(8));
+                case "Analfabeto": escolaridade.setId(new Long(1)); break;
+                case "Fundamental incompleto": escolaridade.setId(new Long(2)); break;
+                case "Fundamental completo": escolaridade.setId(new Long(3)); break;
+                case "Medio incompleto": escolaridade.setId(new Long(4)); break;
+                case "Medio completo": escolaridade.setId(new Long(5)); break;
+                case "Superior incompleto": escolaridade.setId(new Long(6)); break;
+                case "Superior completo": escolaridade.setId(new Long(7)); break;
+                case "Mestrado": escolaridade.setId(new Long(8)); break;
+                case "Doutorado": escolaridade.setId(new Long(9)); break;
             }
             
             escolaridade.setNome(strEscolaridade);
