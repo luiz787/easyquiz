@@ -58,7 +58,6 @@
         <jsp:include page ="Menu.jsp"/>
         <%
             if (logado != 0) {
-                System.out.println(request.getAttribute("listDificuldade"));
         %>        
 
 
@@ -105,7 +104,6 @@
                                 List<Modulo> listamodulos = Modulo.getAll();
                                 for (Modulo M : listamodulos) {
                                     String nommodulo = M.getNome();
-                                    System.out.println(nommodulo);
                                     int valmodulo = M.getId().intValue();
                             %>
 

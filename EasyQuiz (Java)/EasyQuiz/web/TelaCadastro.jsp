@@ -11,11 +11,6 @@
         <script type="text/javascript" src="dist/additional-methods.min.js" ></script>
         <script type="text/javascript" src="dist/additional-methods.js" ></script>
         <script type="text/javascript" src="js/validaForm.js"></script>
-        <script type="text/javascript" >
-            function cancelar() {
-                window.location.href="index.jsp";
-            }
-        </script>
     </head>
     <body>
         <br>
@@ -86,10 +81,10 @@
                 <br>
                 <br>
                 <br>
-
+                <div>
+                <a class="btn waves-effect waves-light" href="/EasyQuiz/servletweb?acao=PaginaInicial">Cancelar</a>
+                </div>
                 <div align="right">
-                    <button class="btn waves-effect waves-light" onclick="cancelar()" type="button">Cancelar</button>
-
                     <button class="btn waves-effect waves-light" class="submit" type="submit" value="submit" name="action">Confirmar
                         <i class="material-icons right">send</i>
                     </button>

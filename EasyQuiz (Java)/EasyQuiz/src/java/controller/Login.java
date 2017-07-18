@@ -35,7 +35,6 @@ public class Login {
             
             String email;
             String senha;
-            System.out.println("chego");
             
             if (request.getAttribute("tipo") != null && request.getAttribute("tipo").equals("cadastro")) {
                 email = (String)request.getAttribute("email");

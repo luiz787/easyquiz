@@ -14,7 +14,6 @@ public class ServletWeb extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String acao = request.getParameter("acao");
-        System.out.println("ACAO: "+acao);
         
         if(acao.equals("PaginaInicial"))
             jsp = PaginaInicial.execute(request);
@@ -43,7 +42,6 @@ public class ServletWeb extends HttpServlet {
         else if (acao.equals("AdicionarQuestao"))
             jsp = AdicionarQuestao.execute(request);
         else if (acao.equals("CadastroQuestao")){
-            System.out.println("Entrei no CadastroQuestao!!!");
             jsp = CadastroQuestao.execute(request);
         }
         else if (acao.equals("EditarQuestao")){

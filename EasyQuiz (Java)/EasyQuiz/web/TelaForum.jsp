@@ -1,3 +1,4 @@
+<%@page import="java.time.ZoneId"%>
 <%@page import="model.serviceimpl.ManterUsuarioImpl"%>
 <%@page import="model.daoimpl.UsuarioDAOImpl"%>
 <%@page import="model.daoimpl.UsuarioDAOImpl"%>
@@ -145,7 +146,7 @@
                 %>
 
                 <h5 style="color: #C55353" href="" name="nomeUsuario"><%=usuario.getNome()%></h5>
-                <h8 style="color: #696969" name="dataPost"> em <%= post.getDatCriacao()%></h8>
+                <h8 style="color: #696969" name="dataPost"> em <%= post.getDatCriacao().atZone(ZoneId.of("GMT-3"))%></h8>
                 <br>
                 <p>
                     <% String[] com = post.getTxtConteudo().split("//");
