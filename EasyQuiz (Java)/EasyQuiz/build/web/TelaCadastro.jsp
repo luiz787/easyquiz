@@ -49,7 +49,8 @@
                         <option value="Médio completo">Médio completo</option>
                         <option value="Superior incompleto">Superior incompleto</option>
                         <option value="Superior completo">Superior completo</option>
-                        <option value="Pós graduado">Pós graduado</option>
+                        <option value="Pós graduado">Mestrado</option>
+                        <option value="Pós graduado">Doutorado</option>
                     </select>
                 </div>
 
