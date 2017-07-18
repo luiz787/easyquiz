@@ -45,12 +45,12 @@
                         <option value="Analfabeto">Analfabeto</option>
                         <option value="Fundamental incompleto">Fundamental incompleto</option>
                         <option value="Fundamental completo">Fundamental completo</option>
-                        <option value="Médio incompleto">Médio incompleto</option>
-                        <option value="Médio completo">Médio completo</option>
+                        <option value="Medio incompleto">Médio incompleto</option>
+                        <option value="Medio completo">Médio completo</option>
                         <option value="Superior incompleto">Superior incompleto</option>
                         <option value="Superior completo">Superior completo</option>
-                        <option value="Pós graduado">Mestrado</option>
-                        <option value="Pós graduado">Doutorado</option>
+                        <option value="Mestrado">Mestrado</option>
+                        <option value="Doutorado">Doutorado</option>
                     </select>
                 </div>
 
