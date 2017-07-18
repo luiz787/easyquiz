@@ -82,11 +82,11 @@ public class CadastroUsuario extends HttpServlet {
             response.sendRedirect("TelaQuestoes.jsp");
              
         } catch (ParseException ex) {
-            System.out.println("Deu merda ein - parse exception");
+            System.out.println(ex);
         } catch (ExcecaoPersistencia ex) {
-            System.out.println("Deu merda ein - persistencia");
+            System.out.println(ex);
         } catch (ExcecaoNegocio ex) {
-            System.out.println("Deu merda ein - negocio");
+            System.out.println(ex);
         }
     }
 }

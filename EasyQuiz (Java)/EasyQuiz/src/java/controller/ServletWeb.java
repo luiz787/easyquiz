@@ -43,12 +43,12 @@ public class ServletWeb extends HttpServlet {
         else if (acao.equals("AdicionarQuestao"))
             jsp = AdicionarQuestao.execute(request);
         else if (acao.equals("CadastroQuestao")){
-             System.out.println("Entrei no CadastroQuestao!!!");
-             jsp = CadastroQuestao.execute(request);
-         }
-         else if (acao.equals("EditarQuestao")){
-             jsp = EditarQuestao.execute(request);
-		 }
+            System.out.println("Entrei no CadastroQuestao!!!");
+            jsp = CadastroQuestao.execute(request);
+        }
+        else if (acao.equals("EditarQuestao")){
+            jsp = EditarQuestao.execute(request);
+	}
         else if(acao.equals("Sair"))
             jsp = Logout.execute(request);
         else if(acao.equals("GravarPostAvulso"))
