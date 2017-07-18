@@ -54,7 +54,7 @@ public class CadastroQuestao {
                 System.out.println("Dificuldade: "+dificuldade);
                 String disciplina = request.getParameter("disciplina");
                 System.out.println("Disciplina: "+disciplina);
-                String modulo = request.getParameter("moduloo");
+                String modulo = request.getParameter("modulo");
                 System.out.println("Modulo: "+ modulo);
                 if (request.getAttribute("listDificuldade")!=null && request.getAttribute("listDisciplina")!=null
                         && request.getAttribute("listModulo")!=null){
@@ -71,43 +71,20 @@ public class CadastroQuestao {
                 }
                 System.out.println("Dificuldade da questão setada: "+questao.getDificuldade().getDescricao());
                 
-                Disciplina objDisciplina=null;
-                boolean gravouDisciplina = false;
+                //List<Disciplina> listDisciplina = (List<Disciplina>) request.getAttribute("listDisciplina");
                 for (int i=0; i<disciplinas.size(); i++){
                     if (disciplina.equals(disciplinas.get(i).getNome())){
-                        objDisciplina = disciplinas.get(i);
-                        questao.setDisciplina(objDisciplina);
-                        gravouDisciplina = true;
+                        questao.setDisciplina(disciplinas.get(i));
                     }
                 }
-                System.out.println(gravouDisciplina);
-                if (!gravouDisciplina){
-                    Disciplina novaDisciplina = new Disciplina();
-                    novaDisciplina.setNome(disciplina);
-                    Long novoIdDisciplina = manterDisciplina.cadastrarDisciplina(novaDisciplina);
-                    System.out.println("NOVO ID DISC: "+novoIdDisciplina);
-                    novaDisciplina.setId(novoIdDisciplina);
-                    questao.setDisciplina(novaDisciplina);
-                    objDisciplina = novaDisciplina;
-                }
                 
-                boolean gravouModulo = false;
+                //List<Modulo> listModulo = (List<Modulo>) request.getAttribute("listModulo");
                 for (int i=0; i<modulos.size(); i++){
                     if (modulo.equals(modulos.get(i).getNome())){
                         questao.setModulo(modulos.get(i));
-                        gravouModulo = true;
                     }
                 }
-                System.out.println("GRAVOU MODULO: "+gravouModulo);
-                if (!gravouModulo){
-                    Modulo novoModulo = new Modulo();
-                    novoModulo.setNome(modulo);
-                    System.out.println("ID DA DISCIPLINA Q TA ENTRANDO NO MODULO: "+objDisciplina.getId());
-                    novoModulo.setDisciplina(objDisciplina); //get Disciplina que foi colocada pelo usuário (se nao existia já foi criada)
-                    Long novoIdModulo = manterModulo.cadastrarModulo(novoModulo);
-                    novoModulo.setId(novoIdModulo);
-                    questao.setModulo(novoModulo);
-                }
+                
                 questao.setTxtEnunciado(enunciado);
                 if (tipo.equals("aberta")){
                     questao.setIdTipo('A');
