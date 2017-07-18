@@ -83,50 +83,51 @@
                         <datalist id="disciplina">
                             <option value="" disabled selected>Escolha uma Disciplina</option>
 
-                            <% 
-                               ManterDisciplinaImpl Disciplina = new ManterDisciplinaImpl(DisciplinaDAOImpl.getInstance()); 
-                               List<Disciplina> listadisciplinas = Disciplina.getAll() ;
-                                        
-                               for (Disciplina D : listadisciplinas) { 
-                                String nomdisc = D.getNome();
-                                int valdisc = D.getId().intValue(); %>
+                            <%
+                                ManterDisciplinaImpl Disciplina = new ManterDisciplinaImpl(DisciplinaDAOImpl.getInstance());
+                                List<Disciplina> listadisciplinas = Disciplina.getAll();
+
+                                for (Disciplina D : listadisciplinas) {
+                                    String nomdisc = D.getNome();
+                                    int valdisc = D.getId().intValue();%>
                             <option value="<%=nomdisc%>"><%=nomdisc%></option>
 
                             <% } %>
                             <option value="">Nenhum</option>
                         </datalist>
-                            <label>Disciplina</label>
+                        <label>Disciplina</label>
                     </div>
                     <div class="input-field">
-                        <select id="modulo" name="modulo" >
-                            <option value="" id="0" disabled selected>Escolha um módulo</option>
-                            <% 
-                               ManterModuloImpl Modulo = new ManterModuloImpl(ModuloDAOImpl.getInstance()); 
-                               List<Modulo> listamodulos = Modulo.getAll() ;
-                                        
-                               for (Modulo M : listamodulos) { 
-                                String nommodulo = M.getNome();
-                                int valmodulo = M.getId().intValue();
-                                long idmate = M.getDisciplina().getId(); 
+                        <input name="moduloo" type="text" list="moduloo" />
+                        <datalist id="moduloo">
+                            <option value="" disabled selected>Escolha um módulo</option>
+                            <%
+                                ManterModuloImpl Modulo = new ManterModuloImpl(ModuloDAOImpl.getInstance());
+                                List<Modulo> listamodulos = Modulo.getAll();
+
+                                for (Modulo M : listamodulos) {
+                                    String nommodulo = M.getNome();
+                                    System.out.println(nommodulo);
+                                    int valmodulo = M.getId().intValue();
                             %>
 
-                            <option id="<%=idmate%>" value="<%=nommodulo%>" style="color:blue;"><%=nommodulo%></option>
+                            <option value="<%=nommodulo%>" ><%=nommodulo%></option>
 
                             <% } %>
-                            <option id="-1" value="">Nenhum</option>
-                                </select>
+                            <option value="">Nenhum</option>
+                        </datalist>
                         <label>Módulo</label>
                     </div>
                     <div class="input-field">
                         <select id="dificuldade" name="dificuldade">
                             <option value="" disabled selected>Escolha uma Dificuldade</option>
-                            <% 
-                                ManterDificuldadeImpl Dificuldade = new ManterDificuldadeImpl(DificuldadeDAOImpl.getInstance()); 
+                            <%
+                                ManterDificuldadeImpl Dificuldade = new ManterDificuldadeImpl(DificuldadeDAOImpl.getInstance());
                                 List<Dificuldade> listadificuldades = Dificuldade.listAll();
-                                        
-                                for (Dificuldade D : listadificuldades) { 
-                                 String nomdif = D.getDescricao();
-                                 int valdif = D.getId().intValue(); %>
+
+                                for (Dificuldade D : listadificuldades) {
+                                    String nomdif = D.getDescricao();
+                                    int valdif = D.getId().intValue();%>
                             <option value="<%=nomdif%>"><%=nomdif%></option>
 
                             <% } %>
@@ -135,7 +136,7 @@
                         <label>Dificuldade</label>
                     </div>
                 </div>
-                
+
                 <div id="divEnunciado">
                     <h5>Enunciado</h5>
                     <div class="row">
@@ -235,9 +236,9 @@
         <script src="js/addQuestao.js"></script>
         <script src="js/webvalida.js"></script>
         <script type="text/javascript">
-                                            $(document).ready(function () {
-                                                $('select').material_select();
-                                            });
+                            $(document).ready(function () {
+                                $('select').material_select();
+                            });
         </script>
     </body>
 </html>
